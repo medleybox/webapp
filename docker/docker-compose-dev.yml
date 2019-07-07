@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+    nginx:
+        image: medleybox/nginx
+        build:
+            context: ./
+            dockerfile: docker/nginx/Dockerfile
+    webapp:
+        image: medleybox/webapp
+        build:
+            context: ./
+            dockerfile: docker/app/Dockerfile

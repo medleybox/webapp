@@ -1,0 +1,46 @@
+version: '3.4'
+
+x-variables: &x-variables
+    APP_ENV: dev
+    APP_SECRET: c95ab68cbfba3232e79d72ebae567424
+    MINIO_ENDPOINT: http://minio:9000
+    MINIO_ACCESS_KEY: medley
+    MINIO_BUCKET: medley
+    MINIO_SECRET_KEY: h15QXfIaJVdcTQdqTQm6pYwYjFa7x87TfhF47CPf
+    POSTGRES_USER: medleybox
+    POSTGRES_PASSWORD: Ze964V98S4w622dzf45WJ37W
+    POSTGRES_DB: medleybox
+
+volumes:
+    minio-data:
+
+services:
+    nginx:
+        image: medleybox/nginx
+        restart: always
+        ports:
+            - "80:80"
+            - "443:443"
+    webapp:
+        image: medleybox/webapp
+        restart: always
+        environment: *x-variables
+        ports:
+            - "8081:80"
+    db:
+        image: postgres:12-alpine
+        restart: always
+        environment: *x-variables
+    minio:
+        image: minio/minio
+        restart: always
+        hostname: minio
+        environment: *x-variables
+        command: server /data
+        volumes:
+            - minio-data:/data
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
