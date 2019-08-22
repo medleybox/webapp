@@ -2,6 +2,7 @@ version: '3.4'
 
 x-variables: &x-variables
     APP_ENV: dev
+    PPM_DEBUG: 1
     APP_SECRET: c95ab68cbfba3232e79d72ebae567424
     MINIO_ENDPOINT: http://minio:9000
     MINIO_ACCESS_KEY: medley
@@ -25,8 +26,10 @@ services:
         image: medleybox/webapp
         restart: always
         environment: *x-variables
-        ports:
-            - "8081:80"
+    import:
+        image: medleybox/import
+        restart: always
+        environment: *x-variables
     db:
         image: postgres:12-alpine
         restart: always
@@ -34,13 +37,15 @@ services:
     minio:
         image: minio/minio
         restart: always
+        ports:
+          - "9001:9000"
         hostname: minio
         environment: *x-variables
         command: server /data
         volumes:
             - minio-data:/data
-    adminer:
-        image: adminer
-        restart: always
-        ports:
-            - 8080:8080
+    # adminer:
+    #     image: adminer
+    #     restart: always
+    #     ports:
+    #         - 8080:8080

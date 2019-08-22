@@ -3,11 +3,19 @@ version: '3.4'
 services:
     nginx:
         image: medleybox/nginx
+        ports:
+            - "81:80"
+            - "444:443"
         build:
             context: ./
             dockerfile: docker/nginx/Dockerfile
     webapp:
         image: medleybox/webapp
+        volumes:
+         - ./bin:/app/bin
+         - ./config:/app/config
+         - ./src:/app/src
+         - ./templates:/app/templates
         build:
             context: ./
             dockerfile: docker/app/Dockerfile

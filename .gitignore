@@ -1,5 +1,7 @@
 deployment-config.json
 
+bin/docker-deploy
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php

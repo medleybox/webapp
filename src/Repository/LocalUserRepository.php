@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Repository;
+
+use App\Entity\LocalUser;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+
+/**
+ * @method LocalUser|null find($id, $lockMode = null, $lockVersion = null)
+ * @method LocalUser|null findOneBy(array $criteria, array $orderBy = null)
+ * @method LocalUser[]    findAll()
+ * @method LocalUser[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class LocalUserRepository extends ServiceEntityRepository
+{
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, LocalUser::class);
+    }
+}
