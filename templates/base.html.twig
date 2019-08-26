@@ -2,18 +2,12 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{% endblock %} - MedleyBox</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
-
-        <audio id="app_audio" style="min-width: 100%;" autoplay="autoplay" controls="controls" preload="auto" autobuffer>
-            <p>Your browser does not support the audio element.</p>
-            <source/>
-        </audio>
-
         <script>
         document.addEventListener( 'DOMContentLoaded', function( event ) {
             function deleteData(item, url) {

@@ -36,6 +36,11 @@
 <br />
 <a href="{{ path('security_logout') }}">Logout</a>
 
+<audio id="app_audio" style="min-width: 100%;" autoplay="autoplay" controls="controls" preload="auto" autobuffer>
+    <p>Your browser does not support the audio element.</p>
+    <source/>
+</audio>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
 <script>new ClipboardJS('button');</script>
 {% endblock body %}
