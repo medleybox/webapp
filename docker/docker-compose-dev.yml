@@ -1,21 +1,41 @@
 version: '3.4'
 
+x-variables: &x-variables
+    APP_ENV: dev
+    PPM_DEBUG: 1
+
 services:
     nginx:
         image: medleybox/nginx
+        environment: *x-variables
+        volumes:
+         - ./public:/var/www/public
         ports:
             - "81:80"
             - "444:443"
         build:
             context: ./
             dockerfile: docker/nginx/Dockerfile
+    import:
+        image: medleybox/import
+        environment: *x-variables
+        ports:
+            - "82:80"
+        volumes:
+         - /home/chris/git/medleybox/import/bin:/var/www/bin
+         - /home/chris/git/medleybox/import/config:/var/www/config
+         - /home/chris/git/medleybox/import/src:/var/www/src
+         - /home/chris/git/medleybox/import/templates:/var/www/templates
+         - /home/chris/git/medleybox/import/vendor:/var/www/vendor
     webapp:
         image: medleybox/webapp
+        environment: *x-variables
         volumes:
          - ./bin:/app/bin
          - ./config:/app/config
          - ./src:/app/src
          - ./templates:/app/templates
+         - ./vendor:/app/vendor
         build:
             context: ./
             dockerfile: docker/app/Dockerfile

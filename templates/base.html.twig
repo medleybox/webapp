@@ -8,5 +8,52 @@
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+
+        <audio id="app_audio" style="min-width: 100%;" autoplay="autoplay" controls="controls" preload="auto" autobuffer>
+            <p>Your browser does not support the audio element.</p>
+            <source/>
+        </audio>
+
+        <script>
+        document.addEventListener( 'DOMContentLoaded', function( event ) {
+            function deleteData(item, url) {
+              return fetch(url + '/' + item, {
+                method: 'delete'
+              }).then(response =>
+                response.json().then(json => {
+                  return json;
+                })
+              );
+            }
+            console.log('here');
+
+            document.addEventListener( 'click', function (event) {
+                let target = event.target;
+                let path = target.dataset.path;
+                if (target.classList.contains('js--delete-youtube-file')) {
+                    fetch('/delete', {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({path: path})
+                    }).then(response =>
+                        response.json().then(json => {
+                            console.log(json);
+                            return json;
+                        })
+                    );
+                }
+
+                if (target.classList.contains('js--play')) {
+                    let src = target.dataset.src;
+                    let audio = document.getElementById('app_audio');
+
+                    audio.src = src;
+                    audio.play();
+                }
+            });
+        });
+        </script>
     </body>
 </html>

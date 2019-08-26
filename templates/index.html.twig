@@ -1,5 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
 {{ number }}
+
+<h1>Imported Youtube</h1>
+<ul>
+    {% for link in youtube %}
+    {% set url = app.request.getSchemeAndHttpHost() ~ '/import' ~ link.src %}
+    <li>
+        <a href="{{ url }}">{{ link.filename }}</a>
+        <button class="js--play" data-src="{{ url }}">play</button>
+        <button data-clipboard-text="{{ url }}">stream</button>
+        <a href="vlc-x-callback://x-callback-url/stream?url={{ url }}"><button>vlc</button></a>
+        <button class="js--delete-youtube-file" data-path="{{ link.path }}">delete</button>
+    </li>
+    {% endfor %}
+</ul>
+
+{{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.url) }}
+        </div>
+        <div class="col" id="some-custom-id">
+            {{ form_row(form.submit) }}
+        </div>
+    </div>
+{{ form_end(form) }}
 
 <br />
 <br />
 <a href="{{ path('security_logout') }}">Logout</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+<script>new ClipboardJS('button');</script>
+{% endblock body %}
