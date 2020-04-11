@@ -10,17 +10,12 @@ services:
         environment: *x-variables
         volumes:
          - ./public:/var/www/public
-        # ports:
-        #     - "81:80"
-        #     - "444:443"
         build:
             context: ./
             dockerfile: docker/nginx/Dockerfile
     import:
         image: medleybox/import
         environment: *x-variables
-        ports:
-            - "82:80"
         volumes:
          - /home/chris/git/medleybox/import/bin:/var/www/bin
          - /home/chris/git/medleybox/import/config:/var/www/config
