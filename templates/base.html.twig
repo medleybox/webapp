@@ -23,8 +23,8 @@
 
             document.addEventListener( 'click', function (event) {
                 let target = event.target;
-                let path = target.dataset.path;
                 if (target.classList.contains('js--delete-youtube-file')) {
+                    let path = target.dataset.path;
                     fetch('/delete', {
                         method: 'DELETE',
                         headers: {
@@ -34,6 +34,24 @@
                     }).then(response =>
                         response.json().then(json => {
                             console.log(json);
+                            return json;
+                        })
+                    );
+                }
+                
+                if (target.classList.contains('js--delete-media-file')) {
+                    let id = target.dataset.id;
+                    fetch('/delete/' + id, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(response =>
+                        response.json().then(json => {
+                            console.log(json);
+                            
+                            //window.location = '';
+                            
                             return json;
                         })
                     );

@@ -14,13 +14,13 @@ x-variables: &x-variables
 
 volumes:
     minio-data:
+    postgres-data:
 
 services:
     nginx:
         image: medleybox/nginx
         restart: always
         ports:
-            - "80:80"
             - "443:443"
     webapp:
         image: medleybox/webapp
@@ -34,6 +34,8 @@ services:
         image: postgres:12-alpine
         restart: always
         environment: *x-variables
+        volumes:
+         - postgres-data:/var/lib/postgresql/data
     minio:
         image: minio/minio
         restart: always

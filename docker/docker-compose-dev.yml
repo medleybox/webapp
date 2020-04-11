@@ -10,9 +10,9 @@ services:
         environment: *x-variables
         volumes:
          - ./public:/var/www/public
-        ports:
-            - "81:80"
-            - "444:443"
+        # ports:
+        #     - "81:80"
+        #     - "444:443"
         build:
             context: ./
             dockerfile: docker/nginx/Dockerfile

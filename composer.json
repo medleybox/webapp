@@ -17,6 +17,7 @@
         "symfony/monolog-bundle": "^3.4",
         "symfony/orm-pack": "^1",
         "symfony/process": "^4",
+        "symfony/proxy-manager-bridge": "4.*.*",
         "symfony/security-bundle": "^4",
         "symfony/swiftmailer-bundle": "^3",
         "symfony/translation": "^4",

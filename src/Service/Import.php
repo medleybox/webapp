@@ -2,15 +2,20 @@
 
 namespace App\Service;
 
+use App\Entity\MediaFile;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
 
 class Import
 {
     protected $request;
 
-    public function __construct(Request $request)
+    protected $em;
+
+    public function __construct(Request $request, EntityManagerInterface $em)
     {
         $this->request = $request;
+        $this->em = $em;
     }
 
     public function processForm(Form $form)
@@ -28,17 +33,36 @@ class Import
             ['url' => $url]
         );
 
-        return json_decode($response->getBody(), true);
+        $data = json_decode($response->getBody(), true);
+        dump($response->getBody() . '');
+        dump($data);
+
+        $file = new MediaFile;
+
+        $file->setType('youtube');
+        $file->setSize($data['size']);
+        $file->setSeconds($data['seconds']);
+        $file->setPath($data['path']);
+
+        $this->em->persist($file);
+        $this->em->flush();
+
+        return true;
     }
 
     public function delete($path)
     {
-        $response = $this->request->delete(
-            'api/delete/delete',
-            ['path' => $path]
-        );
+        try {
+            $response = $this->request->delete(
+                'api/delete/delete',
+                ['path' => $path]
+            );
 
-        dump($response->getBody() . '');
+            dump($response->getBody() . '');
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function list()

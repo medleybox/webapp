@@ -36,25 +36,43 @@ class IndexController extends AbstractController
     public function index(Request $request)
     {
         $number = random_int(0, 100);
-
         $list = $this->import->list();
-
-
         $form = $this->createForm(ImportType::class);
-        if ($request->isMethod('POST')) {
-            $form->submit($request->request->get($form->getName()));
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $inport = $this->import->processForm($form);
-                //dump('here', $form->getData());
-                //return $this->redirectToRoute('task_success');
-            }
-        }
 
         return $this->render('index.html.twig', [
             'number' => $number,
             'form' => $form->createView(),
             'youtube' => $list['youtube']
         ]);
+    }
+    
+    /**
+     * @Route("/add", name="index_add")
+     */
+    public function add(Request $request)
+    {
+        $form = $this->createForm(ImportType::class);
+
+        return $this->render('add.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+    
+
+    /**
+     * @Route("/import-form", name="index_import", methods={"POST"})
+     */
+    public function import(Request $request)
+    {
+        $form = $this->createForm(ImportType::class);
+        if ($request->isMethod('POST')) {
+            $form->submit($request->request->get($form->getName()));
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $inport = $this->import->processForm($form);
+                
+                return $this->redirectToRoute('index_index');
+            }
+        }
     }
 }
