@@ -36,16 +36,16 @@ class IndexController extends AbstractController
     public function index(Request $request)
     {
         $number = random_int(0, 100);
-        $list = $this->import->list();
+        // $list = $this->import->list();
         $form = $this->createForm(ImportType::class);
 
         return $this->render('index.html.twig', [
             'number' => $number,
             'form' => $form->createView(),
-            'youtube' => $list['youtube']
+            'youtube' => []
         ]);
     }
-    
+
     /**
      * @Route("/add", name="index_add")
      */
@@ -57,7 +57,7 @@ class IndexController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-    
+
 
     /**
      * @Route("/import-form", name="index_import", methods={"POST"})
@@ -70,7 +70,7 @@ class IndexController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $inport = $this->import->processForm($form);
-                
+
                 return $this->redirectToRoute('index_index');
             }
         }
