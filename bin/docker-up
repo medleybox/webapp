@@ -4,8 +4,12 @@ function dclocal(){
     docker-compose -f docker-compose.yml -f docker/docker-compose-dev.yml $@
 }
 
+function dcConsole(){
+    docker-compose -f docker-compose.yml exec webapp bin/console -vvv $@
+}
+
 dclocal up -d --force-recreate
 
-docker-console cache:clear
+dcConsole cache:clear
 
 dclocal logs -f webapp import
