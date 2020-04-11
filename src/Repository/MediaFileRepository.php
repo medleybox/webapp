@@ -5,18 +5,18 @@ namespace App\Repository;
 use App\Entity\MediaFile;
 use App\Service\Import;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 class MediaFileRepository extends ServiceEntityRepository
 {
     protected $import;
 
-    public function __construct(RegistryInterface $registry, Import $import)
+    public function __construct(ManagerRegistry $registry, Import $import)
     {
         $this->import = $import;
         parent::__construct($registry, MediaFile::class);
     }
-    
+
     public function save(MediaFile $media)
     {
         $this->_em->persist($media);
@@ -24,7 +24,7 @@ class MediaFileRepository extends ServiceEntityRepository
 
         return true;
     }
-    
+
     public function delete(MediaFile $media)
     {
         // Remove the file from storage
