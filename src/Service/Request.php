@@ -8,8 +8,7 @@ use Xigen\Bundle\GuzzleBundle\Service\GuzzleClient;
 
 class Request
 {
-    const BASE_URI = 'http://import';
-    //const BASE_URI = 'http://10.10.1.61:8084';
+    const BASE_URI = 'http://vault';
 
     /*
      * @var \Xigen\Bundle\GuzzleBundle\Service\GuzzleClient

@@ -14,4 +14,4 @@ dcConsole cache:clear
 dcConsole cache:warmup
 dcConsole doctrine:schema:update --force
 
-dclocal logs -f webapp import
+dclocal logs -f webapp

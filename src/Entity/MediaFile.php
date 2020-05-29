@@ -17,14 +17,19 @@ class MediaFile
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=36)
      */
-    private $title = '';
+    private $uuid;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $type;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $title = '';
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -36,24 +41,19 @@ class MediaFile
      */
     private $seconds;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $path;
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getUuid(): ?string
     {
-        return $this->title;
+        return $this->uuid;
     }
 
-    public function setTitle(string $title): self
+    public function setUuid(string $uuid): self
     {
-        $this->title = $title;
+        $this->uuid = $uuid;
 
         return $this;
     }
@@ -66,6 +66,18 @@ class MediaFile
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }
@@ -90,18 +102,6 @@ class MediaFile
     public function setSeconds(?float $seconds): self
     {
         $this->seconds = $seconds;
-
-        return $this;
-    }
-
-    public function getPath(): ?string
-    {
-        return $this->path;
-    }
-
-    public function setPath(string $path): self
-    {
-        $this->path = $path;
 
         return $this;
     }

@@ -13,15 +13,6 @@ services:
         build:
             context: ./
             dockerfile: docker/nginx/Dockerfile
-    import:
-        image: medleybox/import
-        environment: *x-variables
-        volumes:
-         - /home/chris/git/medleybox/import/bin:/var/www/bin
-         - /home/chris/git/medleybox/import/config:/var/www/config
-         - /home/chris/git/medleybox/import/src:/var/www/src
-         - /home/chris/git/medleybox/import/templates:/var/www/templates
-         - /home/chris/git/medleybox/import/vendor:/var/www/vendor
     webapp:
         image: medleybox/webapp
         environment: *x-variables

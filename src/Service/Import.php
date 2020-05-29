@@ -29,8 +29,8 @@ class Import
     public function import($url)
     {
         $response = $this->request->post(
-            'api/import/youtube',
-            ['url' => $url]
+            'entry/import',
+            ['id' => $url]
         );
 
         $data = json_decode($response->getBody(), true);
@@ -40,9 +40,7 @@ class Import
         $file = new MediaFile;
 
         $file->setType('youtube');
-        $file->setSize($data['size']);
-        $file->setSeconds($data['seconds']);
-        $file->setPath($data['path']);
+        $file->setUuid($data['uuid']);
 
         $this->em->persist($file);
         $this->em->flush();
