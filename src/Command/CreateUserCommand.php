@@ -61,6 +61,8 @@ class CreateUserCommand extends Command
             $password
         ));
 
+        $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+
         $this->em->persist($user);
         $this->em->flush();
 
