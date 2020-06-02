@@ -90,6 +90,9 @@
     "guzzlehttp/psr7": {
         "version": "1.6.1"
     },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.0.4"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
     },
@@ -300,6 +303,9 @@
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.11.0"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.17.0"
     },
     "symfony/profiler-pack": {
         "version": "v1.0.4"
