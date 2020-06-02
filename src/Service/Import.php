@@ -42,6 +42,9 @@ class Import
         $file->setType('youtube');
         $file->setUuid($data['uuid']);
 
+        // Set the title to the URL of import
+        $file->setTitle($url);
+
         $this->em->persist($file);
         $this->em->flush();
 
