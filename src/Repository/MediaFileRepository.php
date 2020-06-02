@@ -19,7 +19,9 @@ class MediaFileRepository extends ServiceEntityRepository
 
     public function save(MediaFile $media)
     {
-        $this->_em->persist($media);
+        if (null === $media->getId()) {
+            $this->_em->persist($media);
+        }
         $this->_em->flush();
 
         return true;

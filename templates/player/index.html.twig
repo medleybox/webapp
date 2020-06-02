@@ -4,6 +4,7 @@
 <ul>
     {% for file in files %}
     {{ dump(file) }}
+    {#
     {% set url = 'https://' ~ app.request.getHttpHost() ~ '/import/stream/' ~ file.path %}
     <li>
         <a href="{{ url }}">{{ file.title }}</a>
@@ -12,6 +13,7 @@
         <a href="{{ path('player_edit', {'id': file.id}) }}"><button>edit1</button></a>
         <button class="js--delete-media-file" data-id="{{ file.id }}">delete</button>
     </li>
+    #}
     {% endfor %}
 </ul>
 {% endblock body %}
