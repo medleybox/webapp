@@ -21,6 +21,24 @@ class MediaFileController extends AbstractController
     }
 
     /**
+     * @Route("/media-file/list", name="media_list", methods={"GET"})
+     */
+    public function list(Request $request)
+    {
+        $files = [];
+        foreach ($this->media->findAll() as $media) {
+            $files[] = [
+                'uuid' => $media->getUuid(),
+                'thumbnail' => $this->media->getThumbnail($media),
+                'title' => $media->getTitle(),
+                'seconds' => $media->getTitle(),
+            ];
+        }
+
+        return $this->json([['files' => $files]]);
+    }
+
+    /**
      * @Route("/media-file/update", name="media_update", methods={"POST"})
      */
     public function update(Request $request)

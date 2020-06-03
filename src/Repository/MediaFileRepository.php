@@ -37,4 +37,9 @@ class MediaFileRepository extends ServiceEntityRepository
 
         return true;
     }
+
+    public function getThumbnail(MediaFile $media): string
+    {
+        return "/vault/entry/thumbnail/{$media->getUuid()}";
+    }
 }
