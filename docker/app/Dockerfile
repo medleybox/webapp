@@ -8,5 +8,5 @@ RUN composer install -vvv -o -a --no-scripts --ignore-platform-reqs
 
 FROM xigen/php:cli-ppm
 
-COPY --from=composer /app/vendor /var/www/vendor
+COPY --from=composer /app/vendor /app/vendor
 COPY . /app
