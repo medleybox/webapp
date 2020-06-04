@@ -38,8 +38,20 @@ class MediaFileRepository extends ServiceEntityRepository
         return true;
     }
 
+    private function getFakeFilename(MediaFile $media): string
+    {
+        $name = str_replace(" - ", "", $media->getTitle());
+
+        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
+    }
+
     public function getThumbnail(MediaFile $media): string
     {
         return "/vault/entry/thumbnail/{$media->getUuid()}";
+    }
+
+    public function getStream(MediaFile $media): string
+    {
+        return "/vault/entry/steam/{$media->getUuid()}/{$this->getFakeFilename($media)}";
     }
 }
