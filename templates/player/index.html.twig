@@ -3,17 +3,16 @@
 {% block body %}
 <ul>
     {% for file in files %}
-    {{ dump(file) }}
-    {#
-    {% set url = 'https://' ~ app.request.getHttpHost() ~ '/import/stream/' ~ file.path %}
     <li>
-        <a href="{{ url }}">{{ file.title }}</a>
-        <button class="js--play" data-src="{{ url }}">play</button>
-        <button data-clipboard-text="{{ url }}">stream</button>
-        <a href="{{ path('player_edit', {'id': file.id}) }}"><button>edit1</button></a>
-        <button class="js--delete-media-file" data-id="{{ file.id }}">delete</button>
+        <a href="{{ file.stream }}">{{ file.title }}</a>
+        <button class="js--play" data-src="{{ file.stream }}">play</button>
+        <button data-clipboard-text="{{ file.stream }}">stream</button>
     </li>
-    #}
     {% endfor %}
 </ul>
+
+<audio id="app_audio" style="min-width: 100%;" autoplay="autoplay" controls="controls" preload="auto" autobuffer>
+    <p>Your browser does not support the audio element.</p>
+    <source/>
+</audio>
 {% endblock body %}

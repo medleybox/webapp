@@ -30,9 +30,9 @@ class MediaFileController extends AbstractController
             $files[] = [
                 'uuid' => $media->getUuid(),
                 'thumbnail' => $this->media->getThumbnail($media),
-                'steam' => $this->media->getStream($media),
+                'stream' => $this->media->getStream($media),
                 'title' => $media->getTitle(),
-                'seconds' => $media->getTitle(),
+                'seconds' => $media->getSeconds(),
             ];
         }
 

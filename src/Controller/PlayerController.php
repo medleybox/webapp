@@ -23,7 +23,16 @@ class PlayerController extends AbstractController
      */
     public function index(Request $request)
     {
-        $files = $this->media->findAll();
+        $files = [];
+        foreach ($this->media->findAll() as $media) {
+            $files[] = [
+                'uuid' => $media->getUuid(),
+                'thumbnail' => $this->media->getThumbnail($media),
+                'stream' => $this->media->getStream($media),
+                'title' => $media->getTitle(),
+                'seconds' => $media->getSeconds(),
+            ];
+        }
 
         return $this->render('player/index.html.twig', [
             'files' => $files
@@ -37,13 +46,13 @@ class PlayerController extends AbstractController
     public function edit(MediaFile $media, Request $request)
     {
         $form = $this->createForm(MediaFileType::class, $media);
-        
+
         if ($request->isMethod('POST')) {
             $form->submit($request->request->get($form->getName()));
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->media->save($form->getData());
-                
+
                 return $this->redirectToRoute('player_index');
             }
         }
