@@ -17,6 +17,23 @@ class MediaFileRepository extends ServiceEntityRepository
         parent::__construct($registry, MediaFile::class);
     }
 
+    public function list(): array
+    {
+        $files = [];
+        foreach ($this->findAll() as $media) {
+            $files[] = [
+                'uuid' => $media->getUuid(),
+                'thumbnail' => $this->getThumbnail($media),
+                'stream' => $this->getStream($media),
+                'title' => $media->getTitle(),
+                'seconds' => $media->getSeconds(),
+                'delete' => $this->getDelete($media)
+            ];
+        }
+
+        return $files;
+    }
+
     public function save(MediaFile $media)
     {
         if (null === $media->getId()) {
@@ -53,5 +70,10 @@ class MediaFileRepository extends ServiceEntityRepository
     public function getStream(MediaFile $media): string
     {
         return "/vault/entry/steam/{$media->getUuid()}/{$this->getFakeFilename($media)}";
+    }
+
+    public function getDelete(MediaFile $media): string
+    {
+        return "/vault/entry/delete/{$media->getUuid()}";
     }
 }

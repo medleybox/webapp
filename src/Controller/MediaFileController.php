@@ -25,18 +25,7 @@ class MediaFileController extends AbstractController
      */
     public function list(Request $request)
     {
-        $files = [];
-        foreach ($this->media->findAll() as $media) {
-            $files[] = [
-                'uuid' => $media->getUuid(),
-                'thumbnail' => $this->media->getThumbnail($media),
-                'stream' => $this->media->getStream($media),
-                'title' => $media->getTitle(),
-                'seconds' => $media->getSeconds(),
-            ];
-        }
-
-        return $this->json([['files' => $files]]);
+        return $this->json([['files' => $this->media->list()]]);
     }
 
     /**
