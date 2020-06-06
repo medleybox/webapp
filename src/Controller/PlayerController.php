@@ -50,17 +50,4 @@ class PlayerController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-
-    /**
-     * @Route("/delete/{id}", name="player_delete", methods={"DELETE"})
-     * @ParamConverter("id", class="App\Entity\MediaFile")
-     */
-    public function delete(MediaFile $media, Request $request)
-    {
-        $this->media->delete($media);
-
-        return $this->json([
-            'delete' => true
-        ]);
-    }
 }

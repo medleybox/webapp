@@ -6,14 +6,25 @@ use App\Entity\MediaFile;
 use App\Service\Import;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class MediaFileRepository extends ServiceEntityRepository
 {
+    /**
+     * @var \App\Service\Import
+     */
     protected $import;
 
-    public function __construct(ManagerRegistry $registry, Import $import)
+    /**
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     */
+    protected $router;
+
+    public function __construct(ManagerRegistry $registry, Import $import, UrlGeneratorInterface $router)
     {
         $this->import = $import;
+        $this->router = $router;
+
         parent::__construct($registry, MediaFile::class);
     }
 
@@ -27,7 +38,7 @@ class MediaFileRepository extends ServiceEntityRepository
                 'stream' => $this->getStream($media),
                 'title' => $media->getTitle(),
                 'seconds' => $media->getSeconds(),
-                'delete' => $this->getDelete($media)
+                'delete' => $this->router->generate('media_delete', ['uuid' => $media->getUuid()])
             ];
         }
 
@@ -47,7 +58,7 @@ class MediaFileRepository extends ServiceEntityRepository
     public function delete(MediaFile $media)
     {
         // Remove the file from storage
-        $this->import->delete($media->getPath());
+        $this->import->delete($this->getDelete($media));
 
         $this->_em->remove($media);
         $this->_em->flush();
@@ -74,6 +85,6 @@ class MediaFileRepository extends ServiceEntityRepository
 
     public function getDelete(MediaFile $media): string
     {
-        return "/vault/entry/delete/{$media->getUuid()}";
+        return "entry/delete/{$media->getUuid()}";
     }
 }

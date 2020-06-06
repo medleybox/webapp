@@ -51,12 +51,11 @@ class Import
         return true;
     }
 
-    public function delete($path)
+    public function delete(string $url)
     {
         try {
             $response = $this->request->delete(
-                'api/delete/delete',
-                ['path' => $path]
+                $url
             );
 
             dump($response->getBody() . '');
@@ -64,15 +63,5 @@ class Import
         } catch (\Exception $e) {
             return false;
         }
-    }
-
-    public function list()
-    {
-        $response = $this->request->get(
-            'api/list/all',
-            ['url' => $url]
-        );
-
-        return json_decode($response->getBody(), true);
     }
 }

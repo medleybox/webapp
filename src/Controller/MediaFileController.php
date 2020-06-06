@@ -29,6 +29,19 @@ class MediaFileController extends AbstractController
     }
 
     /**
+     * @Route("/media-file/delete/{uuid}", name="media_delete", methods={"GET", "DELETE"})
+     * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
+     */
+    public function delete(MediaFile $media, Request $request)
+    {
+        $this->media->delete($media);
+
+        return $this->json([
+            'delete' => true
+        ]);
+    }
+
+    /**
      * @Route("/media-file/update", name="media_update", methods={"POST"})
      */
     public function update(Request $request)
