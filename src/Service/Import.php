@@ -18,15 +18,15 @@ class Import
         $this->em = $em;
     }
 
-    public function processForm(Form $form)
+    public function processForm(Form $form): bool
     {
         $data = $form->getData();
         $url = $data['url'];
 
-        $this->import($url);
+        return $this->import($url);
     }
 
-    public function import($url)
+    public function import($url): bool
     {
         $response = $this->request->post(
             'entry/import',
@@ -34,11 +34,8 @@ class Import
         );
 
         $data = json_decode($response->getBody(), true);
-        dump($response->getBody() . '');
-        dump($data);
 
         $file = new MediaFile;
-
         $file->setType('youtube');
         $file->setUuid($data['uuid']);
 
@@ -51,7 +48,7 @@ class Import
         return true;
     }
 
-    public function delete(string $url)
+    public function delete(string $url): bool
     {
         try {
             $response = $this->request->delete(

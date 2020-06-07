@@ -8,8 +8,6 @@ services:
     nginx:
         image: medleybox/nginx
         environment: *x-variables
-        volumes:
-         - ./public:/var/www/public
         build:
             context: ./
             dockerfile: docker/nginx/Dockerfile
