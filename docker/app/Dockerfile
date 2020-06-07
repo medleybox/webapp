@@ -13,6 +13,6 @@ ENV APP_ENV=prod \
 
 COPY --from=composer /app/vendor /app/vendor
 COPY . /app
-COPY --from=medleybox/frontend:latest /app/dist /app/public
+COPY --from=medleybox/frontend:latest /app /app/public
 
 RUN ls -alsh /app/public
