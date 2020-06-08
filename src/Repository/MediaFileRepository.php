@@ -36,6 +36,7 @@ class MediaFileRepository extends ServiceEntityRepository
                 'uuid' => $media->getUuid(),
                 'thumbnail' => $this->getThumbnail($media),
                 'stream' => $this->getStream($media),
+                'download' => $this->getDownload($media),
                 'title' => $media->getTitle(),
                 'seconds' => $media->getSeconds(),
                 'delete' => $this->router->generate('media_delete', ['uuid' => $media->getUuid()])
@@ -81,6 +82,11 @@ class MediaFileRepository extends ServiceEntityRepository
     public function getStream(MediaFile $media): string
     {
         return "/vault/entry/steam/{$media->getUuid()}/{$this->getFakeFilename($media)}";
+    }
+
+    public function getDownload(MediaFile $media): string
+    {
+        return "/vault/entry/download/{$media->getUuid()}";
     }
 
     public function getDelete(MediaFile $media): string
