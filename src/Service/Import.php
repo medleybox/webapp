@@ -34,7 +34,9 @@ class Import
         );
 
         $data = json_decode($response->getBody(), true);
-
+        if (null === $data || !array_key_exists('uuid', $data)) {
+            return false;
+        }
         $file = new MediaFile;
         $file->setType('youtube');
         $file->setUuid($data['uuid']);
