@@ -25,7 +25,7 @@ class MediaFileController extends AbstractController
      */
     public function list(Request $request)
     {
-        return $this->json([['files' => $this->media->list()]]);
+        return $this->json(['files' => $this->media->list()]);
     }
 
     /**
