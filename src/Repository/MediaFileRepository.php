@@ -31,7 +31,7 @@ class MediaFileRepository extends ServiceEntityRepository
     public function list(): array
     {
         $files = [];
-        foreach ($this->findAll() as $media) {
+        foreach ($this->findBy([], ['id' => 'DESC']) as $media) {
             $files[] = [
                 'uuid' => $media->getUuid(),
                 'thumbnail' => $this->getThumbnail($media),
