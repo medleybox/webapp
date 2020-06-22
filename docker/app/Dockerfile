@@ -9,7 +9,8 @@ RUN composer install --no-dev -o -a --no-scripts --ignore-platform-reqs
 FROM xigen/php:cli-ppm
 
 ENV APP_ENV=prod \
-  POSTGRES_DB=medleybox_webapp
+  POSTGRES_DB=medleybox_webapp \
+  REDIS_URL='redis://redis'
 
 COPY --from=composer /app/vendor /app/vendor
 COPY . /app
