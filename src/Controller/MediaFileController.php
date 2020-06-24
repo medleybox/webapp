@@ -53,11 +53,10 @@ class MediaFileController extends AbstractController
 
         $media = $this->media->findBy(['uuid' => $uuid]);
         if ([] === $media) {
-            exit();
+            $media = [(new MediaFile)->setUuid($uuid)];
         }
 
         $media = $media[0];
-
         $media->setType($request->request->get('provider'));
         $media->setTitle($request->request->get('title'));
         $media->setSeconds($request->request->get('seconds'));
