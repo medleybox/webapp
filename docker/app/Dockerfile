@@ -21,6 +21,7 @@ COPY --from=composer /app /app
 COPY --from=medleybox/frontend:latest /app /app/public
 COPY bin/console /app/bin/console
 COPY docker/app/php.ini /etc/php7/php.ini
+COPY templates /app/templates
 
 USER root
 
