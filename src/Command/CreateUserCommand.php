@@ -5,7 +5,7 @@ namespace App\Command;
 use App\Entity\LocalUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\{InputArgument,InputInterface};
+use Symfony\Component\Console\Input\{InputDefinition,InputInterface,InputOption};
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -40,7 +40,16 @@ class CreateUserCommand extends Command
      */
     protected function configure()
     {
-        $this->setDescription('Create a new user');
+        $this
+            ->setDescription('Create a new admin user');
+            ->addOption(
+                'username',
+                'u',
+                InputOption::VALUE_REQUIRED,
+                'Set the name of the new user',
+                'admin'
+            )
+        ;
     }
 
     /**
@@ -49,8 +58,7 @@ class CreateUserCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-
-        $username = $io->ask('username');
+        $username = $io->ask('username', $input->getOption('username'));
         $password = $io->askHidden('password');
 
         $user = new LocalUser;
@@ -67,5 +75,7 @@ class CreateUserCommand extends Command
         $this->em->flush();
 
         $io->success('Success! Use has been created. Now login via the browser');
+
+        return 1;
     }
 }
