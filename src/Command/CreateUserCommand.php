@@ -41,7 +41,7 @@ class CreateUserCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Create a new admin user');
+            ->setDescription('Create a new admin user')
             ->addOption(
                 'username',
                 'u',
