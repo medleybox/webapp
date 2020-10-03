@@ -26,11 +26,29 @@ class Import
         return $this->import($url);
     }
 
-    public function import($url): bool
+    public function check($url)
+    {
+        $response = $this->request->post(
+            'entry/check',
+            ['id' => $url]
+        );
+        $data = json_decode($response->getBody(), true);
+        if (array_key_exists('found', $data) && false === $data['found']) {
+            return $data;
+        }
+
+        if (!array_key_exists('uuid', $data)) {
+            return false;
+        }
+
+        return $data;
+    }
+
+    public function import($uuid): ?bool
     {
         $response = $this->request->post(
             'entry/import',
-            ['id' => $url]
+            ['uuid' => $uuid]
         );
 
         $data = json_decode($response->getBody(), true);
@@ -42,7 +60,7 @@ class Import
         $file->setUuid($data['uuid']);
 
         // Set the title to the URL of import
-        $file->setTitle($url);
+        $file->setTitle($data['title']);
 
         $this->em->persist($file);
         $this->em->flush();
@@ -53,10 +71,7 @@ class Import
     public function delete(string $url): bool
     {
         try {
-            $response = $this->request->delete(
-                $url
-            );
-
+            $response = $this->request->delete($url);
             dump($response->getBody() . '');
             return true;
         } catch (\Exception $e) {

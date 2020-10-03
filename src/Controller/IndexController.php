@@ -25,16 +25,42 @@ class IndexController extends AbstractController
     }
 
     /**
+     * @Route("/check", name="index_check", methods={"POST"})
+     */
+    public function check(Request $request)
+    {
+        $check = $this->import->check($request->request->get('url'));
+        if (false === $check) {
+            return $this->json([
+                'check' => false,
+                'message' => 'Failed to check import'
+            ]);
+        }
+
+        if (false === $check['found']) {
+            return $this->json([
+                'check' => false,
+                'message' => $check['message']
+            ]);
+        }
+
+        return $this->json([
+            'check' => true,
+            'metadata' => $check
+        ]);
+    }
+
+    /**
      * @Route("/import-form", name="index_import", methods={"POST"})
      */
     public function import(Request $request)
     {
         if ($request->isMethod('POST')) {
-            $url = $request->request->get('url');
-            if (null === $url) {
-                exit();
+            $uuid = $request->request->get('uuid');
+            if (null === $uuid) {
+                return $this->json(['import' => false, 'attepmt' => false]);
             }
-            $inport = $this->import->import($url);
+            $inport = $this->import->import($uuid);
 
             return $this->json(['import' => $inport, 'attepmt' => true]);
         }
