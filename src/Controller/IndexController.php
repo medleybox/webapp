@@ -57,10 +57,11 @@ class IndexController extends AbstractController
     {
         if ($request->isMethod('POST')) {
             $uuid = $request->request->get('uuid');
-            if (null === $uuid) {
+            $url = $request->request->get('url');
+            if (null === $uuid || null === $url) {
                 return $this->json(['import' => false, 'attepmt' => false]);
             }
-            $inport = $this->import->import($uuid);
+            $inport = $this->import->import($uuid, $url);
 
             return $this->json(['import' => $inport, 'attepmt' => true]);
         }

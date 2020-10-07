@@ -44,11 +44,14 @@ class Import
         return $data;
     }
 
-    public function import($uuid): ?bool
+    public function import(string $uuid, string $url): ?bool
     {
         $response = $this->request->post(
             'entry/import',
-            ['uuid' => $uuid]
+            [
+                'uuid' => $uuid,
+                'url' => $url,
+            ]
         );
 
         $data = json_decode($response->getBody(), true);
