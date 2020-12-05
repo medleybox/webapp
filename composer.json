@@ -17,7 +17,7 @@
         "symfony/intl": "^5",
         "symfony/monolog-bundle": "^3.5",
         "symfony/orm-pack": "^1",
-        "symfony/proxy-manager-bridge": "~5.1",
+        "symfony/proxy-manager-bridge": "^5",
         "symfony/security-bundle": "^5",
         "symfony/twig-bundle": "^5",
         "symfony/validator": "^5",
@@ -53,6 +53,7 @@
     "replace": {
         "paragonie/random_compat": "2.*",
         "doctrine/migrations": "*",
+        "doctrine/doctrine-migrations-bundle": "*",
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-iconv": "*",
         "symfony/polyfill-php74": "*",
@@ -68,7 +69,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "~5.1"
+            "require": "~5.2"
         }
     },
     "scripts": {
