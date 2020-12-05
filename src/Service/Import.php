@@ -5,6 +5,8 @@ namespace App\Service;
 use App\Entity\MediaFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
+use GuzzleHttp\Exception\ServerException;
+use \Exception;
 
 class Import
 {
@@ -34,7 +36,7 @@ class Import
         );
         $data = json_decode($response->getBody(), true);
         if (array_key_exists('found', $data) && false === $data['found']) {
-            return $data;
+            throw new \Exception($data['message']);
         }
 
         if (!array_key_exists('uuid', $data)) {
@@ -44,26 +46,41 @@ class Import
         return $data;
     }
 
-    public function import(string $uuid, string $url): ?bool
+    public function import(string $uuid, string $url, string $title = null): ?bool
     {
-        $response = $this->request->post(
-            'entry/import',
-            [
-                'uuid' => $uuid,
-                'url' => $url,
-            ]
-        );
+        try {
+            $response = $this->request->post(
+                'entry/import',
+                [
+                    'uuid' => $uuid,
+                    'url' => $url,
+                ]
+            );
+        } catch (ServerException $e) {
+            throw new \Exception('Unable send request to vault');
+        }
 
         $data = json_decode($response->getBody(), true);
-        if (null === $data || !array_key_exists('uuid', $data)) {
-            return false;
+        if (null === $data) {
+            throw new \Exception('Unable to decode json response');
         }
+
+        if (true === $data['error']) {
+            throw new \Exception($data['message']);
+        }
+
+        if (!array_key_exists('uuid', $data)) {
+            throw new \Exception('Entry uuid not found');
+        }
+
         $file = new MediaFile;
         $file->setType('youtube');
         $file->setUuid($data['uuid']);
 
-        // Set the title to the URL of import
-        $file->setTitle($data['title']);
+        // Set the title to the URL of import if set
+        if (null !== $title) {
+            $file->setTitle($title);
+        }
 
         $this->em->persist($file);
         $this->em->flush();

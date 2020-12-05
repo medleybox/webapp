@@ -7,6 +7,7 @@ use App\Service\Import;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{Request, Response};
+use \Exception;
 
 class IndexController extends AbstractController
 {
@@ -29,7 +30,12 @@ class IndexController extends AbstractController
      */
     public function check(Request $request)
     {
-        $check = $this->import->check($request->request->get('url'));
+        try {
+            $check = $this->import->check($request->request->get('url'));
+        } catch (\Exception $e) {
+            return $this->json(['check' => false, 'message' => $e->getMessage()]);
+        }
+
         if (false === $check) {
             return $this->json([
                 'check' => false,
@@ -56,16 +62,23 @@ class IndexController extends AbstractController
     public function import(Request $request)
     {
         if ($request->isMethod('POST')) {
-            $uuid = $request->request->get('uuid');
             $url = $request->request->get('url');
-            if (null === $uuid || null === $url) {
-                return $this->json(['import' => false, 'attepmt' => false]);
-            }
-            $inport = $this->import->import($uuid, $url);
+            $uuid = $request->request->get('uuid');
+            $title = $request->request->get('title');
 
-            return $this->json(['import' => $inport, 'attepmt' => true]);
+            if (null === $uuid || null === $url) {
+                return $this->json(['import' => false, 'attempt' => false]);
+            }
+
+            try {
+                $this->import->import($uuid, $url, $title);
+            } catch (\Exception $e) {
+                return $this->json(['import' => $inport, 'attempt' => true, 'error' => $e->getMessage()]);
+            }
+
+            return $this->json(['import' => $inport, 'attempt' => true]);
         }
 
-        return $this->json(['import' => false, 'attepmt' => true]);
+        return $this->json(['import' => false, 'attempt' => true]);
     }
 }
