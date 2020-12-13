@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\MediaFile;
 use App\Service\Import;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class MediaFileRepository extends ServiceEntityRepository
