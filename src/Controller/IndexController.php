@@ -11,6 +11,11 @@ use \Exception;
 
 class IndexController extends AbstractController
 {
+    /**
+     * @var \App\Service\Import
+     */
+    private $import;
+
     public function __construct(Import $import)
     {
         $this->import = $import;
@@ -71,12 +76,12 @@ class IndexController extends AbstractController
             }
 
             try {
-                $this->import->import($uuid, $url, $title);
+                $import = $this->import->import($uuid, $url, $title);
             } catch (\Exception $e) {
-                return $this->json(['import' => $inport, 'attempt' => true, 'error' => $e->getMessage()]);
+                return $this->json(['import' => false, 'attempt' => true, 'error' => $e->getMessage()]);
             }
 
-            return $this->json(['import' => $inport, 'attempt' => true]);
+            return $this->json(['import' => $import, 'attempt' => true]);
         }
 
         return $this->json(['import' => false, 'attempt' => true]);

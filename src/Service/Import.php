@@ -20,14 +20,6 @@ class Import
         $this->em = $em;
     }
 
-    public function processForm(Form $form): bool
-    {
-        $data = $form->getData();
-        $url = $data['url'];
-
-        return $this->import($url);
-    }
-
     public function check($url)
     {
         $response = $this->request->post(

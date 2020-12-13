@@ -24,9 +24,9 @@ class ResetDataCommand extends Command
     private $em;
 
     /**
-     * @var Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface
+     * @var \App\Repository\MediaFileRepository
      */
-    private $encoder;
+    private $media;
 
     public function __construct(EntityManagerInterface $em, MediaFileRepository $media)
     {

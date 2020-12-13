@@ -13,6 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PlayerController extends AbstractController
 {
+    /**
+     * @var \App\Repository\MediaFileRepository
+     */
+    private $media;
+
     public function __construct(MediaFileRepository $media)
     {
         $this->media = $media;

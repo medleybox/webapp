@@ -14,6 +14,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MediaFileController extends AbstractController
 {
+    /**
+     * @var \App\Repository\MediaFileRepository
+     */
+    private $media;
+
+    /**
+     * @var \Psr\Log\\LoggerInterface
+     */
+    private $log;
+
+
     public function __construct(MediaFileRepository $media, LoggerInterface $log)
     {
         $this->media = $media;
