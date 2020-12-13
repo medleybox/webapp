@@ -3,7 +3,7 @@
 [![Docker Hub Link](https://img.shields.io/docker/cloud/automated/medleybox/webapp?style=for-the-badge)][dockerhub-webapp-builds]
 [![Docker Hub Link](https://img.shields.io/docker/cloud/build/medleybox/webapp?style=for-the-badge)][dockerhub-webapp-builds]
 
-A Symfony 4 application to serve the frontend of Medleybox.
+A Symfony 5 application to serve the frontend of Medleybox.
 
 ## Quick Start
 ```bash
