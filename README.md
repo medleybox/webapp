@@ -33,4 +33,5 @@ vendor/bin/phpcbf --standard=PSR12 --colors src
 
 [dockerhub-webapp]: https://hub.docker.com/repository/docker/medleybox/webapp
 [dockerhub-webapp-builds]: https://hub.docker.com/repository/docker/medleybox/webapp/builds
+[github-workflows]: https://github.com/medleybox/webapp/actions?query=workflow%3A%22PHP+Tests%22
 [phpcs-symfony-ruleset]: https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/2.17/doc/ruleSets/SymfonyRisky.rst
