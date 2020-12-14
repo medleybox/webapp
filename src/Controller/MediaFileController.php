@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Repository\MediaFileRepository;
 use App\Entity\MediaFile;
 use App\Form\MediaFileType;
-
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,7 +63,7 @@ class MediaFileController extends AbstractController
 
         $media = $this->media->findBy(['uuid' => $uuid]);
         if ([] === $media) {
-            $media = [(new MediaFile)->setUuid($uuid)];
+            $media = [(new MediaFile())->setUuid($uuid)];
         }
 
         $media = $media[0];

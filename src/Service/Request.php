@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use Symfony\Component\Form\Form;
-
 use Xigen\Bundle\GuzzleBundle\Service\GuzzleClient;
 
 class Request
@@ -25,7 +24,7 @@ class Request
         return $this->guzzle->request(
             'GET',
             $url,
-            ['base_uri' => SELF::BASE_URI]
+            ['base_uri' => self::BASE_URI]
         );
     }
 
@@ -35,7 +34,7 @@ class Request
             'POST',
             $url,
             [
-                'base_uri' => SELF::BASE_URI,
+                'base_uri' => self::BASE_URI,
                 'form_params' => $data
             ]
         );
@@ -47,7 +46,7 @@ class Request
             'DELETE',
             $url,
             [
-                'base_uri' => SELF::BASE_URI,
+                'base_uri' => self::BASE_URI,
                 'json' => $data,
             ]
         );

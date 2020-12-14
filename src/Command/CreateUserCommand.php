@@ -61,7 +61,7 @@ class CreateUserCommand extends Command
         $username = $io->ask('username', $input->getOption('username'));
         $password = $io->askHidden('password');
 
-        $user = new LocalUser;
+        $user = new LocalUser();
         $user->setUsername($username);
 
         $user->setPassword($this->encoder->encodePassword(

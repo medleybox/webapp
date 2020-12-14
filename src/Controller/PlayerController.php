@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Repository\MediaFileRepository;
 use App\Entity\MediaFile;
 use App\Form\MediaFileType;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

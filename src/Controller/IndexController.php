@@ -7,7 +7,7 @@ use App\Service\Import;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{Request, Response};
-use \Exception;
+use Exception;
 
 class IndexController extends AbstractController
 {

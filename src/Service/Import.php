@@ -6,7 +6,7 @@ use App\Entity\MediaFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
 use GuzzleHttp\Exception\ServerException;
-use \Exception;
+use Exception;
 
 class Import
 {
@@ -65,7 +65,7 @@ class Import
             throw new \Exception('Entry uuid not found');
         }
 
-        $file = new MediaFile;
+        $file = new MediaFile();
         $file->setType('youtube');
         $file->setUuid($data['uuid']);
 
