@@ -2,6 +2,7 @@
 [![Docker Hub Link](https://img.shields.io/docker/image-size/medleybox/webapp/latest?style=for-the-badge)][dockerhub-webapp]
 [![Docker Hub Link](https://img.shields.io/docker/cloud/automated/medleybox/webapp?style=for-the-badge)][dockerhub-webapp-builds]
 [![Docker Hub Link](https://img.shields.io/docker/cloud/build/medleybox/webapp?style=for-the-badge)][dockerhub-webapp-builds]
+[![Github Workflows Link](https://github.com/medleybox/webapp/workflows/PHP%20Tests/badge.svg)][github-workflows]
 
 A Symfony 5 application to serve the frontend of Medleybox.
 
