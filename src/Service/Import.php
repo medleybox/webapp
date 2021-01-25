@@ -84,10 +84,10 @@ class Import
     {
         try {
             $response = $this->request->delete($url);
-            dump($response->getBody() . '');
-            return true;
         } catch (\Exception $e) {
             return false;
         }
+
+        return true;
     }
 }
