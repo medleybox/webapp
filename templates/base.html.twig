@@ -10,59 +10,10 @@
         {% block javascripts %}{% endblock %}
         <script>
         document.addEventListener( 'DOMContentLoaded', function( event ) {
-            function deleteData(item, url) {
-              return fetch(url + '/' + item, {
-                method: 'delete'
-              }).then(response =>
-                response.json().then(json => {
-                  return json;
-                })
-              );
-            }
-            console.log('here');
-
             document.addEventListener( 'click', function (event) {
                 let target = event.target;
-                if (target.classList.contains('js--delete-youtube-file')) {
-                    let path = target.dataset.path;
-                    fetch('/delete', {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({path: path})
-                    }).then(response =>
-                        response.json().then(json => {
-                            console.log(json);
-                            return json;
-                        })
-                    );
-                }
-                
-                if (target.classList.contains('js--delete-media-file')) {
-                    let id = target.dataset.id;
-                    fetch('/delete/' + id, {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    }).then(response =>
-                        response.json().then(json => {
-                            console.log(json);
-                            
-                            //window.location = '';
-                            
-                            return json;
-                        })
-                    );
-                }
-
-                if (target.classList.contains('js--play')) {
-                    let src = target.dataset.src;
-                    let audio = document.getElementById('app_audio');
-
-                    audio.src = src;
-                    audio.play();
+                if (target.classList.contains('js')) {
+                    //
                 }
             });
         });
