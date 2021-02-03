@@ -39,6 +39,15 @@ class MediaFileController extends AbstractController
     }
 
     /**
+     * @Route("/media-file/metadata/{uuid}", name="media_metadata", methods={"GET"})
+     * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
+     */
+    public function metadata(MediaFile $media, Request $request)
+    {
+        return $this->json(['metadata' => $this->media->getMetadata($media)]);
+    }
+
+    /**
      * @Route("/media-file/delete/{uuid}", name="media_delete", methods={"GET", "DELETE"})
      * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
      */
@@ -67,10 +76,25 @@ class MediaFileController extends AbstractController
         }
 
         $media = $media[0];
-        $media->setType($request->request->get('provider'));
-        $media->setTitle($request->request->get('title'));
-        $media->setSeconds($request->request->get('seconds'));
-        $media->setSize($request->request->get('size'));
+        if (null !== $request->request->get('provider')) {
+            $media->setType($request->request->get('provider'));
+        }
+
+        if (null !== $request->request->get('title')) {
+            $media->setTitle($request->request->get('title'));
+        }
+
+        if (null !== $request->request->get('seconds')) {
+            $media->setSeconds($request->request->get('seconds'));
+        }
+
+        if (null !== $request->request->get('size')) {
+            $media->setSize($request->request->get('size'));
+        }
+
+        if (null !== $request->request->get('size')) {
+            $media->setSize($request->request->get('size'));
+        }
 
         $this->media->save($media);
 

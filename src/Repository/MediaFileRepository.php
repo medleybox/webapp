@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\MediaFile;
-use App\Service\Import;
+use App\Service\{Import, Request};
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -20,10 +20,16 @@ class MediaFileRepository extends ServiceEntityRepository
      */
     protected $router;
 
-    public function __construct(ManagerRegistry $registry, Import $import, UrlGeneratorInterface $router)
+    /**
+     * @var \App\Service\ImportRequest
+     */
+    protected $request;
+
+    public function __construct(ManagerRegistry $registry, Import $import, UrlGeneratorInterface $router, Request $request)
     {
         $this->import = $import;
         $this->router = $router;
+        $this->request = $request;
 
         parent::__construct($registry, MediaFile::class);
     }
@@ -37,6 +43,7 @@ class MediaFileRepository extends ServiceEntityRepository
                 'thumbnail' => $this->getThumbnail($media),
                 'stream' => $this->getStream($media),
                 'download' => $this->getDownload($media),
+                'metadata' => $this->getMetadataUrl($media),
                 'title' => $media->getTitle(),
                 'seconds' => $media->getSeconds(),
                 'delete' => $this->router->generate('media_delete', ['uuid' => $media->getUuid()])
@@ -44,6 +51,19 @@ class MediaFileRepository extends ServiceEntityRepository
         }
 
         return $files;
+    }
+
+    public function getMetadata(MediaFile $media)
+    {
+        try {
+            $response = $this->request->get("entry/metadata/{$media->getUuid()}/");
+        } catch (ServerException $e) {
+            throw new \Exception('Unable send request to vault');
+        }
+
+        $data = json_decode($response->getBody(), true);
+
+        return $data;
     }
 
     public function save(MediaFile $media)
@@ -87,6 +107,11 @@ class MediaFileRepository extends ServiceEntityRepository
     public function getDownload(MediaFile $media): string
     {
         return "/vault/entry/download/{$media->getUuid()}";
+    }
+
+    public function getMetadataUrl(MediaFile $media): string
+    {
+        return "/media-file/metadata/{$media->getUuid()}";
     }
 
     public function getDelete(MediaFile $media): string
