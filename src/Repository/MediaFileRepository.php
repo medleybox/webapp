@@ -96,7 +96,7 @@ class MediaFileRepository extends ServiceEntityRepository
 
     public function getThumbnail(MediaFile $media): string
     {
-        return "/vault/entry/thumbnail/{$media->getUuid()}";
+        return "/vault/entry/thumbnail/{$media->getUuid()}.jpg";
     }
 
     public function getStream(MediaFile $media): string
