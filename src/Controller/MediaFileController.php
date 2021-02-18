@@ -39,7 +39,7 @@ class MediaFileController extends AbstractController
     }
 
     /**
-     * @Route("/media-file/metadata/{uuid}", name="media_metadata", methods={"GET"})
+     * @Route("/media-file/metadata/{uuid}", name="media_metadata", methods={"GET", "HEAD"})
      * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
      */
     public function metadata(MediaFile $media, Request $request)
