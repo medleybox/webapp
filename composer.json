@@ -6,7 +6,6 @@
     "require": {
         "php": ">=7.4",
         "composer-plugin-api": "^2",
-        "ocramius/proxy-manager": "^2.11.1",
         "sensio/framework-extra-bundle": "^5",
         "symfony/asset": "^5",
         "symfony/console": "^5",
@@ -24,6 +23,7 @@
         "symfony/web-link": "^5",
         "symfony/webpack-encore-bundle": "^1.6",
         "symfony/yaml": "^5",
+        "psr/link": "1",
         "xigen.io/guzzle-bundle": "^1.1"
     },
     "require-dev": {
