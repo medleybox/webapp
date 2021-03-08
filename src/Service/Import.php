@@ -26,7 +26,7 @@ class Import
             'entry/check',
             ['id' => $url]
         );
-        $data = json_decode($response->getBody(), true);
+        $data = json_decode($response->getContent(), true);
         if (array_key_exists('found', $data) && false === $data['found']) {
             throw new \Exception($data['message']);
         }
@@ -52,7 +52,7 @@ class Import
             throw new \Exception('Unable send request to vault');
         }
 
-        $data = json_decode($response->getBody(), true);
+        $data = json_decode($response->getContent(), true);
         if (null === $data) {
             throw new \Exception('Unable to decode json response');
         }
@@ -83,7 +83,7 @@ class Import
     public function delete(string $url): bool
     {
         try {
-            $response = $this->request->delete($url);
+            $this->request->delete($url);
         } catch (\Exception $e) {
             return false;
         }

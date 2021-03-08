@@ -23,8 +23,7 @@
         "symfony/web-link": "^5",
         "symfony/webpack-encore-bundle": "^1.6",
         "symfony/yaml": "^5",
-        "psr/link": "1",
-        "xigen.io/guzzle-bundle": "^1.1"
+        "psr/link": "1"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12.62",
