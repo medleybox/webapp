@@ -1,5 +1,5 @@
 #!/bin/sh
 
-vendor/bin/phpstan analyse -l 0 src
+vendor/bin/phpstan analyse -l 2 src
 
 vendor/bin/phpcs --standard=PSR12 --colors -pn --report=full,summary src

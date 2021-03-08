@@ -24,7 +24,7 @@ class CreateUserCommand extends Command
     private $em;
 
     /**
-     * @var Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface
+     * @var \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface
      */
     private $encoder;
 

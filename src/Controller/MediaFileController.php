@@ -19,7 +19,7 @@ class MediaFileController extends AbstractController
     private $media;
 
     /**
-     * @var \Psr\Log\\LoggerInterface
+     * @var \Psr\Log\LoggerInterface
      */
     private $log;
 

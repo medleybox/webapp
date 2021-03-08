@@ -22,7 +22,7 @@ class MediaFileRepository extends ServiceEntityRepository
     protected $router;
 
     /**
-     * @var \App\Service\ImportRequest
+     * @var \App\Service\Request
      */
     protected $request;
 
