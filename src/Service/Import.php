@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Entity\MediaFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
-use GuzzleHttp\Exception\ServerException;
+use Symfony\Component\HttpClient\Exception\ServerException;
 use Exception;
 
 class Import

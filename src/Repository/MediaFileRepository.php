@@ -6,6 +6,7 @@ use App\Entity\MediaFile;
 use App\Service\{Import, Request};
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpClient\Exception\ServerException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class MediaFileRepository extends ServiceEntityRepository
