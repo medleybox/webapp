@@ -81,7 +81,10 @@ class MediaFileController extends AbstractController
         }
 
         if (null !== $request->request->get('title')) {
-            $media->setTitle($request->request->get('title'));
+            // If media hasn't already been imported and title not set
+            if ('' === $media->getTitle() && null !== $media->getSize()) {
+                $media->setTitle($request->request->get('title'));
+            }
         }
 
         if (null !== $request->request->get('seconds')) {
