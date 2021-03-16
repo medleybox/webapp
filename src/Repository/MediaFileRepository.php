@@ -62,9 +62,7 @@ class MediaFileRepository extends ServiceEntityRepository
             throw new \Exception('Unable send request to vault');
         }
 
-        $data = json_decode($response->getBody(), true);
-
-        return $data;
+        return $response->toArray();
     }
 
     public function save(MediaFile $media)
