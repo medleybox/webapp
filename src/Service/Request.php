@@ -10,6 +10,11 @@ class Request
     const BASE_URI = 'http://vault';
 
     /*
+     * @var string
+     */
+    private string $baseUrl = self::BASE_URI;
+
+    /*
      * @var \Symfony\Contracts\HttpClient\HttpClientInterface
      */
     public $client;
@@ -19,12 +24,19 @@ class Request
         $this->client = $client;
     }
 
+    public function setBaseUrl(string $url)
+    {
+        $this->baseUrl = $url;
+
+        return $this;
+    }
+
     public function get($url)
     {
         return $this->client->request(
             'GET',
             $url,
-            ['base_uri' => self::BASE_URI]
+            ['base_uri' => $this->baseUrl]
         );
     }
 
@@ -34,7 +46,7 @@ class Request
             'POST',
             $url,
             [
-                'base_uri' => self::BASE_URI,
+                'base_uri' => $this->baseUrl,
                 'body' => $data
             ]
         );
@@ -46,10 +58,7 @@ class Request
             $this->client->request(
                 'DELETE',
                 $url,
-                [
-                    'base_uri' => self::BASE_URI,
-                    'json' => $data,
-                ]
+                ['base_uri' => $this->baseUrl]
             );
         } catch (\RuntimeException $e) {
             return false;
