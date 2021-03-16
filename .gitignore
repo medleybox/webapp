@@ -14,6 +14,7 @@ bin/docker-deploy
 ###> symfony/phpunit-bridge ###
 .phpunit
 /phpunit.xml
+.phpunit.result.cache
 ###< symfony/phpunit-bridge ###
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
