@@ -10,8 +10,14 @@ use Exception;
 
 class Import
 {
+    /**
+     * @var \App\Service\Request
+     */
     protected $request;
 
+    /**
+     * @var \Doctrine\ORM\EntityManagerInterface
+     */
     protected $em;
 
     public function __construct(Request $request, EntityManagerInterface $em)
@@ -20,19 +26,23 @@ class Import
         $this->em = $em;
     }
 
-    public function check($url)
+    /**
+     * @return array<string, mixed>|null
+     */
+    public function check(string $url): ?array
     {
         $response = $this->request->post(
             'entry/check',
             ['id' => $url]
         );
-        $data = json_decode($response->getContent(), true);
+
+        $data = $response->toArray();
         if (array_key_exists('found', $data) && false === $data['found']) {
             throw new \Exception($data['message']);
         }
 
         if (!array_key_exists('uuid', $data)) {
-            return false;
+            return null;
         }
 
         return $data;

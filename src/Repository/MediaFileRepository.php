@@ -35,6 +35,9 @@ class MediaFileRepository extends ServiceEntityRepository
         parent::__construct($registry, MediaFile::class);
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function list(): array
     {
         $files = [];
@@ -54,7 +57,10 @@ class MediaFileRepository extends ServiceEntityRepository
         return $files;
     }
 
-    public function getMetadata(MediaFile $media)
+    /**
+     * @return array<string, string>
+     */
+    public function getMetadata(MediaFile $media): array
     {
         try {
             $response = $this->request->get("entry/metadata/{$media->getUuid()}");
@@ -65,7 +71,7 @@ class MediaFileRepository extends ServiceEntityRepository
         return $response->toArray();
     }
 
-    public function save(MediaFile $media)
+    public function save(MediaFile $media): bool
     {
         if (null === $media->getId()) {
             $this->_em->persist($media);
@@ -75,7 +81,7 @@ class MediaFileRepository extends ServiceEntityRepository
         return true;
     }
 
-    public function delete(MediaFile $media)
+    public function delete(MediaFile $media): bool
     {
         // Remove the file from storage
         $this->import->delete($this->getDelete($media));

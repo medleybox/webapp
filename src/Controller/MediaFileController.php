@@ -8,7 +8,7 @@ use App\Form\MediaFileType;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Component\Routing\Annotation\Route;
 
 class MediaFileController extends AbstractController
@@ -33,7 +33,7 @@ class MediaFileController extends AbstractController
     /**
      * @Route("/media-file/list", name="media_list", methods={"GET"})
      */
-    public function list(Request $request)
+    public function list(Request $request): Response
     {
         return $this->json(['files' => $this->media->list()]);
     }
@@ -42,7 +42,7 @@ class MediaFileController extends AbstractController
      * @Route("/media-file/metadata/{uuid}", name="media_metadata", methods={"GET", "HEAD"})
      * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
      */
-    public function metadata(MediaFile $media, Request $request)
+    public function metadata(MediaFile $media, Request $request): Response
     {
         return $this->json([
             'metadata' => $this->media->getMetadata($media),
@@ -54,7 +54,7 @@ class MediaFileController extends AbstractController
      * @Route("/media-file/delete/{uuid}", name="media_delete", methods={"GET", "DELETE"})
      * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
      */
-    public function delete(MediaFile $media, Request $request)
+    public function delete(MediaFile $media, Request $request): Response
     {
         $this->media->delete($media);
 
@@ -66,7 +66,7 @@ class MediaFileController extends AbstractController
     /**
      * @Route("/media-file/update", name="media_update", methods={"POST"})
      */
-    public function update(Request $request)
+    public function update(Request $request): Response
     {
         $uuid = $request->request->get('uuid');
         if (null === $uuid) {

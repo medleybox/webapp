@@ -38,7 +38,7 @@ class CreateUserCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Create a new admin user')
@@ -55,10 +55,11 @@ class CreateUserCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $username = $io->ask('username', $input->getOption('username'));
+        $username = $input->getOption('username');
+        $username = $io->ask('username', $username);
         $password = $io->askHidden('password');
 
         $user = new LocalUser();

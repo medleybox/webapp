@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class MediaFile
 {
     /**
+     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -17,26 +18,31 @@ class MediaFile
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=36, unique=true)
      */
     private $uuid;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
     private $type;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $title = '';
 
     /**
+     * @var int
      * @ORM\Column(type="integer", nullable=true)
      */
     private $size;
 
     /**
+     * @var float
      * @ORM\Column(type="float", nullable=true)
      */
     private $seconds;

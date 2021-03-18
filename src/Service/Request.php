@@ -2,19 +2,18 @@
 
 namespace App\Service;
 
-use Symfony\Component\Form\Form;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\{HttpClientInterface, ResponseInterface};
 
 class Request
 {
     const BASE_URI = 'http://vault';
 
-    /*
+    /**
      * @var string
      */
     private string $baseUrl = self::BASE_URI;
 
-    /*
+    /**
      * @var \Symfony\Contracts\HttpClient\HttpClientInterface
      */
     public $client;
@@ -24,14 +23,14 @@ class Request
         $this->client = $client;
     }
 
-    public function setBaseUrl(string $url)
+    public function setBaseUrl(string $url): self
     {
         $this->baseUrl = $url;
 
         return $this;
     }
 
-    public function get($url)
+    public function get(string $url): ResponseInterface
     {
         return $this->client->request(
             'GET',
@@ -40,7 +39,10 @@ class Request
         );
     }
 
-    public function post($url, array $data = [])
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function post(string $url, array $data = []): ResponseInterface
     {
         return $this->client->request(
             'POST',
@@ -52,7 +54,7 @@ class Request
         );
     }
 
-    public function delete($url, array $data = [])
+    public function delete(string $url): bool
     {
         try {
             $this->client->request(

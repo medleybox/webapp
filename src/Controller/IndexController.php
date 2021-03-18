@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Form\ImportType;
 use App\Service\Import;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +24,7 @@ class IndexController extends AbstractController
      * @Route("/", name="index_index")
      * @Route("/about")
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         return $this->render('index.html.twig');
     }
@@ -33,7 +32,7 @@ class IndexController extends AbstractController
     /**
      * @Route("/check", name="index_check", methods={"POST"})
      */
-    public function check(Request $request)
+    public function check(Request $request): Response
     {
         try {
             $check = $this->import->check($request->request->get('url'));
@@ -41,7 +40,7 @@ class IndexController extends AbstractController
             return $this->json(['check' => false, 'message' => $e->getMessage()]);
         }
 
-        if (false === $check) {
+        if (null === $check) {
             return $this->json([
                 'check' => false,
                 'message' => 'Failed to check import'
@@ -64,7 +63,7 @@ class IndexController extends AbstractController
     /**
      * @Route("/import-form", name="index_import", methods={"POST"})
      */
-    public function import(Request $request)
+    public function import(Request $request): Response
     {
         if ($request->isMethod('POST')) {
             $url = $request->request->get('url');
