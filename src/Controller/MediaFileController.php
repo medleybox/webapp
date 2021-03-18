@@ -44,7 +44,10 @@ class MediaFileController extends AbstractController
      */
     public function metadata(MediaFile $media, Request $request)
     {
-        return $this->json(['metadata' => $this->media->getMetadata($media)]);
+        return $this->json([
+            'metadata' => $this->media->getMetadata($media),
+            'title' => $media->getTitle()
+        ]);
     }
 
     /**

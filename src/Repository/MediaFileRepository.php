@@ -57,7 +57,7 @@ class MediaFileRepository extends ServiceEntityRepository
     public function getMetadata(MediaFile $media)
     {
         try {
-            $response = $this->request->get("entry/metadata/{$media->getUuid()}/");
+            $response = $this->request->get("entry/metadata/{$media->getUuid()}");
         } catch (ServerException $e) {
             throw new \Exception('Unable send request to vault');
         }
