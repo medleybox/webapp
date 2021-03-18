@@ -1,5 +1,9 @@
 #!/bin/sh
 
-vendor/bin/phpstan analyse -l 5 src
+set -xe
+
+vendor/bin/phpstan analyse -l 6 src
 
 vendor/bin/phpcs --standard=PSR12 --colors -pn --report=full,summary src
+
+bin/phpunit tests/Service/Request.php
