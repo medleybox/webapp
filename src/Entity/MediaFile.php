@@ -102,7 +102,7 @@ class MediaFile
 
     public function getSeconds(): ?float
     {
-        return $this->seconds;
+        return floor($this->seconds);
     }
 
     public function setSeconds(?float $seconds): self
