@@ -1,6 +1,7 @@
 version: '3.4'
 
 x-variables: &x-variables
+    APP_ENV: dev
     APP_SECRET: c95ab68cbfba3232e79d72ebae567424
     TZ: Europe/London
     POSTGRES_USER: medleybox
