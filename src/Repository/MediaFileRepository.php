@@ -9,6 +9,10 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpClient\Exception\ServerException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * @method MediaFile[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends \Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository<MediaFile>
+ */
 class MediaFileRepository extends ServiceEntityRepository
 {
     /**
