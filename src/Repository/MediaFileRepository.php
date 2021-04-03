@@ -49,8 +49,7 @@ class MediaFileRepository extends ServiceEntityRepository
                 'download' => $this->getDownload($media),
                 'metadata' => $this->getMetadataUrl($media),
                 'title' => $media->getTitle(),
-                'seconds' => $media->getSeconds(),
-                'delete' => $this->router->generate('media_delete', ['uuid' => $media->getUuid()])
+                'seconds' => $media->getSeconds()
             ];
         }
 
@@ -97,6 +96,11 @@ class MediaFileRepository extends ServiceEntityRepository
         $name = str_replace(" - ", "", $media->getTitle());
 
         return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
+    }
+
+    public function getDeleteUrl(MediaFile $media): string
+    {
+        return $this->router->generate('media_delete', ['uuid' => $media->getUuid()]);
     }
 
     public function getThumbnail(MediaFile $media): string

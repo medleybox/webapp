@@ -45,8 +45,10 @@ class MediaFileController extends AbstractController
     public function metadata(MediaFile $media, Request $request): Response
     {
         return $this->json([
+            'loaded' => true,
+            'title' => $media->getTitle(),
             'metadata' => $this->media->getMetadata($media),
-            'title' => $media->getTitle()
+            'delete' => $this->media->getDeleteUrl($media),
         ]);
     }
 
@@ -84,8 +86,8 @@ class MediaFileController extends AbstractController
         }
 
         if (null !== $request->request->get('title')) {
-            // If media hasn't already been imported and title not set
-            if ('' === $media->getTitle() && null !== $media->getSize()) {
+            // Check that media hasn't already been imported and title not set
+            if ('' !== $media->getTitle() && null !== $media->getSize()) {
                 $media->setTitle($request->request->get('title'));
             }
         }
