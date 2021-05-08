@@ -7,6 +7,7 @@ use App\Service\{Import, Request};
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpClient\Exception\ServerException;
+use Symfony\Component\HttpFoundation\UrlHelper;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -30,11 +31,17 @@ class MediaFileRepository extends ServiceEntityRepository
      */
     protected $request;
 
-    public function __construct(ManagerRegistry $registry, Import $import, UrlGeneratorInterface $router, Request $request)
+    /**
+     * @var \Symfony\Component\HttpFoundation\UrlHelper;
+     */
+    private $urlHelper;
+
+    public function __construct(ManagerRegistry $registry, Import $import, UrlGeneratorInterface $router, Request $request, UrlHelper $urlHelper)
     {
         $this->import = $import;
         $this->router = $router;
         $this->request = $request;
+        $this->urlHelper = $urlHelper;
 
         parent::__construct($registry, MediaFile::class);
     }
@@ -95,6 +102,9 @@ class MediaFileRepository extends ServiceEntityRepository
         return true;
     }
 
+    /**
+     * Used to fake a url with media name for stream url
+     */
     private function getFakeFilename(MediaFile $media): string
     {
         $name = str_replace(" - ", "", $media->getTitle());
@@ -109,26 +119,36 @@ class MediaFileRepository extends ServiceEntityRepository
 
     public function getThumbnail(MediaFile $media): string
     {
-        return "/vault/entry/thumbnail/{$media->getUuid()}.jpg";
+        $url = "/vault/entry/thumbnail/{$media->getUuid()}.jpg";
+
+        return $this->urlHelper->getAbsoluteUrl($url);
     }
 
     public function getStream(MediaFile $media): string
     {
-        return "/vault/entry/steam/{$media->getUuid()}/{$this->getFakeFilename($media)}";
+        $url = "/vault/entry/steam/{$media->getUuid()}/{$this->getFakeFilename($media)}";
+
+        return $this->urlHelper->getAbsoluteUrl($url);
     }
 
     public function getDownload(MediaFile $media): string
     {
-        return "/vault/entry/download/{$media->getUuid()}";
+        $url = "/vault/entry/download/{$media->getUuid()}";
+
+        return $this->urlHelper->getAbsoluteUrl($url);
     }
 
     public function getMetadataUrl(MediaFile $media): string
     {
-        return "/media-file/metadata/{$media->getUuid()}";
+        $url = "/media-file/metadata/{$media->getUuid()}";
+
+        return $this->urlHelper->getAbsoluteUrl($url);
     }
 
     public function getDelete(MediaFile $media): string
     {
-        return "entry/delete/{$media->getUuid()}";
+        $url = "entry/delete/{$media->getUuid()}";
+
+        return $this->urlHelper->getAbsoluteUrl($url);
     }
 }
