@@ -6,6 +6,7 @@ use App\Service\Import;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{Request, Response};
+use Symfony\Component\Security\Core\Security;
 use Exception;
 
 class IndexController extends AbstractController
@@ -15,9 +16,15 @@ class IndexController extends AbstractController
      */
     private $import;
 
-    public function __construct(Import $import)
+    /**
+     * @var \Symfony\Component\Security\Core\Security
+     */
+    private $security;
+
+    public function __construct(Import $import, Security $security)
     {
         $this->import = $import;
+        $this->security = $security;
     }
 
     /**
@@ -75,7 +82,11 @@ class IndexController extends AbstractController
             }
 
             try {
-                $import = $this->import->import($uuid, $url, $title);
+                /**
+                 * @var \App\Entity\LocalUser
+                 */
+                $user = $this->security->getUser(); // null or UserInterface, if logged in
+                $import = $this->import->import($uuid, $url, $title, $user);
             } catch (\Exception $e) {
                 return $this->json(['import' => false, 'attempt' => true, 'error' => $e->getMessage()]);
             }

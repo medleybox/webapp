@@ -47,6 +47,12 @@ class MediaFile
      */
     private $seconds;
 
+    /**
+     * @var \App\Entity\LocalUser
+     * @ORM\ManyToOne(targetEntity=LocalUser::class, inversedBy="mediaFiles")
+     */
+    private $importUser;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,6 +114,18 @@ class MediaFile
     public function setSeconds(?float $seconds): self
     {
         $this->seconds = $seconds;
+
+        return $this;
+    }
+
+    public function getImportUser(): ?LocalUser
+    {
+        return $this->importUser;
+    }
+
+    public function setImportUser(?LocalUser $importUser): self
+    {
+        $this->importUser = $importUser;
 
         return $this;
     }

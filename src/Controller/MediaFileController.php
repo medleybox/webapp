@@ -44,9 +44,15 @@ class MediaFileController extends AbstractController
      */
     public function metadata(MediaFile $media, Request $request): Response
     {
+        $importuser = $media->getImportUser();
+        if (null !== $importuser) {
+            $importuser = $importuser->getUsername();
+        }
+
         return $this->json([
             'loaded' => true,
             'title' => $media->getTitle(),
+            'importuser' => $importuser,
             'metadata' => $this->media->getMetadata($media),
             'delete' => $this->media->getDeleteUrl($media),
         ]);

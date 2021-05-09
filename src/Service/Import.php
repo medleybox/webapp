@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Entity\MediaFile;
+use App\Entity\{MediaFile, LocalUser};
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpClient\Exception\ServerException;
@@ -48,7 +48,7 @@ class Import
         return $data;
     }
 
-    public function import(string $uuid, string $url, string $title = null): ?bool
+    public function import(string $uuid, string $url, string $title = null, LocalUser $user = null): ?bool
     {
         try {
             $response = $this->request->post(
@@ -82,6 +82,10 @@ class Import
         // Set the title to the URL of import if set
         if (null !== $title) {
             $file->setTitle($title);
+        }
+
+        if (null !== $user) {
+            $file->setImportUser($user);
         }
 
         $this->em->persist($file);

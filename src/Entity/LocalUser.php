@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -35,6 +37,22 @@ class LocalUser implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection<int, MediaFile>
+     * @ORM\OneToMany(targetEntity=MediaFile::class, mappedBy="importUser")
+     */
+    private $mediaFiles;
+
+    public function __construct()
+    {
+        $this->mediaFiles = new ArrayCollection();
+    }
+
+    public function __toString(): ?string
+    {
+        return $this->getUsername();
+    }
 
     public function getId(): ?int
     {
@@ -98,5 +116,35 @@ class LocalUser implements UserInterface
         // $this->plainPassword = null;
 
         return true;
+    }
+
+    /**
+     * @return Collection<int, MediaFile>
+     */
+    public function getMediaFiles(): Collection
+    {
+        return $this->mediaFiles;
+    }
+
+    public function addMediaFile(MediaFile $mediaFile): self
+    {
+        if (!$this->mediaFiles->contains($mediaFile)) {
+            $this->mediaFiles[] = $mediaFile;
+            $mediaFile->setImportUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMediaFile(MediaFile $mediaFile): self
+    {
+        if ($this->mediaFiles->removeElement($mediaFile)) {
+            // set the owning side to null (unless already changed)
+            if ($mediaFile->getImportUser() === $this) {
+                $mediaFile->setImportUser(null);
+            }
+        }
+
+        return $this;
     }
 }
