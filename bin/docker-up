@@ -10,8 +10,6 @@ function dcConsole(){
 
 dclocal up -d --force-recreate
 
-dcConsole cache:clear
-dcConsole cache:warmup
 dcConsole doctrine:schema:update --force
 
 dclocal logs -f webapp
