@@ -45,11 +45,13 @@ class LocalUser implements UserInterface
     private $mediaFiles;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
     private $email;
 
     /**
+     * @var boolean
      * By default users are inactive
      * @ORM\Column(type="boolean")
      */
