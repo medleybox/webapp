@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="icon" href="{{ asset('img/favicon.ico') }}">
+        <title>{{title|default('')}} - MedleyBox Admin</title>
+        {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
+    </head>
+    <body class="{{ app.request.get('_route') }}">
+        {% block body %}{% endblock %}
+        {{ encore_entry_script_tags('ws') }}
+        {{ encore_entry_script_tags('app') }}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

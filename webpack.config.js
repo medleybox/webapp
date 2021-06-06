@@ -6,6 +6,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
 
+Encore.disableCssExtraction();
 Encore
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
@@ -24,8 +25,9 @@ Encore
      * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
      */
     .addEntry('app', './assets/js/app.js')
-    //.addEntry('page1', './assets/js/page1.js')
-    //.addEntry('page2', './assets/js/page2.js')
+    .addEntry('ws', './assets/js/ws.js')
+    .addEntry('admin_about', './assets/js/admin_about.js')
+    .addEntry('admin_users', './assets/js/admin_users.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
@@ -42,33 +44,30 @@ Encore
      * https://symfony.com/doc/current/frontend.html#adding-more-features
      */
     .cleanupOutputBeforeBuild()
-    .enableBuildNotifications()
+    //.enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
-
-    // enables @babel/preset-env polyfills
-    .configureBabel(() => {}, {
-        useBuiltIns: 'usage',
-        corejs: 3
+    .configureBabel((babelConfig) => {
+        const preset = babelConfig.presets.find(([name]) => name === "@babel/preset-env");
+        if (preset !== undefined) {
+            preset[1].useBuiltIns = "usage";
+            preset[1].corejs = '3.0.0';
+        }
     })
 
     // enables Sass/SCSS support
-    //.enableSassLoader()
+    .enableSassLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
 
     // uncomment to get integrity="..." attributes on your script & link tags
     // requires WebpackEncoreBundle 1.4 or higher
-    //.enableIntegrityHashes(Encore.isProduction())
-
-    // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you use API Platform Admin (composer req api-admin)
-    //.enableReactPreset()
-    //.addEntry('admin', './assets/js/admin.js')
+    .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
 ;
 
 module.exports = Encore.getWebpackConfig();

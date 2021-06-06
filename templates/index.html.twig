@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Home{% endblock %}
+
 {% block stylesheets %}
 <link href="/app.css" rel="preload" as="style" />
 <link href="/app.js" rel="preload" as="script" />
@@ -16,4 +18,5 @@
 {% block javascripts %}
 <script type="text/javascript" src="/chunk-vendors.js"></script>
 <script type="text/javascript" src="/app.js"></script>
+{{ encore_entry_script_tags('ws') }}
 {% endblock javascripts %}

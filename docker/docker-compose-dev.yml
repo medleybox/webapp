@@ -8,9 +8,25 @@ services:
     nginx:
         image: medleybox/nginx
         environment: *x-variables
+        volumes:
+         - ./public/build:/app/public/build
         build:
             context: ./
             dockerfile: docker/nginx/Dockerfile
+
+    encore:
+        image: medleybox/encore
+        extra_hosts:
+         - "medleybox.local:0.0.0.0"
+        networks:
+            - medley
+        volumes:
+         - ./assets:/app/assets
+         - ./public/build:/app/public/build
+        build:
+            context: ./
+            dockerfile: docker/encore/Dockerfile
+
     webapp:
         image: medleybox/webapp
         environment: *x-variables
@@ -20,6 +36,7 @@ services:
          - ./src:/app/src
          - ./templates:/app/templates
          - ./vendor:/app/vendor
+         - ./public/build:/app/public/build
         build:
             context: ./
             dockerfile: docker/app/Dockerfile

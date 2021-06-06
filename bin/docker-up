@@ -12,4 +12,4 @@ dclocal up -d --force-recreate
 
 dcConsole doctrine:schema:update --force
 
-dclocal logs -f webapp
+dclocal logs -f webapp nginx encore

@@ -1,7 +1,12 @@
 {
     "devDependencies": {
-        "@symfony/webpack-encore": "^0.27.0",
-        "core-js": "^3.0.0",
+        "@symfony/webpack-encore": "^1.4.0",
+        "core-js": "^3.13.1",
+        "css-loader": "^5",
+        "node-sass": "^6.0.0",
+        "sass-loader": "^11 ",
+        "vue-loader": "^15.9.7",
+        "vue-template-compiler": "^2.6.12",
         "webpack-notifier": "^1.6.0"
     },
     "license": "UNLICENSED",
@@ -11,5 +16,12 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "vue-material": "*"
+    },
+    "engines": {
+        "node": ">=15.14.0",
+        "npm": ">=7.7.6"
     }
 }
