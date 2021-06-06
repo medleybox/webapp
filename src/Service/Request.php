@@ -39,6 +39,15 @@ class Request
         );
     }
 
+    public function head(string $url): ResponseInterface
+    {
+        return $this->client->request(
+            'HEAD',
+            $url,
+            ['base_uri' => $this->baseUrl]
+        );
+    }
+
     /**
      * @param array<string, mixed> $data
      */
@@ -67,5 +76,10 @@ class Request
         }
 
         return true;
+    }
+
+    public function refreshMediaList(): ResponseInterface
+    {
+        return $this->get('websocket/refreshMediaList');
     }
 }

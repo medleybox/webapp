@@ -53,6 +53,11 @@ class MediaFileRepository extends ServiceEntityRepository
     {
         $files = [];
         foreach ($this->findBy([], ['id' => 'DESC']) as $media) {
+            // Hide items until they've been imported
+            if (null === $media->getSize()) {
+                continue;
+            }
+
             $files[] = [
                 'uuid' => $media->getUuid(),
                 'thumbnail' => $this->getThumbnail($media),
@@ -87,6 +92,7 @@ class MediaFileRepository extends ServiceEntityRepository
             $this->_em->persist($media);
         }
         $this->_em->flush();
+        $this->request->refreshMediaList();
 
         return true;
     }
@@ -98,6 +104,7 @@ class MediaFileRepository extends ServiceEntityRepository
 
         $this->_em->remove($media);
         $this->_em->flush();
+        $this->request->refreshMediaList();
 
         return true;
     }
