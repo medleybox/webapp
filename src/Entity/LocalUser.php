@@ -44,6 +44,17 @@ class LocalUser implements UserInterface
      */
     private $mediaFiles;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $email;
+
+    /**
+     * By default users are inactive
+     * @ORM\Column(type="boolean")
+     */
+    private $active = false;
+
     public function __construct()
     {
         $this->mediaFiles = new ArrayCollection();
@@ -144,6 +155,30 @@ class LocalUser implements UserInterface
                 $mediaFile->setImportUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }
