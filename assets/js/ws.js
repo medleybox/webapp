@@ -1,6 +1,6 @@
 function connect() {
   console.log('Trying to connect with connect()');
-  exampleSocket = new WebSocket("wss://medleybox.local/socketserver");
+  exampleSocket = new WebSocket("wss://" + window.location.hostname + "/socketserver");
   exampleSocket.onopen = function (event) {
     console.log("Connection established!");
     exampleSocket.send("Client connected to network");
