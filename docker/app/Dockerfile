@@ -19,6 +19,7 @@ ENV APP_ENV=prod \
 
 COPY --from=composer /app /app
 COPY --from=medleybox/frontend:latest /app /app/public
+COPY --from=medleybox/encore:latest /app/public/build /app/public/build
 COPY bin/console /app/bin/console
 COPY docker/app/php.ini /etc/php7/php.ini
 COPY templates /app/templates

@@ -21,17 +21,44 @@ services:
     nginx:
         image: medleybox/nginx
         restart: always
+        environment: *x-variables
+        depends_on:
+            - "encore"
+        volumes:
+         - ./public/build:/var/www/public/build
         networks:
             - medley
         ports:
             - "80:80"
             - "443:443"
+    encore:
+        image: medleybox/encore
+        extra_hosts:
+         - "medleybox.local:0.0.0.0"
+        networks:
+            - medley
+        volumes:
+         - ./assets:/app/assets
+         - ./public/build:/app/public/build
+        build:
+            context: ./
+            dockerfile: docker/encore/Dockerfile
     webapp:
         image: medleybox/webapp
+        build:
+            context: ./
+            dockerfile: docker/app/Dockerfile
         restart: always
         environment: *x-variables
         networks:
             - medley
+        volumes:
+         - ./bin:/app/bin
+         - ./config:/app/config
+         - ./src:/app/src
+         - ./templates:/app/templates
+         - ./vendor:/app/vendor
+         - ./public/build:/app/public/build
     redis:
         image: redis:alpine
         restart: always

@@ -1,15 +1,5 @@
 #!/bin/bash
 
-function dclocal(){
-    docker-compose -f docker-compose.yml -f docker/docker-compose-dev.yml $@
-}
-
-function dcConsole(){
-    docker-compose -f docker-compose.yml exec webapp bin/console -vvv $@
-}
-
-dclocal up -d --force-recreate
-
-dcConsole doctrine:schema:update --force
-
-dclocal logs -f webapp nginx encore
+docker-compose up -d --force-recreate
+docker-compose -f docker-compose.yml exec webapp bin/console -vvv doctrine:schema:update --force
+docker-compose logs -f webapp nginx encore

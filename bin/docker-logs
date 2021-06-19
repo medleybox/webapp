@@ -1,7 +1,3 @@
 #!/bin/bash
 
-function dclocal(){
-    docker-compose -f docker-compose.yml -f docker/docker-compose-dev.yml $@
-}
-
-dclocal logs -f $@
+docker-compose logs -f $@
