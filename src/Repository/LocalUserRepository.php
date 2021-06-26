@@ -19,4 +19,14 @@ class LocalUserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, LocalUser::class);
     }
+
+    public function save(LocalUser $user): bool
+    {
+        if (null === $user->getId()) {
+            $this->_em->persist($user);
+        }
+        $this->_em->flush();
+
+        return true;
+    }
 }

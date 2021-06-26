@@ -9,3 +9,7 @@ body {
 a.md-list-item-text{
     color: white !important;
 }
+
+.admin_users .md-dialog-container {
+    min-width: 400px;
+}

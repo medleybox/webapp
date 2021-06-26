@@ -6,7 +6,6 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
 
-Encore.disableCssExtraction();
 Encore
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
@@ -24,6 +23,8 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
      */
+    .addStyleEntry('security', './assets/css/security.css')
+
     .addEntry('app', './assets/js/app.js')
     .addEntry('ws', './assets/js/ws.js')
     .addEntry('admin_about', './assets/js/admin_about.js')

@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\LocalUser;
 use App\Repository\LocalUserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Component\Security\Core\Security;
@@ -45,5 +47,30 @@ class AdminUsersController extends AbstractController
         }
 
         return $this->json(['users' => $users]);
+    }
+
+    /**
+     * @Route("/admin/users/json/{id}", name="admin_users_json_id", methods={"GET", "POST"})
+     * @ParamConverter("id", class="\App\Entity\LocalUser")
+     */
+    public function usersJsonId(LocalUser $user, Request $request): Response
+    {
+        if ($request->isMethod('POST')) {
+            $user->setUsername($request->request->get('username'));
+            $user->setEmail($request->request->get('email'));
+
+            $this->repo->save($user);
+
+            return $this->json(['success' => true], Response::HTTP_CREATED);
+        }
+
+        $user = [
+            'id' => $user->getId(),
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'active' => $user->getActive()
+        ];
+
+        return $this->json(['user' => $user]);
     }
 }

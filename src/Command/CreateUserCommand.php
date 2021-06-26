@@ -60,7 +60,7 @@ class CreateUserCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $username = $input->getOption('username');
         $username = $io->ask('username', $username);
-        $email = $io->ask('email', $username);
+        $email = $io->ask('email', '');
         $password = $io->askHidden('password');
 
         $user = new LocalUser();

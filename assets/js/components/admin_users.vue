@@ -20,7 +20,7 @@
                 <md-table-cell>{{user.username}}</md-table-cell>
                 <md-table-cell>{{user.email}}</md-table-cell>
                 <md-table-cell>
-                    <md-button class="md-primary">Edit</md-button>
+                    <admin-users-dialog v-bind:id="user.id"></admin-users-dialog>
                 </md-table-cell>
             </md-table-row>
         </md-table>
@@ -33,6 +33,7 @@
 
 <script>
 import adminApp from './admin'
+import adminUsersDialog from './admin_users_dialog'
 
 export default {
     name: "admin_users",
@@ -58,6 +59,7 @@ export default {
     },
     components: {
         'admin': adminApp,
+        'admin-users-dialog': adminUsersDialog
     }
 }
 </script>
