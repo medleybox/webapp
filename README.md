@@ -23,6 +23,21 @@ bin/docker-console app:create-user --username admin
 
 Once the user has been created, you can login via https://localhost
 
+## Bin Scripts
+Bin scripts have been written to automate common tasks:
+
+| Script | Description |
+|--|--|
+| bin/docker-build | Build docker images via docker-compose |
+| bin/docker-console | Run the Symfony Console within the webapp container |
+| bin/docker-dumpserver | Command to run Symfony Dump server |
+| bin/docker-logs | Follow the stack logs via docker-compose |
+| bin/docker-psql | Login to the postgresql server |
+| bin/docker-push | Push locally built docker images to repository |
+| bin/docker-up | Start the stack locally via docker-compose |
+| bin/run-tests | Run PHP CS tests using phpstan and phpcs |
+
+
 ## Testing
 PHP Coding Standards tests using `phpstan` and `squizlabs/php_codesniffer` using the [Symfony:risky][phpcs-symfony-ruleset] ruleset. Use the `run-tests` bin script to use the correct command line arguments for each program.
 
