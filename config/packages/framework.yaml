@@ -14,3 +14,5 @@ framework:
                 adapter: cache.app
     php_errors:
         log: true
+    form:
+        legacy_error_messages: false

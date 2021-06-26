@@ -1,0 +1,26 @@
+{% extends 'security/base.html.twig' %}
+
+{% block title %}Sign Up!{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm">
+      <div class="form-container">
+        <h1 class="h3 mb-3 font-weight-normal">MedleyBox - <span class="h5 mb-3 font-weight-normal">Sign Up</span></h1>
+        {{ form(form) }}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4 offset-4 d-flex justify-content-center">
+      <ul class="nav footer-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('security_login') }}">Login</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

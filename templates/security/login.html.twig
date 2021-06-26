@@ -1,79 +1,41 @@
-{% extends 'base.html.twig' %}
+{% extends 'security/base.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        html,
-        body {
-          height: 100%;
-        }
-
-        body {
-          display: -ms-flexbox;
-          display: -webkPassword￼it-box;
-          display: flex;
-          -ms-flex-align: center;
-          -ms-flex-pack: center;
-          -webkit-box-align: center;
-          align-items: center;
-          -webkit-box-pack: center;
-          justify-content: center;
-          padding-top: 40px;
-          padding-bottom: 40px;
-          background-color: #f5f5f5;
-        }
-
-        .form-signin {
-          width: 100%;
-          max-width: 330px;
-          padding: 15px;
-          margin: 0 auto;
-        }
-        .form-signin .checkbox {
-          font-weight: 400;
-        }
-        .form-signin .form-control {
-          position: relative;
-          box-sizing: border-box;
-          height: auto;
-          padding: 10px;
-          font-size: 16px;
-        }
-        .form-signin .form-control:focus {
-          z-index: 2;
-        }
-        .form-signin input[type="email"] {
-          margin-bottom: -1px;
-          border-bottom-right-radius: 0;
-          border-bottom-left-radius: 0;
-        }
-        .form-signin input[type="password"] {
-          margin-bottom: 10px;
-          border-top-left-radius: 0;
-          border-top-right-radius: 0;
-        }
-    </style>
-{% endblock %}
-
 {% block body %}
 <div class="container-fluid">
-    <form method="post" class="form-signin">
+  <div class="row">
+    <div class="col-sm">
+      <div class="form-container">
         <h1 class="h3 mb-3 font-weight-normal">MedleyBox - <span class="h5 mb-3 font-weight-normal">Please login</span></h1>
+        <form method="post">
+          {% if error %}
+              <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+          {% endif %}
 
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+          <label for="inputUsername" class="sr-only">Username</label>
+          <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
-        <label for="inputUsername" class="sr-only">Username</label>
-        <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-        <button class="btn float-right btn-lg btn-primary" type="submit">Sign in</button>
-    </form>
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+          <button class="btn float-right btn-lg btn-primary" type="submit">Sign in</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4 offset-4 d-flex justify-content-center">
+      <ul class="nav footer-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('security_signup') }}">Sign up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Forgotten password</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 </div>
 {% endblock %}

@@ -40,4 +40,5 @@ security:
         - { path: ^/media-file/update, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/media-file/metadata/, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [HEAD] }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/sign-up, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_USER }
