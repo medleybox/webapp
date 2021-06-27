@@ -5,7 +5,6 @@ COPY config/ /app/config
 COPY src/ /app/src
 
 RUN composer install --no-dev -o -a --no-scripts --ignore-platform-reqs \
- && du -sh vendor/ \
  && rm -rf composer*
 
 FROM xigen/php:cli-ppm-edge
