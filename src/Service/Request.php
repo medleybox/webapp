@@ -7,6 +7,7 @@ use Symfony\Contracts\HttpClient\{HttpClientInterface, ResponseInterface};
 class Request
 {
     const BASE_URI = 'http://vault';
+    const TIMEOUT = 10;
 
     /**
      * @var string
@@ -35,7 +36,7 @@ class Request
         return $this->client->request(
             'GET',
             $url,
-            ['base_uri' => $this->baseUrl]
+            ['base_uri' => $this->baseUrl, 'timeout' => self::TIMEOUT]
         );
     }
 
@@ -44,7 +45,7 @@ class Request
         return $this->client->request(
             'HEAD',
             $url,
-            ['base_uri' => $this->baseUrl]
+            ['base_uri' => $this->baseUrl, 'timeout' => self::TIMEOUT]
         );
     }
 
@@ -58,6 +59,7 @@ class Request
             $url,
             [
                 'base_uri' => $this->baseUrl,
+                'timeout' => self::TIMEOUT,
                 'body' => $data
             ]
         );
@@ -69,7 +71,7 @@ class Request
             $this->client->request(
                 'DELETE',
                 $url,
-                ['base_uri' => $this->baseUrl]
+                ['base_uri' => $this->baseUrl, 'timeout' => self::TIMEOUT]
             );
         } catch (\RuntimeException $e) {
             return false;
