@@ -1,13 +1,14 @@
 {% extends 'security/base.html.twig' %}
-
+{% form_theme form with ['security/_form.html.twig', _self] %}
 {% block title %}Sign Up!{% endblock %}
-
 {% block body %}
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm">
       <div class="form-container">
         <h1 class="h3 mb-3 font-weight-normal">MedleyBox - <span class="h5 mb-3 font-weight-normal">Sign Up</span></h1>
+        <p>Fill out the below form to create a new account.</p>
+        <p>You will need to confirm your email address before account activition.</p>
         {{ form(form) }}
       </div>
     </div>
