@@ -83,7 +83,10 @@ class MediaFileRepository extends ServiceEntityRepository
             throw new \Exception('Unable send request to vault');
         }
 
-        return $response->toArray();
+        $metadata = $response->toArray();
+        $metadata['size'] = $media->getSize();
+
+        return $metadata;
     }
 
     public function save(MediaFile $media): bool
