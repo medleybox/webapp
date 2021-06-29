@@ -1,24 +1,32 @@
 {% extends 'security/base.html.twig' %}
-
+{% form_theme form with ['security/_form.html.twig', _self] %}
 {% block title %}Log in!{% endblock %}
-
 {% block body %}
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm">
       <div class="form-container">
         <h1 class="h3 mb-3 font-weight-normal">MedleyBox - <span class="h5 mb-3 font-weight-normal">Please login</span></h1>
+        {% if error %}
+              <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+          {% endif %}
+        {#{dump(form)}#}
+        {{ form_start(form, {'attr': {'style': '100%'}}) }}
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        {{ form_end(form) }}
+        {# { form(form) } #}
         <form method="post">
           {% if error %}
               <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
           {% endif %}
+
 
           <label for="inputUsername" class="sr-only">Username</label>
           <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
           <label for="inputPassword" class="sr-only">Password</label>
           <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
-          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+          
           <button class="btn float-right btn-lg btn-primary" type="submit">Sign in</button>
         </form>
       </div>

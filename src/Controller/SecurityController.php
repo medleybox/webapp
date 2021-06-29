@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\LocalUser;
-use App\Form\UserSignUpType;
+use App\Form\{UserSignUpType, UserLoginType};
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +17,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="security_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         if (null !== $this->getUser()) {
             return $this->redirectToRoute('index_index');
@@ -28,7 +28,17 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        $form = $this->createForm(UserLoginType::class);
+
+
+        $form->handleRequest($request);
+        //
+
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
