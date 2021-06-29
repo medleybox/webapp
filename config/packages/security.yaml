@@ -1,5 +1,6 @@
 security:
-    encoders:
+    enable_authenticator_manager: true
+    password_hashers:
         App\Entity\LocalUser:
             algorithm: sodium
 
@@ -15,7 +16,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            entry_point: form_login
             form_login:
                 login_path: security_login
                 check_path: security_login
@@ -36,9 +37,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/api/version, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/media-file/update, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/media-file/metadata/, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [HEAD] }
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/sign-up, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/version, roles: PUBLIC_ACCESS }
+        - { path: ^/media-file/update, roles: PUBLIC_ACCESS }
+        - { path: ^/media-file/metadata/, roles: PUBLIC_ACCESS, methods: [HEAD] }
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/sign-up, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: ROLE_USER }
