@@ -3,6 +3,8 @@ security:
     password_hashers:
         App\Entity\LocalUser:
             algorithm: sodium
+        App\Service\UserPasswordReset:
+            algorithm: bcrypt
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -42,4 +44,5 @@ security:
         - { path: ^/media-file/metadata/, roles: PUBLIC_ACCESS, methods: [HEAD] }
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/sign-up, roles: PUBLIC_ACCESS }
+        - { path: ^/forgotten-password, roles: PUBLIC_ACCESS}
         - { path: ^/, roles: ROLE_USER }
