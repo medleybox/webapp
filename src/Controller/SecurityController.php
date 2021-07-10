@@ -78,9 +78,10 @@ class SecurityController extends AbstractController
             $email = $form->getData()['email'];
             try {
                 $hash = $reset->tryReset($email, $request);
-                $this->addFlash('success', 'password reset hash: ' . $hash);
+                $reset->sendEmail($hash);
+                $this->addFlash('success', 'Email sent, please confirm before continuing');
 
-                // return $this->redirectToRoute('security_login');
+                return $this->redirectToRoute('security_login');
             } catch(\Exception $e) {
                 $this->addFlash('error', $e->getMessage());
             }

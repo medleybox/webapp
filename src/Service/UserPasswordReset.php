@@ -8,51 +8,66 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\{Address, Email};
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class UserPasswordReset
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
-    protected $em;
+    private EntityManagerInterface $em;
 
     /**
      * @var \App\Repository\LocalUserRepository
      */
-    protected $users;
+    private LocalUserRepository $users;
 
     /**
      * @var \App\Repository\UserPasswordResetRepository
      */
-    protected $passwordResets;
+    private UserPasswordResetRepository $passwordResets;
 
     /**
      * @var \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface
      */
-    protected PasswordHasherFactoryInterface $passwordHasherFactory;
+    private PasswordHasherFactoryInterface $passwordHasherFactory;
 
     /**
      * @var \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface
      */
-    private $encoder;
+    private UserPasswordEncoderInterface $encoder;
 
-    public function __construct(EntityManagerInterface $em, LocalUserRepository $users, UserPasswordResetRepository $passwordResets, PasswordHasherFactoryInterface $passwordHasherFactory, UserPasswordEncoderInterface $encoder)
+    /**
+     * @var \Symfony\Component\Mailer\MailerInterface
+     */
+    private MailerInterface $mailer;
+
+    /**
+     * @var \Symfony\Component\Routing\UrlGeneratorInterface
+     */
+    private UrlGeneratorInterface $router;
+
+    public function __construct(EntityManagerInterface $em, LocalUserRepository $users, UserPasswordResetRepository $passwordResets, PasswordHasherFactoryInterface $passwordHasherFactory, UserPasswordEncoderInterface $encoder, MailerInterface $mailer, UrlGeneratorInterface $router)
     {
         $this->em = $em;
         $this->users = $users;
         $this->passwordResets = $passwordResets;
         $this->passwordHasherFactory = $passwordHasherFactory;
         $this->encoder = $encoder;
+        $this->mailer = $mailer;
+        $this->router = $router;
     }
 
-    public function updatePassword(ResetEntity $validate, string $password): bool
+    public function updatePassword(ResetEntity $reset, string $password): bool
     {
-        $user = $validate->getLocaluser();
+        $user = $reset->getLocaluser();
         $user->setPassword($this->encoder->encodePassword(
             $user,
             $password
         ));
-        $validate->setActive(false);
+        $reset->setActive(false);
 
         $this->em->flush();
 
@@ -79,6 +94,34 @@ class UserPasswordReset
         $this->em->flush();
 
         return $hash;
+    }
+
+    public function sendEmail(string $hash): bool
+    {
+        $reset = $this->validate($hash);
+        if (null === $reset) {
+            return false;
+        }
+
+        // Fix routing with https using ppm
+        $this->router->getContext()->setScheme('https');
+        $link = $this->router->generate(
+            'security_forgotten_password_reset',
+            ['hash' => $hash],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+        $user = $reset->getLocaluser();
+
+        $email = (new Email())
+            ->from('no-reply@medleybox')
+            ->to((new Address($user->getEmail(), $user->getUsername())))
+            ->subject('User Password Reset | Medleybox')
+            ->text("Click the link to reset your password - ${link}")
+            ->html("<p>Click this <a href='${link}'>link</a> to reset your password</p>");
+
+        $this->mailer->send($email);
+
+        return true;
     }
 
     public function validate(string $hash, Request $request = null): ?ResetEntity

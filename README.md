@@ -23,6 +23,8 @@ bin/docker-console app:create-user --username admin
 
 Once the user has been created, you can login via https://localhost
 
+mailhog - https://localhost/mailhog/
+
 ## Bin Scripts
 Bin scripts have been written to automate common tasks:
 

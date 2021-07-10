@@ -8,6 +8,7 @@ x-variables: &x-variables
     POSTGRES_USER: medleybox
     POSTGRES_DB: medleybox_webapp
     POSTGRES_PASSWORD: medleybox
+    MAILER_DSN: smtp://mailhog:1025
 
 volumes:
     minio-data:
@@ -68,6 +69,10 @@ services:
             - medley
         volumes:
             - redis-data:/data
+    mailhog:
+        image: mailhog/mailhog
+        networks:
+            - medley
     db:
         image: postgres:12-alpine
         restart: always

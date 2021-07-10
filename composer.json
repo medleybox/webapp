@@ -16,6 +16,7 @@
         "symfony/framework-bundle": "^5",
         "symfony/http-client": "^5",
         "symfony/intl": "^5",
+        "symfony/mailer": "~5.2",
         "symfony/monolog-bundle": "^3.5",
         "symfony/orm-pack": "^1",
         "symfony/proxy-manager-bridge": "^5",

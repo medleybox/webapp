@@ -13,6 +13,15 @@
               <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
           {% endif %}
 
+          {# pass an array argument to get the messages of those types  #}
+          {% for label, messages in app.flashes(['success', 'error']) %}
+              {% for message in messages %}
+                  <div class="alert alert-{{ label }}">
+                      {{ message }}
+                  </div>
+              {% endfor %}
+          {% endfor %}
+
           <label for="inputUsername" class="sr-only">Username</label>
           <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
           <label for="inputPassword" class="sr-only">Password</label>
