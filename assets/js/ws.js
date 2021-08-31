@@ -36,19 +36,18 @@ function sendText() {
   exampleSocket.send(JSON.stringify(msg));
 }
 
-let startPlayEvent = function() {
-  var msg = {
-    type: "startPlay",
-    date: Date.now()
-  };
-  
-    // Send the msg object as a JSON-formatted string.
-  exampleSocket.send(JSON.stringify(msg));
-}
-
-window.startPlayEvent = startPlayEvent;
-
 (function () {
   console.log('init async');
   connect();
+
+  let startPlayEvent = function () {
+    var msg = {
+      type: "startPlay",
+      date: Date.now()
+    };
+
+    // Send the msg object as a JSON-formatted string.
+    exampleSocket.send(JSON.stringify(msg));
+  }
+  window.startPlayEvent = startPlayEvent;
 }());
