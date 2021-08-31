@@ -7,7 +7,7 @@ use Symfony\Contracts\HttpClient\{HttpClientInterface, ResponseInterface};
 class Request
 {
     const BASE_URI = 'http://vault';
-    const TIMEOUT = 10;
+    const TIMEOUT = 30;
 
     /**
      * @var string
