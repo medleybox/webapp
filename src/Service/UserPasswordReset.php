@@ -112,8 +112,9 @@ class UserPasswordReset
         );
         $user = $reset->getLocaluser();
 
+        $domain = $this->router->getContext()->getHost();
         $email = (new Email())
-            ->from('no-reply@medleybox')
+            ->from("no-reply@{$domain}")
             ->to((new Address($user->getEmail(), $user->getUsername())))
             ->subject('User Password Reset | Medleybox')
             ->text("Click the link to reset your password - ${link}")
