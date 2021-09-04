@@ -17,8 +17,8 @@ ENV APP_ENV=prod \
   REDIS_URL='redis://redis'
 
 COPY --from=composer /app /app
-COPY --from=medleybox/frontend:latest /app /app/public
-COPY --from=medleybox/encore:latest /app/public/build /app/public/build
+COPY --from=ghcr.io/medleybox/frontend:master /app /app/public
+COPY --from=ghcr.io/medleybox/encore:master /app/public/build /app/public/build
 COPY bin/console /app/bin/console
 COPY docker/app/php.ini /etc/php7/php.ini
 COPY templates /app/templates
