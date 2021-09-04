@@ -21,7 +21,7 @@ networks:
 
 services:
     nginx:
-        image: medleybox/nginx
+        image: ghcr.io/medleybox/nginx:master
         restart: always
         environment: *x-variables
         depends_on:
