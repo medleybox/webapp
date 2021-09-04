@@ -8,7 +8,7 @@
             <md-card-content v-show="data.webapp != {}">
                 Symfony: <code>{{data.webapp.symfony}}</code><br/>
                 PHP: <code>{{data.webapp.php}}</code><br/>
-                Version: -
+                Version: -<br/>
             </md-card-content>
         </md-card>
         <md-card>
@@ -17,8 +17,11 @@
             </md-card-header>
 
             <md-card-content>
-                Music: <code></code><br/>
-                Thumbnails: <code></code><br/>
+                Symfony: <code>{{data.vault.symfony}}</code><br/>
+                PHP: <code>{{data.vault.php}}</code><br/>
+                Version: -<br/>
+                Music: <code>{{musicSize}}</code><br/>
+                Thumbnails: <code>{{thumbnailsSize}}</code><br/>
             </md-card-content>
         </md-card>
     </admin>
@@ -29,6 +32,7 @@
 </style>
 
 <script>
+import prettyBytes from 'pretty-bytes';
 import adminApp from './admin'
 
 export default {
@@ -41,7 +45,9 @@ export default {
         return {
             loaded: false,
             data: {
-                webapp: {}
+                webapp: {},
+                vault: {},
+                stats: {}
             }
         };
     },
@@ -54,8 +60,32 @@ export default {
                 return response.json();
             }).then((json) => {
                 this.data.webapp = json.webapp;
+                this.data.vault = json.vault;
+            });
+
+            fetch('/vault/api/stats', {
+                method: 'GET',
+                credentials: 'same-origin',
+            }).then((response) => {
+                return response.json();
+            }).then((json) => {
+                this.data.stats = json;
                 this.loaded = true;
             });
+        }
+    },
+    computed: {
+        musicSize: function () {
+            if (false === this.loaded) {
+                return '';
+            }
+            return prettyBytes(this.data.stats.music);
+        },
+        thumbnailsSize: function () {
+            if (false === this.loaded) {
+                return '';
+            }
+            return prettyBytes(this.data.stats.thumbnails);
         }
     },
     components: {

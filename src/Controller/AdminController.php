@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\Import;
+use App\Service\{Import, Request as Vault};
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{Request, Response};
@@ -47,13 +47,16 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/about/json", name="admin_about_json", methods={"GET"})
      */
-    public function aboutJson(Request $request): Response
+    public function aboutJson(Request $request, Vault $vault): Response
     {
+        $vaultVersion = $vault->get('api/version')->toArray();;
+
         return $this->json([
             'webapp' => [
                 'symfony' => Kernel::VERSION,
                 'php' => PHP_VERSION
-            ]
+            ],
+            'vault' => $vaultVersion
         ]);
     }
 }
