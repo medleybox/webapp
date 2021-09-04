@@ -136,7 +136,7 @@ class MediaFileRepository extends ServiceEntityRepository
 
     public function getStream(MediaFile $media): string
     {
-        $url = "/vault/entry/steam/{$media->getUuid()}/{$this->getFakeFilename($media)}";
+        $url = "/vault/entry/stream/{$media->getUuid()}/{$this->getFakeFilename($media)}";
 
         return $this->urlHelper->getAbsoluteUrl($url);
     }
