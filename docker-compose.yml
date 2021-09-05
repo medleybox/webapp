@@ -34,7 +34,7 @@ services:
             - "80:80"
             - "443:443"
     encore:
-        image: ghcr.io/medleybox/encore
+        image: ghcr.io/medleybox/encore:master
         extra_hosts:
          - "medleybox.local:0.0.0.0"
         networks:
@@ -46,7 +46,7 @@ services:
             context: ./
             dockerfile: docker/encore/Dockerfile
     webapp:
-        image: ghcr.io/medleybox/webapp
+        image: ghcr.io/medleybox/webapp:master
         build:
             context: ./
             dockerfile: docker/app/Dockerfile
