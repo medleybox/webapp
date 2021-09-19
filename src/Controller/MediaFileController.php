@@ -55,6 +55,7 @@ class MediaFileController extends AbstractController
             'importuser' => $importuser,
             'metadata' => $this->media->getMetadata($media),
             'delete' => $this->media->getDeleteUrl($media),
+            'seconds' => $media->getSeconds(),
         ]);
     }
 
