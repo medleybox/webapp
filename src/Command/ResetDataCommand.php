@@ -49,15 +49,13 @@ class ResetDataCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-
         foreach ($this->media->findAll() as $media) {
+            $io->text("Removed: '{$media->getTitle()}'");
             $this->em->remove($media);
-            dump($media);
         }
 
         $this->em->flush();
-
-        $io->success('Success! Removed all uploads from system');
+        $io->success('Success! Removed all MediaFile entries from system');
 
         return 0;
     }

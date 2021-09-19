@@ -138,6 +138,17 @@ class LocalUser implements UserInterface
     }
 
     /**
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): bool
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+
+        return true;
+    }
+
+    /**
      * @return Collection<int, MediaFile>
      */
     public function getMediaFiles(): Collection
