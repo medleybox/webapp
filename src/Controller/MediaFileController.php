@@ -23,7 +23,6 @@ class MediaFileController extends AbstractController
      */
     private $log;
 
-
     public function __construct(MediaFileRepository $media, LoggerInterface $log)
     {
         $this->media = $media;

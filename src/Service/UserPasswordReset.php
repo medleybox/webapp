@@ -45,7 +45,7 @@ class UserPasswordReset
     private MailerInterface $mailer;
 
     /**
-     * @var \Symfony\Component\Routing\UrlGeneratorInterface
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
     private UrlGeneratorInterface $router;
 
@@ -73,7 +73,7 @@ class UserPasswordReset
 
         return true;
     }
-    
+
     public function tryReset(string $email, Request $request = null): string
     {
         $user = $this->users->findOneBy(['email' => $email]);

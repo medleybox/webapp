@@ -49,7 +49,7 @@ class AdminController extends AbstractController
      */
     public function aboutJson(Request $request, Vault $vault): Response
     {
-        $vaultVersion = $vault->get('api/version')->toArray();;
+        $vaultVersion = $vault->get('api/version')->toArray();
 
         return $this->json([
             'webapp' => [

@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class UserPasswordReset
 {
     /**
+     * @var int
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -18,27 +19,32 @@ class UserPasswordReset
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
     private $hash;
 
     /**
+     * @var \App\Entity\LocalUser
      * @ORM\ManyToOne(targetEntity=LocalUser::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $localuser;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=39, nullable=true)
      */
     private $ip;
 
     /**
+     * @var \DateTimeInterface
      * @ORM\Column(type="datetime")
      */
     private $created;
 
     /**
+     * @var boolean
      * @ORM\Column(type="boolean")
      */
     private $active;

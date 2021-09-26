@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Service\UserPasswordReset;
 use App\Entity\LocalUser;
 use App\Form\{UserForgottenPasswordType, UserResetPasswordType, UserSignUpType};
-
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{Response, Request};
@@ -82,7 +81,7 @@ class SecurityController extends AbstractController
                 $this->addFlash('success', 'Email sent, please confirm before continuing');
 
                 return $this->redirectToRoute('security_login');
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $this->addFlash('error', $e->getMessage());
             }
 
@@ -118,7 +117,7 @@ class SecurityController extends AbstractController
                 $this->addFlash('success', 'Password has been updated');
 
                 return $this->redirectToRoute('security_login');
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $this->addFlash('error', $e->getMessage());
             }
 
