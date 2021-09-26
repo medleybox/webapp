@@ -20,9 +20,10 @@ body {
 
 .form-container {
     width: 100%;
-    max-width: 330px;
-    padding: 15px;
+    max-width: 360px;
+    padding: 35px;
     margin: 0 auto;
+    background-color: #111;
 }
 .form-container .checkbox {
     font-weight: 400;
@@ -46,6 +47,14 @@ body {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+.form-container .form-control, .form-container .form-control:focus {
+  background-color: rgb(29, 32, 33);
+  color: white;
+}
+
+.form-container .h3 {
+    color: var(--primary);
 }
 
 .security_signup .form-container {
