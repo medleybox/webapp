@@ -67,7 +67,6 @@ COPY --from=composer /app /app
 COPY --from=ghcr.io/medleybox/frontend:master /app /app/public
 COPY --from=ghcr.io/medleybox/encore:master /app/public/build /app/public/build
 COPY bin/console /app/bin/console
-COPY bin/entrypoint /app/bin/entrypoint
 COPY docker/app/php.ini /usr/local/etc/php/conf.d/webapp.ini
 COPY templates /app/templates
 
