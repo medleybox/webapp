@@ -1,4 +1,7 @@
 {
+    "beberlei/assert": {
+        "version": "v3.3.1"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
     },
@@ -79,6 +82,9 @@
     },
     "guzzlehttp/psr7": {
         "version": "1.6.1"
+    },
+    "k911/swoole-bundle": {
+        "version": "v0.10.0"
     },
     "laminas/laminas-code": {
         "version": "4.0.0"
@@ -336,11 +342,11 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.17.1"
     },
-    "symfony/polyfill-php80": {
-        "version": "v1.17.1"
-    },
     "symfony/polyfill-php81": {
         "version": "v1.23.0"
+    },
+    "symfony/process": {
+        "version": "v5.3.7"
     },
     "symfony/property-access": {
         "version": "v5.1.2"
