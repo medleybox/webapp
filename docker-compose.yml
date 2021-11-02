@@ -1,7 +1,7 @@
 version: '3.4'
 
 x-variables: &x-variables
-    PPM_DEBUG: 1
+    APP_DEBUG: 1
     APP_ENV: dev
     APP_SECRET: c95ab68cbfba3232e79d72ebae567424
     TZ: Europe/London
@@ -26,6 +26,8 @@ services:
         environment: *x-variables
         depends_on:
             - "encore"
+            - "webapp"
+            - "mailhog"
         volumes:
          - ./public/build:/var/www/public/build
         networks:
