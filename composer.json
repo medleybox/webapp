@@ -4,7 +4,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "composer-plugin-api": "^2",
         "doctrine/doctrine-bundle": "^2",
         "doctrine/orm": "^2",
@@ -44,7 +44,12 @@
         },
         "sort-packages": true,
         "platform": {
-            "php": "8.0"
+            "php": "8.1"
+        },
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "symfony/runtime": true,
+            "symfony/flex": true
         }
     },
     "autoload": {
@@ -77,7 +82,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": true,
-            "require": "~5.3"
+            "require": "~5.4"
         }
     },
     "scripts": {

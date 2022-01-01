@@ -7,7 +7,7 @@ COPY src/ /app/src
 RUN composer install --no-dev -o -a --no-scripts --ignore-platform-reqs \
  && rm -rf composer*
 
-FROM phpswoole/swoole:latest-alpine
+FROM php:8.1-fpm-alpine
 
 ENV IGBINARY_VERSION="3.2.6"
 ENV REDIS_VERSION="5.3.4"
@@ -54,7 +54,7 @@ RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/${
     && rm -rf /usr/src \
     && rm -rf /tmp
 
-WORKDIR /app
+WORKDIR /var/www
 
 ENV APP_ENV=prod \
   POSTGRES_DB=medleybox_webapp \
@@ -63,21 +63,22 @@ ENV APP_ENV=prod \
   PPM_PORT=8080 \
   REDIS_URL='redis://redis'
 
-COPY --from=composer /app /app
-COPY --from=ghcr.io/medleybox/frontend:master /app /app/public
-COPY --from=ghcr.io/medleybox/encore:master /app/public/build /app/public/build
-COPY bin/console /app/bin/console
+COPY --from=composer /app /var/www
+COPY --from=ghcr.io/medleybox/frontend:master /app /var/www/public
+COPY --from=ghcr.io/medleybox/encore:master /app/public/build /var/www/public/build
+COPY bin/console /var/www/bin/console
+COPY public/index.php /var/www/public/index.php
 COPY docker/app/php.ini /usr/local/etc/php/conf.d/webapp.ini
-COPY templates /app/templates
+COPY templates /var/www/templates
 
 USER root
 
-RUN mkdir /tmp; chown -Rf 82:82 /app /tmp
+RUN mkdir /tmp; chown -Rf 82:82 /var/www /tmp
 
 USER 82
 
-ENTRYPOINT ["./bin/console"]
-CMD ["swoole:server:run"]
+# ENTRYPOINT ["./bin/console"]
+# CMD ["swoole:server:run"]
 
 RUN chmod +x bin/console
 

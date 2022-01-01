@@ -57,12 +57,12 @@ services:
         networks:
             - medley
         volumes:
-         - ./bin:/app/bin
-         - ./config:/app/config
-         - ./src:/app/src
-         - ./templates:/app/templates
-         - ./vendor:/app/vendor
-         - ./public/build:/app/public/build
+         - ./bin:/var/www/bin
+         - ./config:/var/www/config
+         - ./src:/var/www/src
+         - ./templates:/var/www/templates
+         - ./vendor:/var/www/vendor
+         - ./public/build:/var/www/public/build
     redis:
         image: redis:alpine
         restart: always
