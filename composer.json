@@ -1,5 +1,5 @@
 {
-    "name": "mewdleybox/webapp",
+    "name": "medleybox/webapp",
     "description": "A Symfony 5 application to serve the frontend of Medleybox.",
     "type": "project",
     "license": "proprietary",

@@ -1,6 +1,7 @@
 security:
     enable_authenticator_manager: true
     password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
         App\Entity\LocalUser:
             algorithm: sodium
         App\Service\UserPasswordReset:
@@ -22,9 +23,6 @@ security:
             form_login:
                 login_path: security_login
                 check_path: security_login
-            guard:
-                authenticators:
-                    - App\Security\LoginFormAuthenticator
             logout:
                 path: security_logout
                 # where to redirect after logout

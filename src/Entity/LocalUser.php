@@ -8,13 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LocalUserRepository")
  * @UniqueEntity(fields="username", message="This username is already taken.")
  * @UniqueEntity(fields="email", message="An account with this email already exists.")
  */
-class LocalUser implements UserInterface
+class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @var int

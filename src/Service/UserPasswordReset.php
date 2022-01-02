@@ -6,13 +6,13 @@ use App\Repository\{LocalUserRepository, UserPasswordResetRepository};
 use App\Entity\UserPasswordReset as ResetEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\{PasswordHasherFactoryInterface, UserPasswordHasherInterface};
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\{Address, Email};
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-class UserPasswordReset
+class UserPasswordReset implements PasswordAuthenticatedUserInterface
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -35,9 +35,9 @@ class UserPasswordReset
     private PasswordHasherFactoryInterface $passwordHasherFactory;
 
     /**
-     * @var \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface
+     * @var \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface
      */
-    private UserPasswordEncoderInterface $encoder;
+    private UserPasswordHasherInterface $encoder;
 
     /**
      * @var \Symfony\Component\Mailer\MailerInterface
@@ -49,7 +49,7 @@ class UserPasswordReset
      */
     private UrlGeneratorInterface $router;
 
-    public function __construct(EntityManagerInterface $em, LocalUserRepository $users, UserPasswordResetRepository $passwordResets, PasswordHasherFactoryInterface $passwordHasherFactory, UserPasswordEncoderInterface $encoder, MailerInterface $mailer, UrlGeneratorInterface $router)
+    public function __construct(EntityManagerInterface $em, LocalUserRepository $users, UserPasswordResetRepository $passwordResets, PasswordHasherFactoryInterface $passwordHasherFactory, UserPasswordHasherInterface $encoder, MailerInterface $mailer, UrlGeneratorInterface $router)
     {
         $this->em = $em;
         $this->users = $users;
@@ -63,7 +63,7 @@ class UserPasswordReset
     public function updatePassword(ResetEntity $reset, string $password): bool
     {
         $user = $reset->getLocaluser();
-        $user->setPassword($this->encoder->encodePassword(
+        $user->setPassword($this->encoder->hashPassword(
             $user,
             $password
         ));
@@ -150,5 +150,15 @@ class UserPasswordReset
         //dump($passwordHasher->verify($hash, $reset->getHash())); // returns true (valid)
 
         return $encoded;
+    }
+
+    public function getPassword(): ?string
+    {
+        return '';
+    }
+
+    public function setPassword(string $password): self
+    {
+        return $this;
     }
 }

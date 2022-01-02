@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{Response, Request};
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -34,7 +34,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/sign-up", name="security_signup")
      */
-    public function signup(UserPasswordEncoderInterface $encoder, EntityManagerInterface $em, Request $request): Response
+    public function signup(UserPasswordHasherInterface $encoder, EntityManagerInterface $em, Request $request): Response
     {
         if (null !== $this->getUser()) {
             return $this->redirectToRoute('index_index');
@@ -46,7 +46,7 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setActive(true);
-            $user->setPassword($encoder->encodePassword(
+            $user->setPassword($encoder->hashPassword(
                 $user,
                 $user->getPassword()
             ));

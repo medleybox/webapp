@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use App\Repository\UserPasswordResetRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserPasswordResetRepository::class)
  */
-class UserPasswordReset
+class UserPasswordReset implements PasswordAuthenticatedUserInterface
 {
     /**
      * @var int
@@ -70,6 +71,19 @@ class UserPasswordReset
         $this->hash = $hash;
 
         return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->getHash();
+    }
+
+    public function setPassword(string $password): self
+    {
+        return $this->setHash($password);
     }
 
     public function getLocaluser(): ?LocalUser
