@@ -77,8 +77,4 @@ RUN mkdir /tmp; chown -Rf 82:82 /var/www /tmp
 
 USER 82
 
-# ENTRYPOINT ["./bin/console"]
-# CMD ["swoole:server:run"]
-
 RUN chmod +x bin/console
-
