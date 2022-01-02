@@ -64,7 +64,6 @@ ENV APP_ENV=prod \
   REDIS_URL='redis://redis'
 
 COPY --from=composer /app /var/www
-COPY --from=ghcr.io/medleybox/frontend:master /app /var/www/public
 COPY --from=ghcr.io/medleybox/encore:master /app/public/build /var/www/public/build
 COPY bin/console /var/www/bin/console
 COPY public/index.php /var/www/public/index.php

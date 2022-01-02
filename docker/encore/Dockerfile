@@ -1,4 +1,6 @@
-FROM node:15-alpine3.12
+FROM node:16-alpine3.12 as builder
+
+RUN apk add --no-cache alpine-sdk python3
 
 WORKDIR /app
 
@@ -9,4 +11,11 @@ RUN mkdir -p /app/public/build && \
   npm install && \
   ./node_modules/.bin/encore production
 
-ENTRYPOINT ["node", "./node_modules/.bin/encore", "dev-server", "--host=medleybox.local", "--port=443", "--https"]
+# Final image
+FROM node:16-alpine3.12 as final
+
+WORKDIR /app
+
+COPY --from=builder /app /app
+
+ENTRYPOINT ["node", "./node_modules/.bin/encore", "dev-server", "--host=medleybox.local", "--port=443", "--keep-public-path", "--https"]

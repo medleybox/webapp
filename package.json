@@ -3,7 +3,7 @@
         "@symfony/webpack-encore": "^1.4.0",
         "core-js": "^3.13.1",
         "css-loader": "^5",
-        "node-sass": "^6.0.0",
+        "node-sass": "^7.0.1",
         "sass-loader": "^11 ",
         "vue-loader": "^15.9.7",
         "vue-template-compiler": "^2.6.12",
