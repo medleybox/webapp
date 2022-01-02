@@ -9,4 +9,4 @@ RUN mkdir -p /app/public/build && \
   npm install && \
   ./node_modules/.bin/encore production
 
-ENTRYPOINT ["node", "./node_modules/.bin/encore", "dev-server", "--host=medleybox.local", "--port=443", "--https", "--firewall=false"]
+ENTRYPOINT ["node", "./node_modules/.bin/encore", "dev-server", "--host=medleybox.local", "--port=443", "--https"]
