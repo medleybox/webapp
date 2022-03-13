@@ -34,11 +34,16 @@
 <script>
 import adminApp from './admin'
 import adminUsersDialog from './admin_users_dialog'
+import { EventBus } from '../event-bus.js';
 
 export default {
     name: "admin_users",
     created: function () {
-        this.fetchData();
+        let _this = this;
+        _this.fetchData();
+        EventBus.$on('admin_user-fetchData', function(e) {
+            _this.fetchData();
+        });
     },
     data: function () {
         return {

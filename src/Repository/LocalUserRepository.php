@@ -15,9 +15,21 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class LocalUserRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    /**
+     * @var \App\Repository\MediaFileRepository
+     */
+    protected $media;
+
+    /**
+     * @var \App\Repository\UserPasswordResetRepository
+     */
+    protected $reset;
+
+    public function __construct(ManagerRegistry $registry, MediaFileRepository $media, UserPasswordResetRepository $reset)
     {
         parent::__construct($registry, LocalUser::class);
+        $this->media = $media;
+        $this->reset = $reset;
     }
 
     public function save(LocalUser $user): bool
@@ -26,6 +38,34 @@ class LocalUserRepository extends ServiceEntityRepository
             $this->_em->persist($user);
         }
         $this->_em->flush();
+
+        return true;
+    }
+
+    public function delete(LocalUser $user): bool
+    {
+        if (null !== $user->getId()) {
+            $this->removeUserMedia($user);
+            $this->removePasswordResets($user);
+            $this->_em->remove($user);
+        }
+        $this->_em->flush();
+
+        return true;
+    }
+
+    private function removeUserMedia(LocalUser $user): bool
+    {
+        foreach ($user->getMediaFiles() as $file) {
+            $this->media->delete($file);
+        }
+
+        return true;
+    }
+
+    private function removePasswordResets(LocalUser $user): bool
+    {
+        $this->reset->cleanForUser($user);
 
         return true;
     }

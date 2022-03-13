@@ -17,6 +17,23 @@
                     </md-field>
                 </div>
             </md-tab>
+            <md-tab md-label="Danger Zone">
+                <div>
+                    <md-card>
+                        <md-card-header>
+                            <div class="md-title">Delete user</div>
+                        </md-card-header>
+
+                        <md-card-content>
+                            Remove this user and all uploaded content by this user
+                        </md-card-content>
+
+                        <md-card-actions>
+                            <md-button class="md-raised md-accent" @click="removeUser()">Delete</md-button>
+                        </md-card-actions>
+                    </md-card>
+                </div>
+            </md-tab>
         </md-tabs>
 
         <md-dialog-actions>
@@ -34,7 +51,7 @@
 </style>
 
 <script>
-//import adminApp from './admin'
+import { EventBus } from '../event-bus.js';
 
 export default {
     name: "admin_users_dialog",
@@ -46,7 +63,10 @@ export default {
         showDialog: function (val) {
             if (true === val) {
                 this.fetchData();
+                return true;
             }
+
+            EventBus.$emit('admin_user-fetchData');
         }
     },
     data: () => ({
@@ -62,6 +82,27 @@ export default {
                 return response.json();
             }).then((json) => {
                 this.user = json.user;
+            });
+        },
+        removeUser() {
+            let _this = this;
+            fetch(`/admin/users/delete/${this.id}`, {
+                method: 'DELETE',
+                credentials: 'same-origin',
+            }).then((response) => {
+                return response.json();
+            }).then((json) => {
+                console.log(json);
+                if (true === json.success) {
+                    _this.showDialog = false;
+                    return true;
+                }
+
+                if (json.msg) {
+                    alert(json.msg);
+                }
+            }).catch((e) => {
+                alert('Unable to delete user');
             });
         },
         submitForm() {
@@ -85,9 +126,6 @@ export default {
                 _this.showDialog = false;
             });
         }
-    },
-    components: {
-        //'admin': adminApp,
     }
 }
 </script>

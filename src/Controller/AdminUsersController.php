@@ -37,7 +37,7 @@ class AdminUsersController extends AbstractController
     public function usersJson(): Response
     {
         $users = [];
-        foreach ($this->repo->findBy([]) as $user) {
+        foreach ($this->repo->findBy([], ['id' => 'ASC']) as $user) {
             $users[] = [
                 'id' => $user->getId(),
                 'username' => $user->getUsername(),
@@ -72,5 +72,20 @@ class AdminUsersController extends AbstractController
         ];
 
         return $this->json(['user' => $user]);
+    }
+
+    /**
+     * @Route("/admin/users/delete/{id}", name="admin_users_delete", methods={"DELETE"})
+     * @ParamConverter("id", class="\App\Entity\LocalUser")
+     */
+    public function deleteUser(LocalUser $user, Request $request): Response
+    {
+        if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+            $msg = "Unable to delete admin user!";
+            return $this->json(['success' => false, 'msg' => $msg], Response::HTTP_FORBIDDEN);
+        }
+        $this->repo->delete($user);
+
+        return $this->json(['success' => true], Response::HTTP_OK);
     }
 }
