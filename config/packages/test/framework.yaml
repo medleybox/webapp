@@ -1,4 +1,8 @@
 framework:
     test: true
     session:
+        handler_id: null
         storage_id: session.storage.mock_file
+    cache:
+        app: cache.adapter.filesystem
+        default_redis_provider: null

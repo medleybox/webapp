@@ -22,20 +22,14 @@ class FixUserNoEmailCommand extends Command
      */
     private $em;
 
-    /**
-     * @var \App\Repository\MediaFileRepository
-     */
-    private $media;
-
      /**
      * @var \App\Repository\LocalUserRepository
      */
     private $users;
 
-    public function __construct(EntityManagerInterface $em, MediaFileRepository $media, LocalUserRepository $users)
+    public function __construct(EntityManagerInterface $em, LocalUserRepository $users)
     {
         $this->em = $em;
-        $this->media = $media;
         $this->users = $users;
         parent::__construct();
     }

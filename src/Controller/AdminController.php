@@ -13,22 +13,6 @@ use Exception;
 class AdminController extends AbstractController
 {
     /**
-     * @var \App\Service\Import
-     */
-    private $import;
-
-    /**
-     * @var \Symfony\Component\Security\Core\Security
-     */
-    private $security;
-
-    public function __construct(Import $import, Security $security)
-    {
-        $this->import = $import;
-        $this->security = $security;
-    }
-
-    /**
      * @Route("/admin", name="admin_index", methods={"GET"})
      */
     public function index(Request $request): Response

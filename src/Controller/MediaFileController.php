@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Repository\MediaFileRepository;
 use App\Entity\MediaFile;
 use App\Form\MediaFileType;
-use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{Request, Response};
@@ -18,15 +17,9 @@ class MediaFileController extends AbstractController
      */
     private $media;
 
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $log;
-
-    public function __construct(MediaFileRepository $media, LoggerInterface $log)
+    public function __construct(MediaFileRepository $media)
     {
         $this->media = $media;
-        $this->log = $log;
     }
 
     /**

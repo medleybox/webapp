@@ -1,0 +1,7 @@
+doctrine:
+    dbal:
+        host: db
+        #port:
+        user: ~
+        password: ~
+        dbname: ~
