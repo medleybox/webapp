@@ -19,6 +19,7 @@
             <md-card-content>
                 Symfony: <code>{{data.vault.symfony}}</code><br/>
                 PHP: <code>{{data.vault.php}}</code><br/>
+                AudiowaveForm: <code>{{data.vault.audiowaveform}}</code><br/>
                 Version: -<br/>
                 Music: <code>{{musicSize}}</code><br/>
                 Thumbnails: <code>{{thumbnailsSize}}</code><br/>
