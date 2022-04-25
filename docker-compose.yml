@@ -24,6 +24,9 @@ services:
         image: ghcr.io/medleybox/nginx:master
         restart: always
         environment: *x-variables
+        build:
+            context: ../nginx/
+            dockerfile: ../nginx/Dockerfile
         depends_on:
             - "encore"
             - "webapp"

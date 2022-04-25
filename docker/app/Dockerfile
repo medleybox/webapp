@@ -63,12 +63,12 @@ ENV APP_ENV=prod \
   PPM_PORT=8080 \
   REDIS_URL='redis://redis'
 
-COPY --from=composer /app /var/www
-COPY --from=ghcr.io/medleybox/encore:master /app/public/build /var/www/public/build
 COPY bin/console /var/www/bin/console
 COPY public/index.php /var/www/public/index.php
 COPY docker/app/php.ini /usr/local/etc/php/conf.d/webapp.ini
 COPY templates /var/www/templates
+COPY --from=composer /app /var/www
+COPY --from=ghcr.io/medleybox/encore:master /app/public/build /var/www/public/build
 
 USER root
 
