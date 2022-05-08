@@ -66,6 +66,7 @@ services:
          - ./templates:/var/www/templates
          - ./vendor:/var/www/vendor
          - ./public/build:/var/www/public/build
+         - ./phpstan.neon:/var/www/phpstan.neon
     redis:
         image: redis:alpine
         restart: always

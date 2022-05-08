@@ -1,5 +1,8 @@
+includes:
+    - vendor/phpstan/phpstan-doctrine/extension.neon
 parameters:
-    ignoreErrors:
-        -
-          message: '#Property [a-zA-Z0-9\\_]+::\$id is never written, only read.#'
-          path: src/Entity/*
+    level: 6
+    paths:
+        - src
+    scanDirectories:
+        - vendor/doctrine/dbal/src
