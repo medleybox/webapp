@@ -27,6 +27,7 @@ Encore
 
     .addEntry('app', './assets/js/app.js')
     .addEntry('ws', './assets/js/ws.js')
+    .addEntry('particles', './assets/js/particles.js')
     .addEntry('admin_about', './assets/js/admin_about.js')
     .addEntry('admin_users', './assets/js/admin_users.js')
 

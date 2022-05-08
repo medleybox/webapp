@@ -9,8 +9,10 @@
         {{ encore_entry_link_tags('security') }}
     </head>
     <body class="{{ app.request.get('_route') }}">
+        <div id="particles-js"></div>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
         {{ encore_entry_script_tags('security') }}
+        {{ encore_entry_script_tags('particles') }}
     </body>
 </html>
