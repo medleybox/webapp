@@ -38,6 +38,19 @@ body {
     margin: 0 auto;
     background-color: #111;
 }
+@media screen and (min-width: 470px) {
+    .form-container {
+        max-width: 445px !important;
+        padding: 42px;
+    }
+}
+.form-container {
+    width: 100%;
+    max-width: 360px;
+    padding: 35px;
+    margin: 0 auto;
+    background-color: #111;
+}
 .form-container .checkbox {
     font-weight: 400;
 }
@@ -66,9 +79,9 @@ body {
   color: white;
 }
 
-.form-container .h3 {
-    color: var(--primary);
-}
+.form-container input.form-control:last-of-type {
+    padding-bottom: 100px;
+  }
 
 .security_signup .form-container {
     max-width: 400px;
@@ -77,4 +90,22 @@ body {
 #user_sign_up {
     width: 80%;
     margin: auto;
+}
+
+.security--header > h1,
+.security--header > h4 {
+    display: inline-block;
+}
+
+.security--header > h1 {
+    color: var(--primary);
+}
+
+.security--header > h4 {
+    padding-top: 5px;
+    padding-left: 15px;
+}
+
+.nav li:not(:last-child) {
+    border-right:2px solid;
 }

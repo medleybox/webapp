@@ -6,22 +6,24 @@
   <div class="row">
     <div class="col-sm">
       <div class="form-container">
-        <h1 class="h3 mb-3 font-weight-normal">MedleyBox - <span class="h5 mb-3 font-weight-normal">Sign Up</span></h1>
-        <p>Fill out the below form to create a new account.</p>
-        <p>You will need to confirm your email address before account activition.</p>
+        <div class="security--header">
+          <h1 class="h3 mb-3 font-weight-normal">MedleyBox</h1>
+          <h4 class="h5 font-weight-normal">Sign Up</h4>
+          <p>Fill out the below form to create a new account.</p>
+          <p>You will need to confirm your email address before account activition.</p>
+        </div>
+
         {{ form(form) }}
+
+        <div class="security--footer justify-content-center">
+          <ul class="nav footer-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('security_login') }}">Login</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-4 offset-4 d-flex justify-content-center">
-      <ul class="nav footer-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ path('security_login') }}">Login</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
 </div>
 {% endblock %}

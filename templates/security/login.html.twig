@@ -7,7 +7,10 @@
   <div class="row">
     <div class="col-sm">
       <div class="form-container">
-        <h1 class="h3 mb-3 font-weight-normal">MedleyBox - <span class="h5 mb-3 font-weight-normal">Please login</span></h1>
+        <div class="security--header">
+          <h1 class="h3 mb-3 font-weight-normal">MedleyBox</h1>
+          <h4 class="h5 font-weight-normal">Please login to continue</h4>
+        </div>
         <form method="post">
           {% if error %}
               <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -28,25 +31,20 @@
           <input type="password" name="_password" id="password" class="form-control" placeholder="Password" required>
 
           <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-          <div class="pull-right">
-          <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
-          </div>
+          <button class="btn btn-lg btn-primary float-right" type="submit">Sign in</button>
         </form>
+        <div class="security--footer justify-content-center">
+          <ul class="nav footer-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('security_signup') }}">Sign up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('security_forgotten_password') }}">Forgotten password</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-4 offset-4 d-flex justify-content-center">
-      <ul class="nav footer-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ path('security_signup') }}">Sign up</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ path('security_forgotten_password') }}">Forgotten password</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
 </div>
 {% endblock %}
