@@ -1,11 +1,13 @@
 #!/bin/sh
 
+
 set -xe
 
-bin/console cache:warmup -e test
+console cache:warmup -e test
 
-vendor/bin/phpstan analyse
+phpstan analyse
 
-vendor/bin/phpcs --standard=PSR12 --colors -pn --report=full,summary src
+phpcs --standard=PSR12 --colors -pn --report=full,summary src
 
-bin/phpunit tests/Service/Request.php
+composer install -vvv
+phpunit -vvv tests/Service/Request.php

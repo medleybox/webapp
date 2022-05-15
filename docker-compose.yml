@@ -60,13 +60,19 @@ services:
         networks:
             - medley
         volumes:
-         - ./bin:/var/www/bin
-         - ./config:/var/www/config
+         - ./bin/run-tests:/var/www/bin/run-tests:ro
+         - ./bin/phpunit:/var/www/bin/phpunit:ro
+         - ./config/packages:/var/www/config/packages
          - ./src:/var/www/src
+         - ./tests:/var/www/tests
          - ./templates:/var/www/templates
          - ./vendor:/var/www/vendor
          - ./public/build:/var/www/public/build
          - ./phpstan.neon:/var/www/phpstan.neon
+         - ./phpunit.xml.dist:/var/www/phpunit.xml.dist
+         - ./composer.json:/var/www/composer.json
+         - ./composer.lock:/var/www/composer.lock
+         - ./symfony.json:/var/www/symfony.json:ro
     redis:
         image: redis:alpine
         restart: always

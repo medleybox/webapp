@@ -61,7 +61,8 @@ ENV APP_ENV=prod \
   POSTGRES_USER=medleybox \
   POSTGRES_PASSWORD='' \
   PPM_PORT=8080 \
-  REDIS_URL='redis://redis'
+  REDIS_URL='redis://redis' \
+  PATH='/var/www/bin:/var/www/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 COPY bin/console /var/www/bin/console
 COPY public/index.php /var/www/public/index.php
