@@ -36,7 +36,7 @@ body {
     max-width: 360px;
     padding: 35px;
     margin: 0 auto;
-    background-color: #111;
+    background-color: var(--dark);
 }
 @media screen and (min-width: 470px) {
     .form-container {
@@ -76,7 +76,7 @@ body {
 }
 .form-container .form-control, .form-container .form-control:focus {
   background-color: rgb(29, 32, 33);
-  color: white;
+  color: var(--light);
 }
 
 .form-container input.form-control:last-of-type {
@@ -104,6 +104,11 @@ body {
 .security--header > h4 {
     padding-top: 5px;
     padding-left: 15px;
+    color: var(--light);
+}
+
+.security--footer {
+    margin-top: 14px;
 }
 
 .nav li:not(:last-child) {
