@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class MediaFileController extends AbstractController
 {
@@ -28,6 +29,21 @@ class MediaFileController extends AbstractController
     public function list(Request $request): Response
     {
         return $this->json(['files' => $this->media->list()]);
+    }
+
+    /**
+     * @Route("/media-file/my-list", name="media_my_list", methods={"GET"})
+     */
+    public function myList(Request $request, Security $security): Response
+    {
+        $user = $security->getUser();
+
+        return $this->json([
+            'files' => $this->media->forUser($user),
+            'user' => [
+                'id' => $user->getId()
+            ]
+        ]);
     }
 
     /**

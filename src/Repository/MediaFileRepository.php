@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\MediaFile;
+use App\Entity\{LocalUser, MediaFile};
 use App\Service\{Import, Request};
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -58,18 +58,41 @@ class MediaFileRepository extends ServiceEntityRepository
                 continue;
             }
 
-            $files[] = [
-                'uuid' => $media->getUuid(),
-                'thumbnail' => $this->getThumbnail($media),
-                'stream' => $this->getStream($media),
-                'download' => $this->getDownload($media),
-                'metadata' => $this->getMetadataUrl($media),
-                'title' => $media->getTitle(),
-                'seconds' => $media->getSeconds()
-            ];
+            $files[] = $this->getApiValue($media);
         }
 
         return $files;
+    }
+
+    public function forUser(LocalUser $user): array
+    {
+        $files = [];
+        foreach ($this->findBy(['importUser' => $user->getId()], ['id' => 'DESC']) as $media) {
+            // Hide items until they've been imported
+            if (null === $media->getSize()) {
+                continue;
+            }
+
+            $files[] = $this->getApiValue($media);
+        }
+
+        return $files;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getApiValue(MediaFile $media): array
+    {
+        return [
+            'uuid' => $media->getUuid(),
+            'thumbnail' => $this->getThumbnail($media),
+            'stream' => $this->getStream($media),
+            'download' => $this->getDownload($media),
+            'metadata' => $this->getMetadataUrl($media),
+            'title' => $media->getTitle(),
+            'seconds' => $media->getSeconds()
+        ];
     }
 
     /**

@@ -72,7 +72,7 @@ services:
          - ./phpunit.xml.dist:/var/www/phpunit.xml.dist
          - ./composer.json:/var/www/composer.json
          - ./composer.lock:/var/www/composer.lock
-         - ./symfony.json:/var/www/symfony.json:ro
+         - ./symfony.lock:/var/www/symfony.lock:ro
     redis:
         image: redis:alpine
         restart: always
