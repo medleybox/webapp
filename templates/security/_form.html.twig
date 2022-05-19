@@ -1,3 +1,12 @@
+{%- block form -%}
+    {{ form_start(form) }}
+        {{- form_widget(form) -}}
+        <div class="security--footer justify-content-center pull-end">
+            {% block security__footer -%}{%- endblock security__footer %}
+        </div>
+    {{ form_end(form) }}
+{%- endblock form -%}
+
 {% block form_row -%}
     {%- set widget_attr = {} -%}
     {%- if help is not empty -%}
@@ -18,7 +27,7 @@
 {%- endblock form_widget_simple %}
 
 {% block form_label -%}
-    <label for="{{id}}" class="sr-only">{{name}}</label>
+    <label for="{{id}}" class="visually-hidden-focusable">{{name}}</label>
      {%- if errors|length > 0 -%}
     <div id="{{ id }}_errors" class="mb-2">
         {{- form_errors(form) -}}

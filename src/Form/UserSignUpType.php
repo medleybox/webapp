@@ -18,7 +18,7 @@ class UserSignUpType extends AbstractType
             ->add('password', Type\PasswordType::class)
             ->add('submit', Type\SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn float-right btn-lg btn-primary'
+                    'class' => 'btn float-end btn-lg btn-secondary'
                 ]
             ])
         ;

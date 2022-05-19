@@ -25,13 +25,13 @@
               {% endfor %}
           {% endfor %}
 
-          <label for="username" class="sr-only">Username</label>
+          <label for="username" class="visually-hidden-focusable">Username</label>
           <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" placeholder="Username" required autofocus>
-          <label for="password" class="sr-only">Password</label>
+          <label for="password" class="visually-hidden-focusable">Password</label>
           <input type="password" name="_password" id="password" class="form-control" placeholder="Password" required>
 
           <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-          <button class="btn btn-lg btn-primary float-right" type="submit">Sign in</button>
+          <button class="btn btn-lg btn-secondary float-end" type="submit">Sign in</button>
         </form>
         <div class="security--footer justify-content-center">
           <ul class="nav footer-nav">
