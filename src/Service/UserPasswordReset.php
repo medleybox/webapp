@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Repository\{LocalUserRepository, UserPasswordResetRepository};
+use App\Entity\LocalUser;
 use App\Entity\UserPasswordReset as ResetEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,19 +60,24 @@ class UserPasswordReset implements PasswordAuthenticatedUserInterface
         $this->mailer = $mailer;
         $this->router = $router;
     }
-
-    public function updatePassword(ResetEntity $reset, string $password): bool
+    public function updatePasswordWithReset(ResetEntity $reset, string $password): bool
     {
-        $user = $reset->getLocaluser();
+        $this->updatePassword($reset->getLocaluser(), $password);
+        $reset->setActive(false);
+
+        $this->em->flush();
+    }
+
+    public function updatePassword(LocalUser $user, string $password): LocalUser
+    {
         $user->setPassword($this->encoder->hashPassword(
             $user,
             $password
         ));
-        $reset->setActive(false);
 
         $this->em->flush();
 
-        return true;
+        return $user;
     }
 
     public function tryReset(string $email, Request $request = null): string
