@@ -123,8 +123,8 @@ class UserPasswordReset implements PasswordAuthenticatedUserInterface
             ->from("no-reply@{$domain}")
             ->to((new Address($user->getEmail(), $user->getUsername())))
             ->subject('User Password Reset | Medleybox')
-            ->text("Click the link to reset your password - ${link}")
-            ->html("<p>Click this <a href='${link}'>link</a> to reset your password</p>");
+            ->text("Click the link to reset your password - {$link}")
+            ->html("<p>Click this <a href='{$link}'>link</a> to reset your password</p>");
 
         $this->mailer->send($email);
 

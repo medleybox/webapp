@@ -7,10 +7,10 @@ COPY src/ /app/src
 RUN composer install --no-dev -o -a --no-scripts --ignore-platform-reqs \
  && rm -rf composer*
 
-FROM php:8.1-fpm-alpine
+FROM php:8.2-rc-fpm-alpine
 
 ENV IGBINARY_VERSION="3.2.6"
-ENV REDIS_VERSION="5.3.4"
+ENV REDIS_VERSION="5.3.7"
 
 RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/${REDIS_VERSION}.tar.gz \
     && tar xfz /tmp/redis.tar.gz \
