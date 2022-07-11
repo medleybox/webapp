@@ -36,6 +36,8 @@ class MediaFileRepository extends ServiceEntityRepository
      */
     private $urlHelper;
 
+    const LIST_LIMIT = 20;
+
     public function __construct(ManagerRegistry $registry, Import $import, UrlGeneratorInterface $router, Request $request, UrlHelper $urlHelper)
     {
         $this->import = $import;
@@ -52,7 +54,7 @@ class MediaFileRepository extends ServiceEntityRepository
     public function list(): array
     {
         $files = [];
-        foreach ($this->findBy([], ['id' => 'DESC']) as $media) {
+        foreach ($this->findBy([], ['id' => 'DESC'], self::LIST_LIMIT) as $media) {
             // Hide items until they've been imported
             if (null === $media->getSize()) {
                 continue;
@@ -67,7 +69,7 @@ class MediaFileRepository extends ServiceEntityRepository
     public function forUser(LocalUser $user): array
     {
         $files = [];
-        foreach ($this->findBy(['importUser' => $user->getId()], ['id' => 'DESC']) as $media) {
+        foreach ($this->findBy(['importUser' => $user->getId()], ['id' => 'DESC'], self::LIST_LIMIT) as $media) {
             // Hide items until they've been imported
             if (null === $media->getSize()) {
                 continue;

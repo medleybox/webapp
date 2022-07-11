@@ -26,9 +26,19 @@ class MediaFileController extends AbstractController
     /**
      * @Route("/media-file/list", name="media_list", methods={"GET"})
      */
-    public function list(Request $request): Response
+    public function list(Request $request, Security $security): Response
     {
-        return $this->json(['files' => $this->media->list()]);
+        $user = $security->getUser();
+
+        return $this->json([
+            'files' => [
+                'user' => $this->media->forUser($user),
+                'home' => $this->media->list()
+            ],
+            'user' => [
+                'id' => $user->getId()
+            ]
+        ]);
     }
 
     /**
