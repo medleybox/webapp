@@ -1,3 +1,4 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
     session:
@@ -17,3 +18,13 @@ framework:
         log: true
     form:
         legacy_error_messages: false
+    #csrf_protection: true
+    http_method_override: false
+    #esi: true
+    #fragments: true
+
+when@test:
+    framework:
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file
