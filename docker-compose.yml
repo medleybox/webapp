@@ -31,6 +31,7 @@ services:
             - "encore"
             - "webapp"
             - "mailhog"
+            - "frontend"
         volumes:
          - ./public/build:/var/www/public/build
         networks:
@@ -50,6 +51,23 @@ services:
         build:
             context: ./
             dockerfile: docker/encore/Dockerfile
+    frontend:
+        image: node:16-alpine
+        extra_hosts:
+          - "medleybox.local:0.0.0.0"
+        entrypoint: 'node'
+        command: 
+            - '/app/node_modules/.bin/vue-cli-service'
+            - 'serve'
+            - '--host 0.0.0.0'
+            - '--public medleybox.local'
+            - '--port=443'
+            - '--https'
+        working_dir: '/app'
+        volumes:
+          - ../frontend:/app
+        networks:
+            - medley
     webapp:
         image: ghcr.io/medleybox/webapp:master
         build:

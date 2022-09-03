@@ -14,8 +14,11 @@ RUN mkdir -p /app/public/build && \
 # Final image
 FROM node:16-alpine3.12 as final
 
+ENV ENCORE_HOST medleybox.local
+
 WORKDIR /app
 
 COPY --from=builder /app /app
+COPY docker/encore/entrypoint /bin/docker-entrypoint
 
-ENTRYPOINT ["node", "./node_modules/.bin/encore", "dev-server", "--host=medleybox.local", "--port=443", "--keep-public-path", "--https"]
+ENTRYPOINT ["/bin/docker-entrypoint"]

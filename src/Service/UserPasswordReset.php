@@ -66,6 +66,8 @@ class UserPasswordReset implements PasswordAuthenticatedUserInterface
         $reset->setActive(false);
 
         $this->em->flush();
+
+        return true;
     }
 
     public function updatePassword(LocalUser $user, string $password): LocalUser

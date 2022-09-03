@@ -1,7 +1,6 @@
 doctrine:
     dbal:
         host: db
-        #port:
         user: '%env(resolve:POSTGRES_USER)%'
         password: '%env(resolve:POSTGRES_PASSWORD)%'
         dbname: '%env(resolve:POSTGRES_DB)%'
@@ -11,6 +10,8 @@ doctrine:
         default_table_options:
             charset: utf8
             collate: utf8_unicode_ci
+        types:
+            uuid: Symfony\Bridge\Doctrine\Types\UuidType
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware

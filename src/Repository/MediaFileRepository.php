@@ -36,7 +36,7 @@ class MediaFileRepository extends ServiceEntityRepository
      */
     private $urlHelper;
 
-    const LIST_LIMIT = 20;
+    const LIST_LIMIT = 60;
 
     public function __construct(ManagerRegistry $registry, Import $import, UrlGeneratorInterface $router, Request $request, UrlHelper $urlHelper)
     {
