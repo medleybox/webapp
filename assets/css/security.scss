@@ -86,7 +86,7 @@ body {
 // }
 .form-container .form-control, .form-container .form-control:focus {
   background-color: rgb(29, 32, 33);
-  color: var(--light);
+  color: var(--bs-white);
 }
 
 .form-container input.form-control:nth-last-of-type(2) {
@@ -114,7 +114,11 @@ body {
 .security--header > h4 {
     padding-top: 5px;
     padding-left: 15px;
-    color: var(--light);
+    color: var(--bs-white);
+}
+
+.security--header > p {
+    color: var(--bs-white);
 }
 
 .security--footer {
