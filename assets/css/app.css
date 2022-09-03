@@ -4,6 +4,7 @@ body {
 
 .md-content {
     min-height: 200px;
+    width: 100%;
 }
 
 a.md-list-item-text{
