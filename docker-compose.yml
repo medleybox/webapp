@@ -81,16 +81,17 @@ services:
          - ./bin/run-tests:/var/www/bin/run-tests:ro
          - ./bin/phpunit:/var/www/bin/phpunit:ro
          - ./config/packages:/var/www/config/packages
+         - ./docker/app/dev.ini:/usr/local/etc/php/conf.d/webapp.ini
          - ./src:/var/www/src
          - ./tests:/var/www/tests
          - ./templates:/var/www/templates
          - ./vendor:/var/www/vendor
-         - ./public/build:/var/www/public/build
          - ./phpstan.neon:/var/www/phpstan.neon
          - ./phpunit.xml.dist:/var/www/phpunit.xml.dist
          - ./composer.json:/var/www/composer.json
          - ./composer.lock:/var/www/composer.lock
          - ./symfony.lock:/var/www/symfony.lock:ro
+         - ./docker/app/dev.ini:/usr/local/etc/php/dev.ini
     redis:
         image: redis:alpine
         restart: always

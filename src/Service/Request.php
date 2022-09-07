@@ -6,7 +6,7 @@ use Symfony\Contracts\HttpClient\{HttpClientInterface, ResponseInterface};
 
 class Request
 {
-    const BASE_URI = 'http://vault';
+    const BASE_URI = 'https://nginx/vault/';
     const TIMEOUT = 30;
 
     /**

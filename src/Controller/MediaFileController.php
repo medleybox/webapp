@@ -78,6 +78,15 @@ class MediaFileController extends AbstractController
     }
 
     /**
+     * @Route("/media-file/wavedata/{uuid}", name="media_wavedata", methods={"GET"})
+     * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
+     */
+    public function wavedata(MediaFile $media, Request $request): Response
+    {
+        return $this->json($this->media->getWavedata($media));
+    }
+
+    /**
      * @Route("/media-file/delete/{uuid}", name="media_delete", methods={"GET", "DELETE"})
      * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
      */

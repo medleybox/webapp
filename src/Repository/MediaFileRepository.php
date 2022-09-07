@@ -114,6 +114,20 @@ class MediaFileRepository extends ServiceEntityRepository
         return $metadata;
     }
 
+    /**
+     * @return array<string, string>
+     */
+    public function getWavedata(MediaFile $media): array
+    {
+        try {
+            $response = $this->request->get("entry/wavedata/{$media->getUuid()}");
+        } catch (ServerException $e) {
+            throw new \Exception('Unable send request to vault');
+        }
+
+        return $response->toArray();
+    }
+
     public function save(MediaFile $media): bool
     {
         if (null === $media->getId()) {
