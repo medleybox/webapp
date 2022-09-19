@@ -41,6 +41,8 @@ services:
             - "443:443"
     encore:
         image: ghcr.io/medleybox/encore:master
+        environment:
+          NODE_ENV: dev
         extra_hosts:
          - "medleybox.local:0.0.0.0"
         networks:
@@ -66,6 +68,8 @@ services:
         working_dir: '/app'
         volumes:
           - ../frontend:/app
+        environment:
+          NODE_ENV: dev
         networks:
             - medley
     webapp:
@@ -92,6 +96,7 @@ services:
          - ./composer.lock:/var/www/composer.lock
          - ./symfony.lock:/var/www/symfony.lock:ro
          - ./docker/app/dev.ini:/usr/local/etc/php/dev.ini
+         - ./public/build:/var/www/public/build
     redis:
         image: redis:alpine
         restart: always
