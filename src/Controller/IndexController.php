@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\{Import, UserPasswordReset};
+use App\Service\Import;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{Request, Response};
@@ -96,33 +96,5 @@ class IndexController extends AbstractController
         }
 
         return $this->json(['import' => false, 'attempt' => true]);
-    }
-
-    /**
-     * @Route("/update-password", name="index_updatePassword", methods={"POST"})
-     */
-    public function updatePassword(Request $request, UserPasswordReset $reset): Response
-    {
-        if ($request->isMethod('POST')) {
-            $password = $request->request->get('password');
-            if (null === $password) {
-                return $this->json(['import' => false, 'attempt' => false]);
-            }
-
-            try {
-                /**
-                 * null or UserInterface if request has valid session
-                 * @var \App\Entity\LocalUser
-                 */
-                $user = $this->security->getUser();
-                $reset->updatePassword($user, $password);
-            } catch (\Exception $e) {
-                return $this->json(['import' => false, 'attempt' => true, 'error' => $e->getMessage()]);
-            }
-
-            return $this->json(['updated' => true, 'attempt' => true]);
-        }
-
-        return $this->json(['updated' => false, 'attempt' => true]);
     }
 }

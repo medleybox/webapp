@@ -64,6 +64,11 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $active = false;
 
+    /**
+     * @ORM\OneToOne(targetEntity=UserSettings::class, mappedBy="ref", cascade={"persist", "remove"})
+     */
+    private $settings;
+
     public function __construct()
     {
         $this->mediaFiles = new ArrayCollection();
@@ -199,6 +204,27 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getSettings(): UserSettings
+    {
+        if (null === $this->settings) {
+            $this->settings = new UserSettings;
+        }
+
+        return $this->settings;
+    }
+
+    public function setSettings(UserSettings $settings): self
+    {
+        // set the owning side of the relation if necessary
+        if ($settings->getRef() !== $this) {
+            $settings->setRef($this);
+        }
+
+        $this->settings = $settings;
 
         return $this;
     }
