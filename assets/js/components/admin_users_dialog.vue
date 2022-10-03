@@ -21,6 +21,19 @@
                 <div>
                     <md-card>
                         <md-card-header>
+                            <div class="md-title">Is admin user</div>
+                        </md-card-header>
+
+                        <md-card-content>
+                            Should this user have access to admin functions
+                        </md-card-content>
+
+                        <md-card-actions>
+                            <md-switch v-model="isAdmin"></md-switch>
+                        </md-card-actions>
+                    </md-card>
+                    <md-card>
+                        <md-card-header>
                             <div class="md-title">Delete user</div>
                         </md-card-header>
 
@@ -71,6 +84,7 @@ export default {
     },
     data: () => ({
         showDialog: false,
+        isAdmin: false,
         user: {}
     }),
     methods: {
@@ -82,6 +96,7 @@ export default {
                 return response.json();
             }).then((json) => {
                 this.user = json.user;
+                this.isAdmin = json.user.isAdmin;
             });
         },
         removeUser() {
@@ -109,6 +124,7 @@ export default {
             const data = new FormData();
             data.append('username', this.user.username);
             data.append('email', this.user.email);
+            data.append('isAdmin', this.isAdmin);
 
             let _this = this;
             fetch(`/admin/users/json/${this.id}`, {

@@ -6,6 +6,7 @@
                 <md-table-head>Active</md-table-head>
                 <md-table-head>Username</md-table-head>
                 <md-table-head>Email</md-table-head>
+                <md-table-head>Roles</md-table-head>
                 <md-table-head></md-table-head>
             </md-table-row>
 
@@ -19,6 +20,9 @@
                 </md-table-cell>
                 <md-table-cell>{{user.username}}</md-table-cell>
                 <md-table-cell>{{user.email}}</md-table-cell>
+                <md-table-cell>
+                    <md-icon v-if="user.isAdmin === true">supervisor_account</md-icon>
+                </md-table-cell>
                 <md-table-cell>
                     <admin-users-dialog v-bind:id="user.id"></admin-users-dialog>
                 </md-table-cell>

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\MediaFileRepository;
+use App\Repository\{MediaFileRepository, LocalUserRepository};
 use App\Entity\MediaFile;
 use App\Form\MediaFileType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -102,7 +102,7 @@ class MediaFileController extends AbstractController
     /**
      * @Route("/media-file/update", name="media_update", methods={"POST"})
      */
-    public function update(Request $request): Response
+    public function update(Request $request, LocalUserRepository $user): Response
     {
         $uuid = $request->request->get('uuid');
         if (null === $uuid) {
@@ -136,6 +136,11 @@ class MediaFileController extends AbstractController
 
         if (null !== $request->request->get('size')) {
             $media->setSize($request->request->get('size'));
+        }
+
+        if (null === $media->getImportUser()) {
+            $importUser = $user->getDefaultUser();
+            $media->setImportUser($importUser);
         }
 
         $this->media->save($media);

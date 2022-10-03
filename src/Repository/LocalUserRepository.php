@@ -32,6 +32,18 @@ class LocalUserRepository extends ServiceEntityRepository
         $this->reset = $reset;
     }
 
+    public function getDefaultUser(): ?LocalUser
+    {
+        foreach ($this->findBy([], ['id' => 'ASC'], 10) as $user) {
+            dump($user, $user->hasRole('ROLE_ADMIN'));
+            if ($user->hasRole('ROLE_ADMIN')) {
+                return $user;
+            }
+        }
+
+        return null;
+    }
+
     public function save(LocalUser $user): bool
     {
         if (null === $user->getId()) {

@@ -111,6 +111,43 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function hasRole(string $role): bool
+    {
+        if (null === $this->roles) {
+            return false;
+        }
+
+        foreach ($this->roles as $r) {
+            if ($r === $role) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function setRole(string $role): self
+    {
+        if (false === $this->hasRole($role)) {
+            $roles = $this->roles;
+            $roles[] = $role;
+            $this->setRoles($roles);
+        }
+
+        return $this;
+    }
+
+    public function removeRole(string $role): self
+    {
+        if (true === $this->hasRole($role)) {
+            $roles = $this->getRoles();
+            unset($roles[$role]);
+            $this->setRoles($roles);
+        }
+
+        return $this;
+    }
+
     public function getPassword(): ?string
     {
         return $this->password;

@@ -21,6 +21,17 @@ class AdminUsersController extends AbstractController
         $this->repo = $repo;
     }
 
+    private function getUserAsArray(LocalUser $user): array
+    {
+        return [
+            'id' => $user->getId(),
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'active' => $user->getActive(),
+            'isAdmin' => $user->hasRole('ROLE_ADMIN'),
+        ];
+    }
+
     /**
      * @Route("/admin/users", name="admin_users", methods={"GET"})
      */
@@ -36,12 +47,7 @@ class AdminUsersController extends AbstractController
     {
         $users = [];
         foreach ($this->repo->findBy([], ['id' => 'ASC']) as $user) {
-            $users[] = [
-                'id' => $user->getId(),
-                'username' => $user->getUsername(),
-                'email' => $user->getEmail(),
-                'active' => $user->getActive()
-            ];
+            $users[] = $this->getUserAsArray($user);
         }
 
         return $this->json(['users' => $users]);
@@ -57,19 +63,17 @@ class AdminUsersController extends AbstractController
             $user->setUsername($request->request->get('username'));
             $user->setEmail($request->request->get('email'));
 
+            $user->removeRole('ROLE_ADMIN');
+            if ('true' === $request->request->get('isAdmin', false)) {
+                $user->setRole('ROLE_ADMIN');
+            }
+
             $this->repo->save($user);
 
             return $this->json(['success' => true], Response::HTTP_CREATED);
         }
 
-        $user = [
-            'id' => $user->getId(),
-            'username' => $user->getUsername(),
-            'email' => $user->getEmail(),
-            'active' => $user->getActive()
-        ];
-
-        return $this->json(['user' => $user]);
+        return $this->json(['user' => $this->getUserAsArray($user)]);
     }
 
     /**
