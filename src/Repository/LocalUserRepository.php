@@ -35,7 +35,6 @@ class LocalUserRepository extends ServiceEntityRepository
     public function getDefaultUser(): ?LocalUser
     {
         foreach ($this->findBy([], ['id' => 'ASC'], 10) as $user) {
-            dump($user, $user->hasRole('ROLE_ADMIN'));
             if ($user->hasRole('ROLE_ADMIN')) {
                 return $user;
             }
