@@ -33,7 +33,8 @@ class MediaFileController extends AbstractController
         return $this->json([
             'files' => [
                 'user' => $this->media->forUser($user),
-                'home' => $this->media->list()
+                'latest' => $this->media->latest(),
+                'suggested' => $this->media->suggested($user),
             ],
             'user' => [
                 'id' => $user->getId()

@@ -36,7 +36,20 @@ class MediaFileRepository extends ServiceEntityRepository
      */
     private $urlHelper;
 
-    const LIST_LIMIT = 250;
+    /**
+     * @var int Number of cols in a row
+     */
+    const COL_LIMIT = 12;
+
+    /**
+     * @var int Max number of user files to fetch
+     */
+    const USER_LIMIT = 100;
+
+    /**
+     * @var int Number of random files to pick from
+     */
+    const SUGGESTED_LIMIT = 50;
 
     public function __construct(ManagerRegistry $registry, Import $import, UrlGeneratorInterface $router, Request $request, UrlHelper $urlHelper)
     {
@@ -51,34 +64,68 @@ class MediaFileRepository extends ServiceEntityRepository
     /**
      * @return array<int, array<string, mixed>>
      */
-    public function list(): array
+    public function latest(): array
     {
         $files = [];
-        foreach ($this->findBy([], ['id' => 'DESC'], self::LIST_LIMIT) as $media) {
-            // Hide items until they've been imported
-            if (null === $media->getSize()) {
-                continue;
+        foreach ($this->findBy([], ['id' => 'DESC'], self::COL_LIMIT) as $media) {
+            $check = $this->checkMedia($media);
+            if (null !== $check) {
+                $files[] = $check;
             }
-
-            $files[] = $this->getApiValue($media);
         }
 
         return $files;
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function forUser(LocalUser $user): array
     {
         $files = [];
-        foreach ($this->findBy(['importUser' => $user->getId()], ['id' => 'DESC'], self::LIST_LIMIT) as $media) {
-            // Hide items until they've been imported
-            if (null === $media->getSize()) {
-                continue;
+        foreach ($this->findBy(['importUser' => $user->getId()], ['id' => 'DESC'], self::USER_LIMIT) as $media) {
+            $check = $this->checkMedia($media);
+            if (null !== $check) {
+                $files[] = $check;
             }
-
-            $files[] = $this->getApiValue($media);
         }
 
         return $files;
+    }
+
+    public function suggested(LocalUser $user): array
+    {
+        $keys = [];
+        $files = [];
+        foreach ($this->findBy([], ['id' => 'DESC'], self::SUGGESTED_LIMIT, self::COL_LIMIT) as $media) {
+            $check = $this->checkMedia($media);
+            if (null !== $check) {
+                $keys[] = $media->getId();
+                $files[] = $check;
+            }
+        }
+
+        if ([] === $files) {
+            return [];
+        }
+
+        $final = [];
+        $randKeys = array_rand($keys, min(self::COL_LIMIT, count($keys)));
+        foreach($randKeys as $key) {
+            $final[] = $files[$key];
+        }
+
+        return $final;
+    }
+
+    private function checkMedia(MediaFile $media): ?array
+    {
+        // Hide items until they've been imported
+        if (null === $media->getSize()) {
+            return null;
+        }
+
+        return $this->getApiValue($media);
     }
 
     /**
