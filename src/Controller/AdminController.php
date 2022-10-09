@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Service\{Import, Request as Vault};
+use App\Repository\MediaFileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\Security;
-use Exception;
+use \Exception;
 
 class AdminController extends AbstractController
 {
@@ -41,6 +42,55 @@ class AdminController extends AbstractController
                 'php' => PHP_VERSION
             ],
             'vault' => $vaultVersion
+        ]);
+    }
+
+    /**
+     * @Route("/admin/media", name="admin_media", methods={"GET"})
+     */
+    public function media(Request $request): Response
+    {
+        return $this->render('admin/media.html.twig');
+    }
+
+    /**
+     * @Route("/admin/media/json", name="admin_media_json", methods={"GET"})
+     */
+    public function mediaJson(Request $request, Vault $vault, MediaFileRepository $media): Response
+    {
+        $vaultMedia = $vault->get('entry/list-all')->toArray();
+        $json = [];
+
+        foreach ($media->findBy([]) as $row) {
+
+            $import = null;
+            if (null !== $row->getImportUser()) {
+                $user = $row->getImportUser();
+                $import = $user->__toString();
+            }
+
+            $uuid = $row->getUuid();
+
+            $data = [
+                'uuid' => $uuid,
+                'title' => $row->getTitle(),
+                'size' => $row->getSize(),
+                'seconds' => $row->getSeconds(),
+                'user' => $import,
+                'hasVault' => false,
+                'vault' => []
+            ];
+
+            if (array_key_exists($uuid, $vaultMedia)) {
+                $data['hasVault'] = true;
+                $data['vault'] = $vaultMedia[$uuid];
+            }
+
+            $json[] = $data;
+        }
+
+        return $this->json([
+            'media' => $json
         ]);
     }
 }

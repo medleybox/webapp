@@ -37,6 +37,10 @@
             <a class="md-list-item-text" href="/admin/users">Users</a>
           </md-list-item>
           <md-list-item>
+            <md-icon>smart_display</md-icon>
+            <a class="md-list-item-text" href="/admin/media">Media</a>
+          </md-list-item>
+          <md-list-item>
             <md-icon>info</md-icon>
             <a class="md-list-item-text" href="/admin/about">About</a>
           </md-list-item>

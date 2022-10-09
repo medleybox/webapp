@@ -172,6 +172,10 @@ class MediaFileRepository extends ServiceEntityRepository
             throw new \Exception('Unable send request to vault');
         }
 
+        if ('null' === $response->getContent()) {
+            return ['message' => 'Unable to load wavedata'];
+        }
+
         return $response->toArray();
     }
 

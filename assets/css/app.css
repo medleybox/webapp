@@ -2,8 +2,8 @@ body {
     background-color: var(--md-theme-default-background, #424242);
 }
 
-.md-content {
-    min-height: 200px;
+.md-app {
+    height: 100vh !important;
     width: 100%;
 }
 

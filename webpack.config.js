@@ -29,6 +29,7 @@ Encore
     .addEntry('ws', './assets/js/ws.js')
     .addEntry('particles', './assets/js/particles.js')
     .addEntry('admin_about', './assets/js/admin_about.js')
+    .addEntry('admin_media', './assets/js/admin_media.js')
     .addEntry('admin_users', './assets/js/admin_users.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
