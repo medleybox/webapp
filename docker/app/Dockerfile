@@ -4,12 +4,11 @@ COPY composer* /app/
 COPY config/ /app/config
 COPY src/ /app/src
 
-RUN composer install --no-dev -o -a --no-scripts --ignore-platform-reqs \
- && rm -rf composer*
+RUN composer install --no-dev -o -a --no-scripts --ignore-platform-reqs rm -rf composer*
 
 FROM ghcr.io/medleybox/php-fpm:master as webapp
 
-WORKDIR /var/www
+ENV POSTGRES_DB=medleybox_webapp
 
 COPY bin/console /var/www/bin/console
 COPY public/index.php /var/www/public/index.php
