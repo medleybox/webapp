@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 set -xe
 
 console cache:warmup -e test
