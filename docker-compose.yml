@@ -4,9 +4,6 @@ x-variables: &x-variables
     APP_DEBUG: 1
     APP_ENV: dev
     APP_SECRET: c95ab68cbfba3232e79d72ebae567424
-    TZ: Europe/London
-    POSTGRES_USER: medleybox
-    POSTGRES_DB: medleybox_webapp
     POSTGRES_PASSWORD: medleybox
     MAILER_DSN: smtp://mailhog:1025
 
@@ -23,7 +20,8 @@ services:
     nginx:
         image: ghcr.io/medleybox/nginx:master
         restart: always
-        environment: *x-variables
+        environment:
+          APP_ENV: dev
         build:
             context: ../nginx/
             dockerfile: ../nginx/Dockerfile
