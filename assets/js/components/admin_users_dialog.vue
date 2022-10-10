@@ -59,10 +59,6 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
-
 <script>
 import { EventBus } from '../event-bus.js';
 

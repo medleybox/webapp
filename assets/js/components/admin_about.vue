@@ -28,10 +28,6 @@
     </admin>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
-
 <script>
 import prettyBytes from 'pretty-bytes';
 import adminApp from './admin'

@@ -1,5 +1,6 @@
 <template>
     <admin>
+        <admin-media-dialog></admin-media-dialog>
         <md-table md-card>
             <md-table-row>
                 <md-table-head>UUID</md-table-head>
@@ -18,20 +19,15 @@
                 <md-table-cell><span v-html="showTrackSeconds(row)"></span></md-table-cell>
                 <md-table-cell><span v-html="getPrettyBytes(row)"></span></md-table-cell>
                 <md-table-cell>{{row.user}}</md-table-cell>
-                <md-table-cell><md-button class="md-primary md-raised" disabled @click="true">Edit</md-button></md-table-cell>
+                <md-table-cell><md-button class="md-primary md-raised" @click="showEditModal(row.uuid)">Edit</md-button></md-table-cell>
             </md-table-row>
         </md-table>
     </admin>
 </template>
 
-<style lang="scss" scoped>
-.admin_media{
-    color: red;
-}
-</style>
-
 <script>
 import adminApp from './admin'
+import adminMediaDialog from './admin_media_dialog'
 import prettyBytes from 'pretty-bytes';
 import { EventBus } from '../event-bus.js';
 
@@ -40,9 +36,6 @@ export default {
     created: function () {
         let _this = this;
         _this.fetchData();
-        EventBus.$on('admin_user-fetchData', function(e) {
-            _this.fetchData();
-        });
     },
     data: function () {
         return {
@@ -77,10 +70,14 @@ export default {
             }
 
             return new Date(row.seconds * 1000).toISOString().substr(11, 8)
+        },
+        showEditModal(uuid) {
+            EventBus.$emit('admin_media_dialog-fetchData', uuid);
         }
     },
     components: {
-        'admin': adminApp
+        'admin': adminApp,
+        'admin-media-dialog': adminMediaDialog
     }
 }
 </script>

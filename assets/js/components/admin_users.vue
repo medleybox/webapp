@@ -31,10 +31,6 @@
     </admin>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
-
 <script>
 import adminApp from './admin'
 import adminUsersDialog from './admin_users_dialog'
