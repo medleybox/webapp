@@ -58,12 +58,22 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .md-app {
     min-height: 100vh;
     border: 1px solid rgba(#000, .12);
     overflow: inherit !important;
     border-bottom: none;
+  }
+
+  .md-table-cell-container {
+    min-width: 105px !important;
+    padding: 6px 4px 6px 4px !important;
+  }
+
+  .md-table-head-label {
+    padding-right: 4px !important;
+    padding-left: 4px !important;
   }
 
    // Demo purposes only
