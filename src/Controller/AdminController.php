@@ -32,14 +32,15 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/about/json", name="admin_about_json", methods={"GET"})
      */
-    public function aboutJson(Request $request, Vault $vault): Response
+    public function aboutJson(Request $request, Vault $vault, MediaFileRepository $media): Response
     {
         $vaultVersion = $vault->get('api/version')->toArray();
 
         return $this->json([
             'webapp' => [
                 'symfony' => Kernel::VERSION,
-                'php' => PHP_VERSION
+                'php' => PHP_VERSION,
+                'files' => $media->count([])
             ],
             'vault' => $vaultVersion
         ]);

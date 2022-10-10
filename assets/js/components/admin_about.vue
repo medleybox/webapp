@@ -1,32 +1,67 @@
 <template>
     <admin>
-        <md-card>
-            <md-card-header>
-                <div class="md-title">Webapp</div>
-            </md-card-header>
+        <div class="card--container">
+            <md-card>
+                <md-card-header>
+                    <div class="md-title">Webapp</div>
+                </md-card-header>
 
-            <md-card-content v-show="data.webapp != {}">
-                Symfony: <code>{{data.webapp.symfony}}</code><br/>
-                PHP: <code>{{data.webapp.php}}</code><br/>
-                Version: -<br/>
-            </md-card-content>
-        </md-card>
-        <md-card>
-            <md-card-header>
-                <div class="md-title">Vault</div>
-            </md-card-header>
+                <md-card-content v-show="data.webapp != {}">
+                    Symfony: <code>{{data.webapp.symfony}}</code><br/>
+                    PHP: <code>{{data.webapp.php}}</code><br/>
+                    Version: -<br/>
+                    Media Files: <code>{{data.webapp.files}}</code><br/>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div class="card--container">
+            <md-card>
+                <md-card-header>
+                    <div class="md-title">Vault</div>
+                </md-card-header>
 
-            <md-card-content>
-                Symfony: <code>{{data.vault.symfony}}</code><br/>
-                PHP: <code>{{data.vault.php}}</code><br/>
-                AudiowaveForm: <code>{{data.vault.audiowaveform}}</code><br/>
-                Version: -<br/>
-                Music: <code>{{musicSize}}</code><br/>
-                Thumbnails: <code>{{thumbnailsSize}}</code><br/>
-            </md-card-content>
-        </md-card>
+                <md-card-content>
+                    <p class="float-right">
+                        Music: <code>{{musicSize}}</code><br/>
+                        Thumbnails: <code>{{thumbnailsSize}}</code><br/>
+                    </p>
+                    <p>
+                        Symfony: <code>{{data.vault.symfony}}</code><br/>
+                        PHP: <code>{{data.vault.php}}</code><br/>
+                        AudiowaveForm: <code>{{data.vault.audiowaveform}}</code><br />
+                        Version: -
+                    </p>
+                </md-card-content>
+            </md-card>
+        </div>
     </admin>
 </template>
+
+<style lang="scss" scoped>
+    .card--container {
+        width: 48vw;
+        height: 230px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 30px;
+
+        .md-card {
+            width: 100%;
+        }
+
+        p {
+            width: 45%;
+            margin-bottom: 0px;
+            margin-top: 0px;
+        }
+
+        .float-right {
+            float: right;
+            margin-top: 0px;
+        }
+    }
+</style>
 
 <script>
 import prettyBytes from 'pretty-bytes';
