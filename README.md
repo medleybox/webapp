@@ -7,6 +7,13 @@
 A Symfony 5 application to serve the frontend of Medleybox.
 
 ## Quick Start
+
+Add hostsfile for medleybox.local:
+```
+127.0.0.1 medleybox.local
+```
+
+Run the following in your terminal:
 ```bash
 # Install PHP dependencies on host
 composer install
@@ -21,9 +28,7 @@ bin/docker-up
 bin/docker-console app:create-user --username admin
 ```
 
-Once the user has been created, you can login via https://localhost
-
-mailhog - https://localhost/mailhog/
+Once the user has been created, you can login via https://medleybox.local
 
 ## Bin Scripts
 Bin scripts have been written to automate common tasks:
@@ -48,7 +53,17 @@ Fix reported issues with `phpcbf`:
 vendor/bin/phpcbf --standard=PSR12 --colors src
 ```
 
+## Useful links
+Services:
+- [Mailhog][medleybox-mailhog]
+
+Docs:
+- [Vue Material][vuematerial-docs]
+
+
 [dockerhub-webapp]: https://hub.docker.com/repository/docker/medleybox/webapp
 [dockerhub-webapp-builds]: https://hub.docker.com/repository/docker/medleybox/webapp/builds
 [github-workflows]: https://github.com/medleybox/webapp/actions?query=workflow%3A%22PHP+Tests%22
 [phpcs-symfony-ruleset]: https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/2.17/doc/ruleSets/SymfonyRisky.rst
+[medleybox-mailhog]: https://medleybox.local/mailhog
+[vuematerial-docs]: https://www.creative-tim.com/vuematerial/components

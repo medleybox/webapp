@@ -26,7 +26,7 @@ class MediaFileController extends AbstractController
     /**
      * @Route("/media-file/list", name="media_list", methods={"GET"})
      */
-    public function list(Request $request, Security $security): Response
+    public function list(Security $security): Response
     {
         $user = $security->getUser();
 
@@ -43,25 +43,38 @@ class MediaFileController extends AbstractController
     }
 
     /**
-     * @Route("/media-file/my-list", name="media_my_list", methods={"GET"})
+     * @Route("/media-file/latest-list", name="media_latest_list", methods={"GET"})
      */
-    public function myList(Request $request, Security $security): Response
+    public function latestList(): Response
+    {
+        return $this->json($this->media->latest());
+    }
+
+    /**
+     * @Route("/media-file/suggested-list", name="media_suggested_list", methods={"GET"})
+     */
+    public function suggested(Security $security): Response
     {
         $user = $security->getUser();
 
-        return $this->json([
-            'files' => $this->media->forUser($user),
-            'user' => [
-                'id' => $user->getId()
-            ]
-        ]);
+        return $this->json($this->media->suggested($user));
+    }
+
+    /**
+     * @Route("/media-file/user-list", name="media_user_list", methods={"GET"})
+     */
+    public function userList(Security $security): Response
+    {
+        $user = $security->getUser();
+
+        return $this->json($this->media->forUser($user));
     }
 
     /**
      * @Route("/media-file/metadata/{uuid}", name="media_metadata", methods={"GET", "HEAD"})
      * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
      */
-    public function metadata(MediaFile $media, Request $request): Response
+    public function metadata(MediaFile $media): Response
     {
         $importuser = $media->getImportUser();
         if (null !== $importuser) {
@@ -82,7 +95,7 @@ class MediaFileController extends AbstractController
      * @Route("/media-file/wavedata/{uuid}", name="media_wavedata", methods={"GET"})
      * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
      */
-    public function wavedata(MediaFile $media, Request $request): Response
+    public function wavedata(MediaFile $media): Response
     {
         return $this->json($this->media->getWavedata($media));
     }
@@ -91,7 +104,7 @@ class MediaFileController extends AbstractController
      * @Route("/media-file/delete/{uuid}", name="media_delete", methods={"GET", "DELETE"})
      * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
      */
-    public function delete(MediaFile $media, Request $request): Response
+    public function delete(MediaFile $media): Response
     {
         $this->media->delete($media);
 
