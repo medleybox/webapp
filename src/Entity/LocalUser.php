@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\LocalUserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,63 +11,63 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\LocalUserRepository")
- * @UniqueEntity(fields="username", message="This username is already taken.")
- * @UniqueEntity(fields="email", message="An account with this email already exists.")
- */
+#[ORM\Entity(repositoryClass: LocalUserRepository::class)]
+#[UniqueEntity(fields: "username", message: "This username is already taken.")]
+#[UniqueEntity(fields: "email", message: "An account with this email already exists.")]
 class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @var int
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Id()]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: "integer")]
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=180, unique=true)
      */
+    #[ORM\Column(type: "string", length: 180, unique: true)]
     private $username;
 
     /**
      * @var array<string> $roles
-     * @ORM\Column(type="json")
      */
+    #[ORM\Column(type: "json")]
     private $roles = ['ROLE_USER'];
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     * @Assert\Length(min=8, max=4096)
      */
+    #[ORM\Column(type: "string")]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 8, max: 4096)]
     private $password;
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection<int, MediaFile>
-     * @ORM\OneToMany(targetEntity=MediaFile::class, mappedBy="importUser")
      */
+    #[ORM\OneToMany(targetEntity: MediaFile::class, mappedBy: "importUser")]
     private $mediaFiles;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, unique=true)
      */
+    #[ORM\Column(type: "string", length: 255, unique: true)]
     private $email;
 
     /**
      * @var boolean
      * By default users are inactive
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: "boolean")]
     private $active = false;
 
     /**
-     * @ORM\OneToOne(targetEntity=UserSettings::class, mappedBy="ref", cascade={"persist", "remove"})
+     * @var ?UserSettings
+     * By default users are inactive
      */
+    #[ORM\OneToOne(targetEntity: UserSettings::class, mappedBy: "ref", cascade: ["persist", "remove"])]
     private $settings;
 
     public function __construct()
@@ -248,7 +249,7 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
     public function getSettings(): UserSettings
     {
         if (null === $this->settings) {
-            $this->settings = new UserSettings;
+            $this->settings = new UserSettings();
         }
 
         return $this->settings;

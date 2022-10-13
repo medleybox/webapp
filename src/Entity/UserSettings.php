@@ -5,37 +5,40 @@ namespace App\Entity;
 use App\Repository\UserSettingsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=UserSettingsRepository::class)
- */
+#[ORM\Entity(repositoryClass: UserSettingsRepository::class)]
 class UserSettings
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @var int
      */
+    #[ORM\Id()]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: "integer")]
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=LocalUser::class, inversedBy="settings", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @var LocalUser
      */
+    #[ORM\OneToOne(targetEntity: LocalUser::class, inversedBy: "settings", cascade: ["persist", "remove"])]
+    #[ORM\JoinColumn(nullable: false)]
     private $ref;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":0})
+     * @var boolean
      */
+    #[ORM\Column(type: "boolean", options: ["default" => 0])]
     private $autoPlay = false;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":0})
+     * @var boolean
      */
+    #[ORM\Column(type: "boolean", options: ["default" => 0])]
     private $random = false;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":0})
+     * @var boolean
      */
+    #[ORM\Column(type: "boolean", options: ["default" => 0])]
     private $openVlc = false;
 
     public function getId(): ?int

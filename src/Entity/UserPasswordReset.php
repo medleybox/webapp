@@ -6,48 +6,46 @@ use App\Repository\UserPasswordResetRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-/**
- * @ORM\Entity(repositoryClass=UserPasswordResetRepository::class)
- */
+#[ORM\Entity(repositoryClass: UserPasswordResetRepository::class)]
 class UserPasswordReset implements PasswordAuthenticatedUserInterface
 {
     /**
      * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Id()]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: "integer")]
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: "string", length: 255)]
     private $hash;
 
     /**
-     * @var \App\Entity\LocalUser
-     * @ORM\ManyToOne(targetEntity=LocalUser::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @var LocalUser
      */
+    #[ORM\ManyToOne(targetEntity: LocalUser::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private $localuser;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=39, nullable=true)
      */
+    #[ORM\Column(type: "string", length: 39, nullable: true)]
     private $ip;
 
     /**
      * @var \DateTimeInterface
-     * @ORM\Column(type="datetime")
      */
+    #[ORM\Column(type: "datetime")]
     private $created;
 
     /**
      * @var boolean
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: "boolean")]
     private $active;
 
     public function __construct()
