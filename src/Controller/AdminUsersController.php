@@ -21,6 +21,9 @@ class AdminUsersController extends AbstractController
         $this->repo = $repo;
     }
 
+    /**
+     * @return array<string, bool|int|string|null>
+     */
     private function getUserAsArray(LocalUser $user): array
     {
         return [

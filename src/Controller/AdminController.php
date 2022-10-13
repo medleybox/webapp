@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\Security;
-use \Exception;
+use Exception;
 
 class AdminController extends AbstractController
 {
@@ -63,7 +63,6 @@ class AdminController extends AbstractController
         $json = [];
 
         foreach ($media->findBy([]) as $row) {
-
             $import = null;
             if (null !== $row->getImportUser()) {
                 $user = $row->getImportUser();

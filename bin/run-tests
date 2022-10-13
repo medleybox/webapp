@@ -2,11 +2,20 @@
 
 set -xe
 
-console cache:warmup -e test
+bin/console cache:warmup -e test
 
-phpstan analyse
+vendor/bin/phpstan analyse
 
-phpcs --standard=PSR12 --colors -pn --report=full,summary src
+vendor/bin/phpcs --standard=PSR12 --colors -pn --report=full,summary src
+
+PHPCS=$?
+if [ $PHPCS -eq 0 ]; then
+  exit 0
+else
+  echo "Fix code issues with:"
+  echo "vendor/bin/phpcbf --standard=PSR12 --colors src"
+  exit 1
+fi
 
 composer install -vvv
-phpunit -vvv tests/Service/Request.php
+vendor/bin/phpunit -vvv tests/Service/Request.php

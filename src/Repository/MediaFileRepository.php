@@ -93,6 +93,9 @@ class MediaFileRepository extends ServiceEntityRepository
         return $files;
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function suggested(LocalUser $user): array
     {
         $keys = [];
@@ -111,13 +114,16 @@ class MediaFileRepository extends ServiceEntityRepository
 
         $final = [];
         $randKeys = array_rand($keys, min(self::COL_LIMIT, count($keys)));
-        foreach($randKeys as $key) {
+        foreach ($randKeys as $key) {
             $final[] = $files[$key];
         }
 
         return $final;
     }
 
+    /**
+     * @return array<string, float|string|null>
+     */
     private function checkMedia(MediaFile $media): ?array
     {
         // Hide items until they've been imported
@@ -129,7 +135,7 @@ class MediaFileRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, float|string|null>.
      */
     private function getApiValue(MediaFile $media): array
     {

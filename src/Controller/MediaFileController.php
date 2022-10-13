@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\{MediaFileRepository, LocalUserRepository};
-use App\Entity\MediaFile;
+use App\Entity\{MediaFile, LocalUser};
 use App\Form\MediaFileType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,6 +29,7 @@ class MediaFileController extends AbstractController
     public function list(Security $security): Response
     {
         $user = $security->getUser();
+        assert($user instanceof LocalUser);
 
         return $this->json([
             'files' => [
@@ -56,6 +57,7 @@ class MediaFileController extends AbstractController
     public function suggested(Security $security): Response
     {
         $user = $security->getUser();
+        assert($user instanceof LocalUser);
 
         return $this->json($this->media->suggested($user));
     }
@@ -66,6 +68,7 @@ class MediaFileController extends AbstractController
     public function userList(Security $security): Response
     {
         $user = $security->getUser();
+        assert($user instanceof LocalUser);
 
         return $this->json($this->media->forUser($user));
     }
