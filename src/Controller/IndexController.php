@@ -73,11 +73,11 @@ class IndexController extends AbstractController
     public function import(Request $request): Response
     {
         if ($request->isMethod('POST')) {
-            $url = $request->request->get('url');
+            $url = $request->request->get('url', '');
             $uuid = $request->request->get('uuid');
             $title = $request->request->get('title');
 
-            if (null === $uuid || null === $url) {
+            if (null === $uuid) {
                 return $this->json(['import' => false, 'attempt' => false]);
             }
 
