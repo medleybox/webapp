@@ -18,4 +18,12 @@ class ApiController extends AbstractController
             'symfony' => Kernel::VERSION
         ]);
     }
+
+    /**
+     * @Route("/api/healthcheck", name="api_healthcheck")
+     */
+    public function healthcheck(): Response
+    {
+        return $this->json([]);
+    }
 }

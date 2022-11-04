@@ -25,8 +25,7 @@ security:
                 check_path: security_login
             logout:
                 path: security_logout
-                # where to redirect after logout
-                # target: app_any_route
+                target: security_login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -38,6 +37,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/version, roles: PUBLIC_ACCESS }
+        - { path: ^/api/healthcheck, roles: PUBLIC_ACCESS }
         - { path: ^/media-file/update, roles: PUBLIC_ACCESS }
         - { path: ^/media-file/metadata/, roles: PUBLIC_ACCESS, methods: [HEAD] }
         - { path: ^/login, roles: PUBLIC_ACCESS }
