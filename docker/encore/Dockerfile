@@ -1,18 +1,19 @@
-FROM node:16-alpine3.12 as builder
+FROM node:18-alpine3.16 as builder
 
 RUN apk add --no-cache alpine-sdk python3
 
 WORKDIR /app
 
-COPY assets /app/assets
 COPY package.json webpack.config.js package-lock.json /app/
 
-RUN mkdir -p /app/public/build && \
-  npm install && \
-  ./node_modules/.bin/encore production
+RUN mkdir -p /app/public/build && npm install
+
+COPY assets /app/assets
+
+RUN node ./node_modules/.bin/encore production
 
 # Final image
-FROM node:16-alpine3.12 as final
+FROM node:18-alpine3.16 as final
 
 ENV ENCORE_HOST medleybox.local
 

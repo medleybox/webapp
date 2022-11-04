@@ -48,14 +48,14 @@ Encore
      */
     .cleanupOutputBeforeBuild()
     //.enableBuildNotifications()
-    .enableSourceMaps(!Encore.isProduction())
+    //.enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
     .configureBabel((babelConfig) => {
         const preset = babelConfig.presets.find(([name]) => name === "@babel/preset-env");
         if (preset !== undefined) {
             preset[1].useBuiltIns = "usage";
-            preset[1].corejs = '3.0.0';
+            preset[1].corejs = '3.26.0';
         }
     })
 

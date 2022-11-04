@@ -59,6 +59,7 @@ Services:
 
 Docs:
 - [Vue Material][vuematerial-docs]
+- [Material Icons][material-icons]
 
 
 [dockerhub-webapp]: https://hub.docker.com/repository/docker/medleybox/webapp
@@ -67,3 +68,4 @@ Docs:
 [phpcs-symfony-ruleset]: https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/2.17/doc/ruleSets/SymfonyRisky.rst
 [medleybox-mailhog]: https://medleybox.local/mailhog
 [vuematerial-docs]: https://www.creative-tim.com/vuematerial/components
+[material-icons]: https://fonts.google.com/icons?icon.set=Material+Icons

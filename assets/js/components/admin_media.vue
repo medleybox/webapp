@@ -1,9 +1,8 @@
 <template>
     <admin>
         <admin-media-dialog></admin-media-dialog>
-        <md-table md-card>
+        <md-table v-if="true === this.loaded" md-card>
             <md-table-row>
-                <md-table-head>UUID</md-table-head>
                 <md-table-head>Title</md-table-head>
                 <md-table-head>Length</md-table-head>
                 <md-table-head>Size</md-table-head>
@@ -14,8 +13,13 @@
             <md-table-row v-for="row in media"
                 v-bind:data="row"
                 v-bind:key="row.uuid">
-                <md-table-cell>{{row.uuid}}</md-table-cell>
-                <md-table-cell>{{row.title}}</md-table-cell>
+                <md-table-cell>
+                    <span>
+                        <md-icon>info</md-icon>
+                        <md-tooltip md-direction="right">{{row.uuid}}</md-tooltip>
+                    </span>
+                    {{row.title}}
+                </md-table-cell>
                 <md-table-cell><span v-html="showTrackSeconds(row)"></span></md-table-cell>
                 <md-table-cell><span v-html="getPrettyBytes(row)"></span></md-table-cell>
                 <md-table-cell>{{row.user}}</md-table-cell>
@@ -39,9 +43,10 @@ export default {
     },
     data: function () {
         return {
+            loaded: false,
             media: {
-                webapp: {},
-                vault: {},
+                webapp: null,
+                vault: null,
             }
         };
     },
@@ -54,6 +59,7 @@ export default {
                 return response.json();
             }).then((json) => {
                 this.media = json.media;
+                this.loaded = true;
             });
         },
         getPrettyBytes(row) {

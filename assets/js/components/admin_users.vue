@@ -1,6 +1,6 @@
 <template>
     <admin>
-        <md-table md-card>
+        <md-table v-if="true === this.loaded" md-card>
             <md-table-row>
                 <md-table-head md-numeric>ID</md-table-head>
                 <md-table-head>Active</md-table-head>
@@ -47,6 +47,7 @@ export default {
     },
     data: function () {
         return {
+            loaded: false,
             users: {}
         };
     },
@@ -59,6 +60,7 @@ export default {
                 return response.json();
             }).then((json) => {
                 this.users = json.users;
+                this.loaded = true;
             });
         }
     },

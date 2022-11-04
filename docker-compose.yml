@@ -11,6 +11,7 @@ volumes:
     minio-data:
     postgres-data:
     redis-data:
+    frontend-data:
 
 networks:
     medley:
@@ -40,7 +41,7 @@ services:
     encore:
         image: ghcr.io/medleybox/encore:master
         environment:
-          NODE_ENV: dev
+          NODE_ENV: development
         extra_hosts:
          - "medleybox.local:0.0.0.0"
         networks:
@@ -54,20 +55,18 @@ services:
     frontend:
         image: node:16-alpine
         extra_hosts:
-          - "medleybox.local:0.0.0.0"
-        entrypoint: 'node'
-        command: 
-            - '/app/node_modules/.bin/vue-cli-service'
-            - 'serve'
-            - '--host 0.0.0.0'
-            - '--public medleybox.local'
-            - '--port=443'
-            - '--https'
+          - "medleybox.test:0.0.0.0"
+        entrypoint: 'sh'
         working_dir: '/app'
+        command:
+          - '/app/bin/start-frontend-service'
         volumes:
+          - ./bin:/app/bin
           - ../frontend:/app
+          - frontend-data:/app/node_modules
         environment:
-          NODE_ENV: dev
+          NODE_ENV: development
+          PUBLIC_HOST: medleybox.test
         networks:
             - medley
     webapp:
