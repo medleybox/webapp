@@ -189,9 +189,9 @@ class MediaFileRepository extends ServiceEntityRepository
     {
         if (null === $media->getId()) {
             $this->_em->persist($media);
+            $this->request->refreshLatestList();
         }
         $this->_em->flush();
-        $this->request->refreshMediaList();
 
         return true;
     }

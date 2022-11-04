@@ -84,4 +84,9 @@ class Request
     {
         return $this->get('websocket/refreshMediaList');
     }
+
+    public function refreshLatestList(): ResponseInterface
+    {
+        return $this->get('websocket/refreshLatestList');
+    }
 }
