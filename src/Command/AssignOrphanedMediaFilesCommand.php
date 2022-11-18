@@ -60,7 +60,7 @@ class AssignOrphanedMediaFilesCommand extends Command
         if ([] === $mediaFiles) {
             $io->info('No files found without import user 🎉');
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         $localUsers = [];
@@ -79,6 +79,6 @@ class AssignOrphanedMediaFilesCommand extends Command
         $this->em->flush();
         $io->success('Success! Flished changes to database');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

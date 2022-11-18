@@ -55,6 +55,6 @@ class FixUserNoEmailCommand extends Command
         }
 
         $this->em->flush();
-        return 0;
+        return Command::SUCCESS;
     }
 }

@@ -80,6 +80,6 @@ class CreateUserCommand extends Command
 
         $io->success('Success! Use has been created. Now login via the browser');
 
-        return 1;
+        return Command::SUCCESS;
     }
 }

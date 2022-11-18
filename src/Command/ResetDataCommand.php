@@ -56,6 +56,6 @@ class ResetDataCommand extends Command
         $this->em->flush();
         $io->success('Success! Removed all MediaFile entries from system');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
