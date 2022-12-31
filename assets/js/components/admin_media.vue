@@ -14,7 +14,7 @@
                 v-bind:data="row"
                 v-bind:key="row.uuid">
                 <md-table-cell>
-                    <span>
+                    <span class="uuid--hover" @click="copyUuidToCB(row.uuid)">
                         <md-icon>info</md-icon>
                         <md-tooltip md-direction="right">{{row.uuid}}</md-tooltip>
                     </span>
@@ -28,6 +28,12 @@
         </md-table>
     </admin>
 </template>
+
+<style lang="scss" scoped>
+    .uuid--hover > .md-icon {
+        cursor: pointer;
+    }
+</style>
 
 <script>
 import adminApp from './admin'
@@ -61,6 +67,13 @@ export default {
                 this.media = json.media;
                 this.loaded = true;
             });
+        },
+        copyUuidToCB(uuid) {
+            try {
+                navigator.clipboard.writeText(uuid);
+            } catch($e) {
+                alert('Cannot copy uuid');
+            }
         },
         getPrettyBytes(row) {
             if ("undefined" == typeof row.size || null === row.size) {
