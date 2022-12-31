@@ -70,9 +70,13 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(targetEntity: UserSettings::class, mappedBy: "ref", cascade: ["persist", "remove"])]
     private $settings;
 
+    #[ORM\OneToMany(mappedBy: 'localUser', targetEntity: MediaCollection::class)]
+    private $mediaCollections;
+
     public function __construct()
     {
         $this->mediaFiles = new ArrayCollection();
+        $this->mediaCollections = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -263,6 +267,36 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->settings = $settings;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MediaCollection>
+     */
+    public function getMediaCollections(): Collection
+    {
+        return $this->mediaCollections;
+    }
+
+    public function addMediaCollection(MediaCollection $mediaCollection): self
+    {
+        if (!$this->mediaCollections->contains($mediaCollection)) {
+            $this->mediaCollections[] = $mediaCollection;
+            $mediaCollection->setLocalUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMediaCollection(MediaCollection $mediaCollection): self
+    {
+        if ($this->mediaCollections->removeElement($mediaCollection)) {
+            // set the owning side to null (unless already changed)
+            if ($mediaCollection->getLocalUser() === $this) {
+                $mediaCollection->setLocalUser(null);
+            }
+        }
 
         return $this;
     }
