@@ -4,7 +4,7 @@ import "particles.js";
 particlesJS('particles-js', {
     "particles": {
       "number": {
-        "value": 80,
+        "value": 20,
         "density": {
           "enable": true,
           "value_area": 800
