@@ -81,6 +81,16 @@
     width: 230px;
     max-width: calc(100vw - 125px);
   }
+
+  .md-toolbar.md-app-toolbar {
+    position: sticky !important;
+    top: 0px !important;
+    transform: translate3d(0px, 0px, 0px) !important;
+  }
+
+  .md-app-scroller {
+    margin-top: 5px !important;
+  }
 </style>
 
 <script>
