@@ -4,7 +4,7 @@ COPY composer* /app/
 COPY config/ /app/config
 COPY src/ /app/src
 
-RUN composer install --no-ansi --no-progress --no-interaction --no-dev -o -a --no-scripts --ignore-platform-reqs; rm -rf composer*
+RUN composer install --no-ansi --no-progress --no-interaction --no-dev -o -a --no-scripts --ignore-platform-reqs
 
 FROM ghcr.io/medleybox/php-fpm:master as webapp
 
