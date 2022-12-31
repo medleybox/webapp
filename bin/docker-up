@@ -1,5 +1,4 @@
 #!/bin/bash
 
-docker-compose up -d --force-recreate
-docker-compose -f docker-compose.yml exec webapp bin/console -vvv doctrine:schema:update --force
-docker-compose logs -f webapp nginx encore
+docker compose -p 'medleybox' up -d --force-recreate
+docker-compose -p 'medleybox' logs -f webapp nginx encore
