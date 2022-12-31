@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\HealthCheck;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,8 +23,8 @@ class ApiController extends AbstractController
     /**
      * @Route("/api/healthcheck", name="api_healthcheck")
      */
-    public function healthcheck(): Response
+    public function healthcheck(HealthCheck $healthcheck): Response
     {
-        return $this->json([]);
+        return $this->json($healthcheck->getOverview());
     }
 }
