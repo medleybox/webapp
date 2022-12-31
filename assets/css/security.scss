@@ -33,6 +33,11 @@ body {
     left: 0;
 }
 
+.alert-danger {
+    background-color: var(--bs-red);
+    color: var(--bs-white);
+}
+
 .container-fluid {
     z-index: 100;
 }

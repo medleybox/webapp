@@ -18,7 +18,9 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@fontsource/roboto": "^4.5.8",
         "bootstrap": "^5.1.3",
+        "material-icons": "^1.13.1",
         "particles.js": "^2.0.0",
         "pretty-bytes": "^6",
         "vue-material": "*"
