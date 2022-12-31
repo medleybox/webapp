@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Service\{Import, Request as Vault};
+use App\Entity\MediaFile;
 use App\Repository\MediaFileRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{Request, Response};
@@ -34,7 +36,11 @@ class AdminController extends AbstractController
      */
     public function aboutJson(Request $request, Vault $vault, MediaFileRepository $media): Response
     {
-        $vaultVersion = $vault->get('api/version')->toArray();
+        $vaultVersion = [];
+        $version = $vault->get('api/version');
+        if (null !== $version) {
+            $vaultVersion = $version->toArray();
+        }
 
         return $this->json([
             'webapp' => [
@@ -52,6 +58,17 @@ class AdminController extends AbstractController
     public function media(Request $request): Response
     {
         return $this->render('admin/media.html.twig');
+    }
+
+    /**
+     * @Route("/admin/media/refresh-source/{uuid}", name="admin_refreshSource", methods={"GET"})
+     * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
+     */
+    public function refreshSource(MediaFile $media, Vault $vault): Response
+    {
+        $json = $vault->get("entry/refresh-source/{$media->getUuid()}")->toArray();
+
+        return $this->json($json);
     }
 
     /**

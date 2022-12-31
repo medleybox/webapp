@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Symfony\Component\HttpClient\Exception\ServerException;
 use Symfony\Contracts\HttpClient\{HttpClientInterface, ResponseInterface};
 
 class Request
@@ -31,13 +32,21 @@ class Request
         return $this;
     }
 
-    public function get(string $url): ResponseInterface
+    public function get(string $url): ?ResponseInterface
     {
-        return $this->client->request(
-            'GET',
-            $url,
-            ['base_uri' => $this->baseUrl, 'timeout' => self::TIMEOUT]
-        );
+        try {
+            $get = $this->client->request(
+                'GET',
+                $url,
+                ['base_uri' => $this->baseUrl, 'timeout' => self::TIMEOUT]
+            );
+
+            return $get;
+        } catch (ServerException $e) {
+            //
+        }
+
+        return null;
     }
 
     public function head(string $url): ResponseInterface
