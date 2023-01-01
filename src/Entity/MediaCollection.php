@@ -16,7 +16,7 @@ class MediaCollection
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\ManyToOne(targetEntity: localUser::class, inversedBy: 'mediaCollections')]
+    #[ORM\ManyToOne(targetEntity: LocalUser::class, inversedBy: 'mediaCollections')]
     private $localUser;
 
     #[ORM\Column(type: 'integer')]
@@ -39,12 +39,12 @@ class MediaCollection
         return $this;
     }
 
-    public function getLocalUser(): ?localUser
+    public function getLocalUser(): ?LocalUser
     {
         return $this->localUser;
     }
 
-    public function setLocalUser(?localUser $localUser): self
+    public function setLocalUser(?LocalUser $localUser): self
     {
         $this->localUser = $localUser;
 

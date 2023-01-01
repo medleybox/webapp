@@ -90,6 +90,9 @@ services:
          - ./templates:/var/www/templates
          - ./docker/app/dev.ini:/usr/local/etc/php/dev.ini
          - ./public/build:/var/www/public/build
+         - ./.php_cs.php:/var/www/.php_cs.php:ro
+         - ./phpstan.neon:/var/www/phpstan.neon:ro
+         - ./phpunit.xml.dist:/var/www/phpunit.xml.dist:ro
          - webapp-data:/var/www/vendor
     redis:
         image: redis:alpine
