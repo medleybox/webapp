@@ -13,6 +13,8 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
+    public const APP_TIMEFORMAT = 'H:i:s d-m-Y';
+
     private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
     public function registerBundles(): iterable

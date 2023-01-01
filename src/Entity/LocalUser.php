@@ -70,6 +70,9 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(targetEntity: UserSettings::class, mappedBy: "ref", cascade: ["persist", "remove"])]
     private $settings;
 
+    #[ORM\OneToMany(mappedBy: 'localUser', targetEntity: UserPlayHistory::class, orphanRemoval: true)]
+    private $userPlayHistories;
+
     #[ORM\OneToMany(mappedBy: 'localUser', targetEntity: MediaCollection::class)]
     private $mediaCollections;
 
@@ -267,6 +270,36 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->settings = $settings;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserPlayHistory>
+     */
+    public function getUserPlayHistories(): Collection
+    {
+        return $this->userPlayHistories;
+    }
+
+    public function addUserPlayHistory(UserPlayHistory $userPlayHistory): self
+    {
+        if (!$this->userPlayHistories->contains($userPlayHistory)) {
+            $this->userPlayHistories[] = $userPlayHistory;
+            $userPlayHistory->setLocalUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserPlayHistory(UserPlayHistory $userPlayHistory): self
+    {
+        if ($this->userPlayHistories->removeElement($userPlayHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($userPlayHistory->getLocalUser() === $this) {
+                $userPlayHistory->setLocalUser(null);
+            }
+        }
 
         return $this;
     }

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\{MediaFileRepository, LocalUserRepository};
+use App\Repository\{MediaFileRepository, LocalUserRepository, UserPlayHistoryRepository};
 use App\Entity\{MediaFile, LocalUser};
 use App\Form\MediaFileType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -113,6 +113,21 @@ class MediaFileController extends AbstractController
 
         return $this->json([
             'delete' => true
+        ]);
+    }
+
+    /**
+     * @Route("/media-file/play/{uuid}", name="media_play", methods={"GET", "HEAD"})
+     * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
+     */
+    public function play(MediaFile $media, Security $security, UserPlayHistoryRepository $history): Response
+    {
+        $user = $security->getUser();
+        assert($user instanceof LocalUser);
+        $history->update($media, $user);
+
+        return $this->json([
+            'play' => true
         ]);
     }
 
