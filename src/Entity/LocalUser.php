@@ -80,6 +80,7 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->mediaFiles = new ArrayCollection();
         $this->mediaCollections = new ArrayCollection();
+        $this->userPlayHistories = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -328,6 +329,36 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($mediaCollection->getLocalUser() === $this) {
                 $mediaCollection->setLocalUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserPlayHistory>
+     */
+    public function getUserPlayHistories(): Collection
+    {
+        return $this->userPlayHistories;
+    }
+
+    public function addUserPlayHistory(UserPlayHistory $userPlayHistory): self
+    {
+        if (!$this->userPlayHistories->contains($userPlayHistory)) {
+            $this->userPlayHistories[] = $userPlayHistory;
+            $userPlayHistory->setLocalUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserPlayHistory(UserPlayHistory $userPlayHistory): self
+    {
+        if ($this->userPlayHistories->removeElement($userPlayHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($userPlayHistory->getLocalUser() === $this) {
+                $userPlayHistory->setLocalUser(null);
             }
         }
 
