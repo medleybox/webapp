@@ -1,8 +1,8 @@
 #!/bin/sh
 
-set -xe
+set -x
 
-bin/console cache:warmup -e test
+bin/console cache:warmup -e dev
 
 vendor/bin/phpstan analyse
 

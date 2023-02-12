@@ -1,4 +1,3 @@
 #!/bin/bash
 
 docker compose -p 'medleybox' up -d --force-recreate
-docker-compose -p 'medleybox' logs -f webapp nginx encore

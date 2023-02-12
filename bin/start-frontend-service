@@ -1,6 +1,12 @@
 #!/bin/sh
 
 set -xe
+PUBLIC_HOST=${PUBLIC_HOST:-'medleybox.local'}
 
+node -v
+npm -v
+
+
+apk add --no-cache wget     gcc     g++     make     zlib-dev     libffi-dev     openssl-dev     musl-dev     python3
 npm install
-node /app/node_modules/.bin/vue-cli-service serve --host 0.0.0.0 --public="localhost" --port="443" --https
+node /app/node_modules/.bin/vue-cli-service serve --host 0.0.0.0 --public="$PUBLIC_HOST" --port="443" --https

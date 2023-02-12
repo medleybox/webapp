@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker-compose exec -e PGPASSWORD=medleybox db psql -h db -d medleybox_webapp -U medleybox $@
+docker compose exec -e PGPASSWORD=medleybox db psql -h db -d medleybox_webapp -U medleybox $@
