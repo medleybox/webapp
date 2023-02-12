@@ -23,7 +23,8 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-
+    App\Service\AssetHash:
+        $env: '%env(APP_ENV)%'
 
     Redis:
         class: Redis

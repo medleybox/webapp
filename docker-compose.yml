@@ -2,7 +2,7 @@ version: '3.4'
 
 x-variables: &x-variables
     APP_DEBUG: 1
-    APP_ENV: dev
+    APP_ENV: prod
     APP_SECRET: c95ab68cbfba3232e79d72ebae567424
     POSTGRES_USER: medleybox
     POSTGRES_PASSWORD: medleybox

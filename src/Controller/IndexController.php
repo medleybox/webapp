@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\Import;
+use App\Service\{AssetHash, Import};
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{Request, Response};
@@ -31,9 +31,11 @@ class IndexController extends AbstractController
      * @Route("/", name="index_index")
      * @Route("/about")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, AssetHash $asset): Response
     {
-        return $this->render('index.html.twig');
+        return $this->render('index.html.twig', [
+            'asset_hash' => $asset->get()
+        ]);
     }
 
     /**

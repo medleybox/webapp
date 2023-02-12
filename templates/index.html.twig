@@ -3,10 +3,10 @@
 {% block title %}Home{% endblock %}
 
 {% block stylesheets %}
-<link href="/app.css" rel="preload" as="style" />
-<link href="/app.js" rel="preload" as="script" />
-<link href="/chunk-vendors.js" rel="preload" as="script" />
-<link href="/app.css" rel="stylesheet" />
+<link href="/app.css{{asset_hash}}" rel="preload" as="style" />
+<link href="/app.js{{asset_hash}}" rel="preload" as="script" />
+<link href="/chunk-vendors.js{{asset_hash}}" rel="preload" as="script" />
+<link href="/app.css{{asset_hash}}" rel="stylesheet" />
 {% endblock stylesheets %}
 
 {% block body %}
@@ -14,7 +14,7 @@
 {% endblock body %}
 
 {% block javascripts %}
-<script type="text/javascript" src="/chunk-vendors.js"></script>
-<script type="text/javascript" src="/app.js"></script>
+<script type="text/javascript" src="/chunk-vendors.js{{asset_hash}}"></script>
+<script type="text/javascript" src="/app.js{{asset_hash}}"></script>
 {{ encore_entry_script_tags('ws') }}
 {% endblock javascripts %}

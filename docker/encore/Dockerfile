@@ -1,4 +1,4 @@
-FROM node:18-alpine3.16 as builder
+FROM node:18-alpine3.17 as builder
 
 RUN apk add --no-cache alpine-sdk python3
 
@@ -13,7 +13,7 @@ COPY assets /app/assets
 RUN node ./node_modules/.bin/encore production
 
 # Final image
-FROM node:18-alpine3.16 as final
+FROM node:18-alpine3.17 as final
 
 ENV ENCORE_HOST medleybox.local
 
