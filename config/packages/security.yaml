@@ -2,10 +2,8 @@ security:
     enable_authenticator_manager: true
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-        App\Entity\LocalUser:
-            algorithm: sodium
-        App\Service\UserPasswordReset:
-            algorithm: bcrypt
+        App\Entity\LocalUser: 'auto'
+        App\Service\UserPasswordReset: 'auto'
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -45,3 +43,13 @@ security:
         - { path: ^/forgotten-password, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/, roles: ROLE_USER }
+
+
+when@prod:
+    security:
+        password_hashers:
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+            App\Entity\LocalUser:
+                algorithm: sodium
+            App\Service\UserPasswordReset:
+                algorithm: bcrypt

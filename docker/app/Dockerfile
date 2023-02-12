@@ -16,6 +16,7 @@ COPY docker/app/php.ini /usr/local/etc/php/conf.d/webapp.ini
 COPY templates /var/www/templates
 COPY --from=composer /app /var/www
 COPY --from=ghcr.io/medleybox/encore:master /app/public/build /var/www/public/build
+COPY --from=ghcr.io/medleybox/frontend:master /app/dist/hash.txt /var/www/public/hash.txt
 
 USER root
 

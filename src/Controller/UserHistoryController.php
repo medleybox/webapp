@@ -23,6 +23,9 @@ class UserHistoryController extends AbstractController
      */
     private $history;
 
+    /**
+     * @var \App\Entity\LocalUser
+     */
     private $user;
 
     public function __construct(UserPlayHistoryRepository $history, Security $security)

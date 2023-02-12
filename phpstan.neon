@@ -1,8 +1,12 @@
-includes:
-    - vendor/phpstan/phpstan-doctrine/extension.neon
 parameters:
     level: 6
     paths:
         - src
     scanDirectories:
         - vendor/doctrine/dbal/src
+    ignoreErrors:
+        -
+          message: '#Call to an undefined method Symfony\\Component\\Console\\Helper\\HelperInterface::ask\(\).#'
+          path: src/Command/TestEmailDeliverabilityCommand.php
+    symfony:
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml

@@ -98,10 +98,11 @@ class Import
     {
         try {
             $this->request->delete($url);
+            return true;
         } catch (\Exception $e) {
-            return false;
+            //
         }
 
-        return true;
+        return false;
     }
 }

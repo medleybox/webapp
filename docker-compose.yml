@@ -56,9 +56,9 @@ services:
             context: ./
             dockerfile: docker/encore/Dockerfile
     frontend:
-        image: node:16-alpine
+        image: node:18-alpine3.17
         extra_hosts:
-          - "medleybox.test:0.0.0.0"
+          - "medleybox.local:0.0.0.0"
         entrypoint: 'sh'
         working_dir: '/app'
         command:
@@ -69,7 +69,7 @@ services:
           - frontend-data:/app/node_modules
         environment:
           NODE_ENV: development
-          PUBLIC_HOST: medleybox.test
+          PUBLIC_HOST: medleybox.local
         networks:
             - medley
     webapp:

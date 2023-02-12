@@ -191,6 +191,7 @@ class MediaFileRepository extends ServiceEntityRepository
             $this->_em->persist($media);
             $this->request->refreshLatestList();
         }
+        $this->request->updateVaultDownload($media, $this->getFakeFilename($media));
         $this->_em->flush();
 
         return true;
@@ -214,8 +215,9 @@ class MediaFileRepository extends ServiceEntityRepository
     private function getFakeFilename(MediaFile $media): string
     {
         $name = str_replace(" - ", "", $media->getTitle());
+        $lower = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
 
-        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
+        return trim($lower, '-');
     }
 
     public function getDeleteUrl(MediaFile $media): string

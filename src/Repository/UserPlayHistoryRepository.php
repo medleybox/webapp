@@ -38,7 +38,7 @@ class UserPlayHistoryRepository extends ServiceEntityRepository
 
     public function add(MediaFile $media, LocalUser $user): void
     {
-        $record = (new UserPlayHistory)->setMedia($media)->setLocalUser($user);
+        $record = (new UserPlayHistory())->setMedia($media)->setLocalUser($user);
         $this->getEntityManager()->persist($record);
 
         $this->getEntityManager()->flush();
@@ -51,10 +51,10 @@ class UserPlayHistoryRepository extends ServiceEntityRepository
 
     public function clearHistory(LocalUser $user): void
     {
-        foreach($user->getUserPlayHistories() as $row) {
+        foreach ($user->getUserPlayHistories() as $row) {
             $this->getEntityManager()->remove($row);
         }
-        
+
         $this->getEntityManager()->flush();
     }
 

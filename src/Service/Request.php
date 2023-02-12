@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\MediaFile;
 use Symfony\Component\HttpClient\Exception\ServerException;
 use Symfony\Contracts\HttpClient\{HttpClientInterface, ResponseInterface};
 
@@ -61,17 +62,25 @@ class Request
     /**
      * @param array<string, mixed> $data
      */
-    public function post(string $url, array $data = []): ResponseInterface
+    public function post(string $url, array $data = []): ?ResponseInterface
     {
-        return $this->client->request(
-            'POST',
-            $url,
-            [
-                'base_uri' => $this->baseUrl,
-                'timeout' => self::TIMEOUT,
-                'body' => $data
-            ]
-        );
+        try {
+            $post = $this->client->request(
+                'POST',
+                $url,
+                [
+                    'base_uri' => $this->baseUrl,
+                    'timeout' => self::TIMEOUT,
+                    'body' => $data
+                ]
+            );
+
+            return $post;
+        } catch (\RuntimeException $e) {
+            //
+        }
+
+        return null;
     }
 
     public function delete(string $url): bool
@@ -87,6 +96,16 @@ class Request
         }
 
         return true;
+    }
+
+    public function updateVaultDownload(MediaFile $entry, $filename)
+    {
+        return $this->post(
+            "entry/update-download/{$entry->getUuid()}",
+            [
+                'filename' => $filename
+            ]
+        );
     }
 
     public function refreshMediaList(): ResponseInterface
