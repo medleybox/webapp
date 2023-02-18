@@ -2,7 +2,7 @@ version: '3.4'
 
 x-variables: &x-variables
     APP_DEBUG: 1
-    APP_ENV: prod
+    APP_ENV: dev
     APP_SECRET: c95ab68cbfba3232e79d72ebae567424
     POSTGRES_USER: medleybox
     POSTGRES_PASSWORD: medleybox
@@ -26,6 +26,7 @@ services:
         restart: always
         environment:
           APP_ENV: dev
+          SERVICES: MAILHOG ENCORE FRONTEND
         build:
             context: ../nginx/
             dockerfile: ../nginx/Dockerfile
@@ -44,7 +45,7 @@ services:
     encore:
         image: ghcr.io/medleybox/encore:master
         environment:
-          NODE_ENV: development
+          NODE_ENV: dev
         extra_hosts:
          - "medleybox.local:0.0.0.0"
         networks:
@@ -68,7 +69,7 @@ services:
           - ../frontend:/app
           - frontend-data:/app/node_modules
         environment:
-          NODE_ENV: development
+          NODE_ENV: dev
           PUBLIC_HOST: medleybox.local
         networks:
             - medley
