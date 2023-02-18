@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\LocalUser;
@@ -11,14 +13,8 @@ use Symfony\Component\HttpFoundation\{Request, Response};
 
 class AdminUsersController extends AbstractController
 {
-    /**
-     * @var \App\Repository\LocalUserRepository
-     */
-    private $repo;
-
-    public function __construct(LocalUserRepository $repo)
+    public function __construct(private LocalUserRepository $repo)
     {
-        $this->repo = $repo;
     }
 
     /**

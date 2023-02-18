@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\{MediaFile, LocalUser};
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpClient\Exception\ServerException;
@@ -27,9 +28,9 @@ class Import
     }
 
     /**
-     * @return array<string, mixed>|null
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function check(string $url): ?array
+    public function check(string $url): ?ArrayCollection
     {
         $response = $this->request->post(
             'entry/check',
@@ -45,7 +46,7 @@ class Import
             return null;
         }
 
-        return $data;
+        return new ArrayCollection($data);
     }
 
     public function import(string $uuid, string $url, string $title = null, LocalUser $user = null): ?bool

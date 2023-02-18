@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Service\UserPasswordReset;
@@ -13,14 +15,8 @@ use Exception;
 
 class UserController extends AbstractController
 {
-    /**
-     * @var \Symfony\Component\Security\Core\Security
-     */
-    private $security;
-
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
     /**

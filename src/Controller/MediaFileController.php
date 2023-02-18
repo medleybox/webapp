@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Repository\{MediaFileRepository, LocalUserRepository, UserPlayHistoryRepository};
@@ -13,14 +15,8 @@ use Symfony\Component\Security\Core\Security;
 
 class MediaFileController extends AbstractController
 {
-    /**
-     * @var \App\Repository\MediaFileRepository
-     */
-    private $media;
-
-    public function __construct(MediaFileRepository $media)
+    public function __construct(private MediaFileRepository $media)
     {
-        $this->media = $media;
     }
 
     /**
@@ -159,15 +155,11 @@ class MediaFileController extends AbstractController
         }
 
         if (null !== $request->request->get('seconds')) {
-            $media->setSeconds($request->request->get('seconds'));
+            $media->setSeconds((float) $request->request->get('seconds'));
         }
 
         if (null !== $request->request->get('size')) {
-            $media->setSize($request->request->get('size'));
-        }
-
-        if (null !== $request->request->get('size')) {
-            $media->setSize($request->request->get('size'));
+            $media->setSize((int) $request->request->get('size'));
         }
 
         if (null === $media->getImportUser()) {
