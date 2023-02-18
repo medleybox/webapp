@@ -11,25 +11,14 @@ use Exception;
 
 class IndexController extends AbstractController
 {
-    /**
-     * @var \App\Service\Import
-     */
-    private $import;
-
-    /**
-     * @var \Symfony\Component\Security\Core\Security
-     */
-    private $security;
-
-    public function __construct(Import $import, Security $security)
+    public function __construct(private Import $import)
     {
-        $this->import = $import;
-        $this->security = $security;
     }
 
     /**
-     * @Route("/", name="index_index")
-     * @Route("/about")
+     * @Route("/", name="index_index", methods={"GET"})
+     * @Route("/about", name="index_about", methods={"GET"})
+     * @Route("/profile", name="index_profile", methods={"GET"})
      */
     public function index(Request $request, AssetHash $asset): Response
     {
@@ -72,7 +61,7 @@ class IndexController extends AbstractController
     /**
      * @Route("/import-form", name="index_import", methods={"POST"})
      */
-    public function import(Request $request): Response
+    public function import(Request $request, Security $security): Response
     {
         if ($request->isMethod('POST')) {
             $url = $request->request->get('url', '');
@@ -88,15 +77,12 @@ class IndexController extends AbstractController
                  * null or UserInterface if request has valid session
                  * @var \App\Entity\LocalUser
                  */
-                $user = $this->security->getUser();
+                $user = $security->getUser();
                 $import = $this->import->import($uuid, $url, $title, $user);
             } catch (\Exception $e) {
                 return $this->json(['import' => false, 'attempt' => true, 'error' => $e->getMessage()]);
             }
 
             return $this->json(['import' => $import, 'attempt' => true]);
-        }
-
-        return $this->json(['import' => false, 'attempt' => true]);
     }
 }
