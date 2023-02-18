@@ -23,6 +23,7 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
     App\Service\AssetHash:
         $env: '%env(APP_ENV)%'
 
@@ -33,6 +34,8 @@ services:
               arguments:
                   - 'redis'
 
+    # Use redis for PHP session data and set TTL to 7 days
     Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
         arguments:
             - '@Redis'
+            - {'ttl': 604800 }
