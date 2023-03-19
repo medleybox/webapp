@@ -50,9 +50,9 @@ class UserController extends AbstractController
              */
             $user = $this->security->getUser();
             $settings = $user->getSettings();
-            $settings->setAutoPlay($request->request->get('autoPlay'));
-            $settings->setRandom($request->request->get('random'));
-            $settings->setOpenVlc($request->request->get('openVlc'));
+            $settings->setAutoPlay("1" === $request->request->get('autoPlay'));
+            $settings->setRandom("1" === $request->request->get('random'));
+            $settings->setOpenVlc("1" === $request->request->get('openVlc'));
 
             try {
                 $repo->save($settings, $user);
