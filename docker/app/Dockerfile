@@ -1,4 +1,4 @@
-FROM composer:2 as composer
+FROM public.ecr.aws/u0u1j5s3/composer:2 as composer
 
 COPY composer* /app/
 COPY config/ /app/config
