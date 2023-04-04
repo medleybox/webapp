@@ -25,6 +25,7 @@ class AdminUsersController extends AbstractController
         return [
             'id' => $user->getId(),
             'username' => $user->getUsername(),
+            'avatar' => $user->getAvatarPath(),
             'email' => $user->getEmail(),
             'active' => $user->getActive(),
             'isAdmin' => $user->hasRole('ROLE_ADMIN'),

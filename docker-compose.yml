@@ -36,7 +36,7 @@ services:
             - "mailhog"
             - "frontend"
         volumes:
-         - ./public/build:/var/www/public/build
+            - ./public/build:/var/www/public/build
         networks:
             - medley
         ports:
@@ -45,32 +45,32 @@ services:
     encore:
         image: ghcr.io/medleybox/encore:master
         environment:
-          NODE_ENV: dev
+            NODE_ENV: dev
         extra_hosts:
-         - "medleybox.local:0.0.0.0"
+            - "medleybox.local:0.0.0.0"
         networks:
             - medley
         volumes:
-         - ./assets:/app/assets
-         - ./public/build:/app/public/build
+            - ./assets:/app/assets
+            - ./public/build:/app/public/build
         build:
             context: ./
             dockerfile: docker/encore/Dockerfile
     frontend:
         image: node:18-alpine3.17
         extra_hosts:
-          - "medleybox.local:0.0.0.0"
+            - "medleybox.local:0.0.0.0"
         entrypoint: 'sh'
         working_dir: '/app'
         command:
-          - '/app/bin/start-frontend-service'
+            - '/app/bin/start-frontend-service'
         volumes:
-          - ./bin:/app/bin
-          - ../frontend:/app
-          - frontend-data:/app/node_modules
+            - ./bin:/app/bin
+            - ../frontend:/app
+            - frontend-data:/app/node_modules
         environment:
-          NODE_ENV: dev
-          PUBLIC_HOST: medleybox.local
+            NODE_ENV: dev
+            PUBLIC_HOST: medleybox.local
         networks:
             - medley
     webapp:
@@ -83,21 +83,30 @@ services:
         networks:
             - medley
         volumes:
-         - ./bin/run-tests:/var/www/bin/run-tests:ro
-         - ./bin/phpunit:/var/www/bin/phpunit:ro
-         - ./config/packages:/var/www/config/packages
-         - ./docker/app/dev.ini:/usr/local/etc/php/conf.d/webapp.ini
-         - ./src:/var/www/src
-         - ./templates:/var/www/templates
-         - ./docker/app/dev.ini:/usr/local/etc/php/dev.ini
-         - ./public/build:/var/www/public/build
-         - ./.php_cs.php:/var/www/.php_cs.php:ro
-         - ./phpstan.neon:/var/www/phpstan.neon:ro
-         - ./phpunit.xml.dist:/var/www/phpunit.xml.dist:ro
-         - webapp-data:/var/www/vendor
+            - ./bin/run-tests:/var/www/bin/run-tests:ro
+            - ./bin/phpunit:/var/www/bin/phpunit:ro
+            - ./config/packages:/var/www/config/packages
+            - ./docker/app/dev.ini:/usr/local/etc/php/conf.d/webapp.ini
+            - ./src:/var/www/src
+            - ./templates:/var/www/templates
+            - ./docker/app/dev.ini:/usr/local/etc/php/dev.ini
+            - ./public/build:/var/www/public/build
+            - ./.php_cs.php:/var/www/.php_cs.php:ro
+            - ./phpstan.neon:/var/www/phpstan.neon:ro
+            - ./phpunit.xml.dist:/var/www/phpunit.xml.dist:ro
+            - webapp-data:/var/www/vendor
     redis:
         image: redis:alpine
         restart: always
+        command: redis-server --save "" --appendonly "no"
+        tmpfs:
+            - /var/lib/redis
+        cap_drop:
+            - ALL
+        cap_add:
+            - SETGID
+            - SETUID
+            - DAC_OVERRIDE
         networks:
             - medley
         volumes:
@@ -113,4 +122,4 @@ services:
         networks:
             - medley
         volumes:
-         - postgres-data:/var/lib/postgresql/data
+            - postgres-data:/var/lib/postgresql/data

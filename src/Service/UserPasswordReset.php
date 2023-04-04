@@ -60,6 +60,7 @@ class UserPasswordReset implements PasswordAuthenticatedUserInterface
         $this->mailer = $mailer;
         $this->router = $router;
     }
+
     public function updatePasswordWithReset(ResetEntity $reset, string $password): bool
     {
         $this->updatePassword($reset->getLocaluser(), $password);

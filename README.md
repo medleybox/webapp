@@ -67,5 +67,5 @@ Docs:
 [github-workflows]: https://github.com/medleybox/webapp/actions?query=workflow%3A%22PHP+Tests%22
 [phpcs-symfony-ruleset]: https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/2.17/doc/ruleSets/SymfonyRisky.rst
 [medleybox-mailhog]: https://medleybox.local/mailhog
-[vuematerial-docs]: https://www.creative-tim.com/vuematerial/components
+[vuematerial-docs]: https://www.creative-tim.com/vuematerial/components/app
 [material-icons]: https://fonts.google.com/icons?icon.set=Material+Icons

@@ -5,6 +5,8 @@ namespace App\Service;
 use App\Entity\MediaFile;
 use Symfony\Component\HttpClient\Exception\ServerException;
 use Symfony\Contracts\HttpClient\{HttpClientInterface, ResponseInterface};
+use Symfony\Component\Mime\Part\DataPart;
+use Symfony\Component\Mime\Part\Multipart\FormDataPart;
 
 class Request
 {
@@ -98,7 +100,28 @@ class Request
         return true;
     }
 
-    public function updateVaultDownload(MediaFile $entry, $filename)
+    public function uploadAvatar(string $path, string $mime): string
+    {
+        try {
+            $formData = new FormDataPart([
+                'file' => DataPart::fromPath($path),
+                'mime' => $mime
+            ]);
+            $post = $this->client->request('POST', "avatar/new", [
+                'headers' => $formData->getPreparedHeaders()->toArray(),
+                'body' => $formData->bodyToIterable(),
+                'base_uri' => $this->baseUrl,
+                'timeout' => self::TIMEOUT
+            ]);
+        } catch (\RuntimeException $e) {
+            //
+            return null;
+        }
+
+        return json_decode($post->getContent(), true)['hash'];
+    }
+
+    public function updateVaultDownload(MediaFile $entry, $filename): ResponseInterface
     {
         return $this->post(
             "entry/update-download/{$entry->getUuid()}",

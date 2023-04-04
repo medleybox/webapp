@@ -20,7 +20,7 @@ class UserPlayHistory
     #[ORM\JoinColumn(nullable: false)]
     private $media;
 
-    #[ORM\ManyToOne(targetEntity: LocalUser::class, inversedBy: 'userPlayHistories')]
+    #[ORM\ManyToOne(targetEntity: LocalUser::class, inversedBy: 'userPlayHistories', cascade: ["persist", "remove"])]
     #[ORM\JoinColumn(nullable: false)]
     private $localUser;
 

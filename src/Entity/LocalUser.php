@@ -70,11 +70,14 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(targetEntity: UserSettings::class, mappedBy: "ref", cascade: ["persist", "remove"])]
     private $settings;
 
-    #[ORM\OneToMany(mappedBy: 'localUser', targetEntity: UserPlayHistory::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'localUser', targetEntity: UserPlayHistory::class, cascade: ["persist", "remove"], orphanRemoval: true)]
     private $userPlayHistories;
 
-    #[ORM\OneToMany(mappedBy: 'localUser', targetEntity: MediaCollection::class)]
+    #[ORM\OneToMany(mappedBy: 'localUser', targetEntity: MediaCollection::class, cascade: ["persist", "remove"])]
     private $mediaCollections;
+
+    #[ORM\Column(type: 'string', length: 36, nullable: true)]
+    private $avatar;
 
     public function __construct()
     {
@@ -333,5 +336,26 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getAvatarPath(): string
+    {
+        if (null === $this->avatar) {
+            return '';
+        }
+
+        return "/vault/avatar/r/{$this->avatar}";
     }
 }

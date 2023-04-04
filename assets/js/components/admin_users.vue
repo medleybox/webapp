@@ -18,7 +18,12 @@
                     <md-icon v-if="user.active === true">check_circle</md-icon>
                     <md-icon v-else>cancel</md-icon>
                 </md-table-cell>
-                <md-table-cell>{{user.username}}</md-table-cell>
+                <md-table-cell>
+                    <md-avatar class="md-small">
+                        <img :src="user.avatar" alt="People">
+                    </md-avatar>
+                    {{user.username}}
+                </md-table-cell>
                 <md-table-cell>{{user.email}}</md-table-cell>
                 <md-table-cell>
                     <md-icon v-if="user.isAdmin === true">supervisor_account</md-icon>

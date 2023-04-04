@@ -16,11 +16,6 @@ use Exception;
 class UserHistoryController extends AbstractController
 {
     /**
-     * @var \Symfony\Component\Security\Core\Security
-     */
-    private $security;
-
-    /**
      * @var \App\Repository\UserPlayHistoryRepository
      */
     private $history;
@@ -33,8 +28,7 @@ class UserHistoryController extends AbstractController
     public function __construct(UserPlayHistoryRepository $history, Security $security)
     {
         $this->history = $history;
-        $this->security = $security;
-        $this->user = $this->security->getUser();
+        $this->user = $security->getUser();
     }
 
     /**

@@ -49,7 +49,7 @@ class MediaFile
     /**
      * @var ?LocalUser
      */
-    #[ORM\ManyToOne(targetEntity: LocalUser::class, inversedBy: "mediaFiles")]
+    #[ORM\ManyToOne(targetEntity: LocalUser::class, inversedBy: "mediaFiles", cascade: ["persist", "remove"])]
     private $importUser;
 
     public function getId(): ?int
