@@ -8,17 +8,29 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: MediaCollectionRepository::class)]
 class MediaCollection
 {
+    /**
+     * @var int
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    /**
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
+    /**
+     * @var LocalUser
+     */
     #[ORM\ManyToOne(targetEntity: LocalUser::class, inversedBy: 'mediaCollections')]
     private $localUser;
 
+    /**
+     * @var int
+     */
     #[ORM\Column(type: 'integer')]
     private $type;
 

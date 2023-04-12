@@ -70,12 +70,21 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(targetEntity: UserSettings::class, mappedBy: "ref", cascade: ["persist", "remove"])]
     private $settings;
 
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection<int, UserPlayHistory>
+     */
     #[ORM\OneToMany(mappedBy: 'localUser', targetEntity: UserPlayHistory::class, cascade: ["persist", "remove"], orphanRemoval: true)]
     private $userPlayHistories;
 
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection<int, MediaCollection>
+     */
     #[ORM\OneToMany(mappedBy: 'localUser', targetEntity: MediaCollection::class, cascade: ["persist", "remove"])]
     private $mediaCollections;
 
+    /**
+     * @var string
+     */
     #[ORM\Column(type: 'string', length: 36, nullable: true)]
     private $avatar;
 

@@ -16,18 +16,12 @@ use Exception;
 class UserHistoryController extends AbstractController
 {
     /**
-     * @var \App\Repository\UserPlayHistoryRepository
-     */
-    private $history;
-
-    /**
      * @var \App\Entity\LocalUser
      */
     private $user;
 
-    public function __construct(UserPlayHistoryRepository $history, Security $security)
+    public function __construct(private UserPlayHistoryRepository $history, Security $security)
     {
-        $this->history = $history;
         $this->user = $security->getUser();
     }
 

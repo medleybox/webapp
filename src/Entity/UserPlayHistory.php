@@ -11,25 +11,39 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: UserPlayHistoryRepository::class)]
 class UserPlayHistory
 {
+    /**
+     * @var int
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    /**
+     * @var MediaFile
+     */
     #[ORM\ManyToOne(targetEntity: MediaFile::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $media;
 
+    /**
+     * @var LocalUser
+     */
     #[ORM\ManyToOne(targetEntity: LocalUser::class, inversedBy: 'userPlayHistories', cascade: ["persist", "remove"])]
     #[ORM\JoinColumn(nullable: false)]
     private $localUser;
 
+    /**
+     * @var \DateTimeInterface
+     */
     #[ORM\Column(type: 'datetime')]
     private $added;
 
+    /**
+     * @var int
+     */
     #[ORM\Column(type: 'integer', nullable: true)]
     private $completed;
-
 
     #[ORM\PrePersist]
     public function setAddedValue(): void
