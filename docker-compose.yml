@@ -69,7 +69,7 @@ services:
             - ../frontend:/app
             - frontend-data:/app/node_modules
         environment:
-            NODE_ENV: dev
+            NODE_ENV: development
             PUBLIC_HOST: medleybox.local
         networks:
             - medley

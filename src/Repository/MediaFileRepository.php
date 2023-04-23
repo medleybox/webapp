@@ -96,7 +96,7 @@ class MediaFileRepository extends ServiceEntityRepository
     /**
      * @return array<int, array<string, mixed>>
      */
-    public function suggested(LocalUser $user): array
+    public function suggested(?LocalUser $user = null): array
     {
         $keys = [];
         $files = [];
