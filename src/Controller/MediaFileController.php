@@ -19,9 +19,7 @@ class MediaFileController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/media-file/list", name="media_list", methods={"GET"})
-     */
+    #[Route('/media-file/list', name: 'media_list', methods: ['GET'])]
     public function list(Security $security): Response
     {
         $user = $security->getUser();
@@ -39,17 +37,13 @@ class MediaFileController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/media-file/latest-list", name="media_latest_list", methods={"GET"})
-     */
+    #[Route('/media-file/latest-list', name: 'media_latest_list', methods: ['GET'])]
     public function latestList(): Response
     {
         return $this->json($this->media->latest());
     }
 
-    /**
-     * @Route("/media-file/suggested-list", name="media_suggested_list", methods={"GET"})
-     */
+    #[Route('/media-file/suggested-list', name: 'media_suggested_list', methods: ['GET'])]
     public function suggested(Security $security): Response
     {
         $user = $security->getUser();
@@ -58,9 +52,7 @@ class MediaFileController extends AbstractController
         return $this->json($this->media->suggested($user));
     }
 
-    /**
-     * @Route("/media-file/user-list", name="media_user_list", methods={"GET"})
-     */
+    #[Route('/media-file/user-list', name: 'media_user_list', methods: ['GET'])]
     public function userList(Security $security): Response
     {
         $user = $security->getUser();
@@ -69,10 +61,8 @@ class MediaFileController extends AbstractController
         return $this->json($this->media->forUser($user));
     }
 
-    /**
-     * @Route("/media-file/metadata/{uuid}", name="media_metadata", methods={"GET", "HEAD"})
-     * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
-     */
+    #[Route('/media-file/metadata/{uuid}', name: 'media_metadata', methods: ['GET', 'HEAD'])]
+    #[ParamConverter('uuid', class: '\App\Entity\MediaFile', options: ['mapping' => ['uuid' => 'uuid']])]
     public function metadata(MediaFile $media): Response
     {
         $importuser = $media->getImportUser();
@@ -90,19 +80,15 @@ class MediaFileController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/media-file/wavedata/{uuid}", name="media_wavedata", methods={"GET"})
-     * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
-     */
+    #[Route('/media-file/wavedata/{uuid}', name: 'media_wavedata', methods: ['GET'])]
+    #[ParamConverter('uuid', class: '\App\Entity\MediaFile', options: ['mapping' => ['uuid' => 'uuid']])]
     public function wavedata(MediaFile $media): Response
     {
         return $this->json($this->media->getWavedata($media));
     }
 
-    /**
-     * @Route("/media-file/delete/{uuid}", name="media_delete", methods={"GET", "DELETE"})
-     * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
-     */
+    #[Route('/media-file/delete/{uuid}', name: 'media_delete', methods: ['GET', 'DELETE'])]
+    #[ParamConverter('uuid', class: '\App\Entity\MediaFile', options: ['mapping' => ['uuid' => 'uuid']])]
     public function delete(MediaFile $media): Response
     {
         $this->media->delete($media);
@@ -112,10 +98,8 @@ class MediaFileController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/media-file/play/{uuid}", name="media_play", methods={"GET", "HEAD"})
-     * @ParamConverter("uuid", class="\App\Entity\MediaFile", options={"mapping": {"uuid": "uuid"}})
-     */
+    #[Route('/media-file/play/{uuid}', name: 'media_play', methods: ['GET', 'HEAD'])]
+    #[ParamConverter('uuid', class: '\App\Entity\MediaFile', options: ['mapping' => ['uuid' => 'uuid']])]
     public function play(MediaFile $media, Security $security, UserPlayHistoryRepository $history): Response
     {
         $user = $security->getUser();
@@ -127,9 +111,7 @@ class MediaFileController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/media-file/update", name="media_update", methods={"POST"})
-     */
+    #[Route('/media-file/update', name: 'media_update', methods: ['POST'])]
     public function update(Request $request, LocalUserRepository $user): Response
     {
         $uuid = $request->request->get('uuid');

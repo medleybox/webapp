@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\LocalUser;
 use App\Service\UserPasswordReset;
 use App\Repository\UserSettingsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +20,7 @@ class UserController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/user/settings", name="user_settings_json", methods={"GET"})
-     */
+    #[Route('/user/settings', name: 'user_settings_json', methods: ['GET'])]
     public function settingsJson(): Response
     {
         /**
@@ -38,59 +37,41 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/user/update-settings", name="user_update_settings", methods={"POST"})
-     */
+    #[Route('/user/update-settings', name: 'user_update_settings', methods: ['POST'])]
     public function updateSettings(Request $request, UserSettingsRepository $repo): Response
     {
-        if ($request->isMethod('POST')) {
-            /**
-             * null or UserInterface if request has valid session
-             * @var \App\Entity\LocalUser
-             */
+        try {
             $user = $this->security->getUser();
-            $settings = $user->getSettings();
-            $settings->setAutoPlay("1" === $request->request->get('autoPlay'));
-            $settings->setRandom("1" === $request->request->get('random'));
-            $settings->setOpenVlc("1" === $request->request->get('openVlc'));
-
-            try {
-                $repo->save($settings, $user);
-            } catch (\Exception $e) {
-                return $this->json(['save' => false, 'attempt' => true, 'error' => $e->getMessage()]);
-            }
-
-            return $this->json(['save' => true, 'attempt' => true]);
+            assert($user instanceof LocalUser);
+            $settings = $user->getSettings()
+                ->setAutoPlay("1" === $request->request->get('autoPlay'))
+                ->setRandom("1" === $request->request->get('random'))
+                ->setOpenVlc("1" === $request->request->get('openVlc'))
+            ;
+            $repo->save($settings, $user);
+        } catch (\Exception $e) {
+            return $this->json(['save' => false, 'attempt' => true, 'error' => $e->getMessage()]);
         }
 
-        return $this->json(['save' => false, 'attempt' => true]);
+        return $this->json(['save' => true, 'attempt' => false]);
     }
 
-    /**
-     * @Route("/user/update-password", name="user_update_password", methods={"POST"})
-     */
+    #[Route('/user/update-password', name: 'user_update_password', methods: ['POST'])]
     public function updatePassword(Request $request, UserPasswordReset $reset): Response
     {
-        if ($request->isMethod('POST')) {
-            $password = $request->request->get('password');
-            if (null === $password) {
-                return $this->json(['import' => false, 'attempt' => false]);
-            }
-
-            try {
-                /**
-                 * null or UserInterface if request has valid session
-                 * @var \App\Entity\LocalUser
-                 */
-                $user = $this->security->getUser();
-                $reset->updatePassword($user, $password);
-            } catch (\Exception $e) {
-                return $this->json(['import' => false, 'attempt' => true, 'error' => $e->getMessage()]);
-            }
-
-            return $this->json(['updated' => true, 'attempt' => true]);
+        $password = $request->request->get('password');
+        if (null === $password) {
+            return $this->json(['updated' => false]);
         }
 
-        return $this->json(['updated' => false, 'attempt' => true]);
+        try {
+            $user = $this->security->getUser();
+            assert($user instanceof LocalUser);
+            $reset->updatePassword($user, $password);
+        } catch (\Exception $e) {
+            return $this->json(['updated' => false, 'error' => $e->getMessage()]);
+        }
+
+        return $this->json(['updated' => true, 'attempt' => true]);
     }
 }

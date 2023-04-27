@@ -25,9 +25,7 @@ class ProfileController extends AbstractController
         $this->user = $security->getUser();
     }
 
-    /**
-     * @Route("/profile", name="profile_index", methods={"GET"})
-     */
+    #[Route('/profile', name: 'profile_index', methods: ['GET'])]
     public function index(AssetHash $asset): Response
     {
         return $this->render('index.html.twig', [
@@ -35,17 +33,13 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/profile/avatar", name="profile_avatar", methods={"GET"})
-     */
+    #[Route('/profile/avatar', name: 'profile_avatar', methods: ['GET'])]
     public function avatar(Request $request): RedirectResponse
     {
         return $this->redirect($this->user->getAvatarPath());
     }
 
-    /**
-     * @Route("/profile/new-avatar", name="profile_netAvatar", methods={"POST"})
-     */
+    #[Route('/profile/new-avatar', name: 'profile_newAvatar', methods: ['POST'])]
     public function newAvatar(Request $request, UserAvatar $avatar)
     {
         $file = $request->files->get('file');
@@ -57,9 +51,7 @@ class ProfileController extends AbstractController
         return $this->json(['completed' => true]);
     }
 
-    /**
-     * @Route("/profile/data", name="profile_data", methods={"GET"})
-     */
+    #[Route('/profile/data', name: 'profile_data', methods: ['GET'])]
     public function data(Request $request): JsonResponse
     {
         return $this->json([

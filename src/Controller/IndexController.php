@@ -18,11 +18,7 @@ class IndexController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/", name="index_index", methods={"GET"})
-     * @Route("/about", name="index_about", methods={"GET"})
-     * @Route("/profile", name="index_profile", methods={"GET"})
-     */
+    #[Route(['/','/about','/profile'], name: 'index_index', methods: ['GET'])]
     public function index(Request $request, AssetHash $asset): Response
     {
         return $this->render('index.html.twig', [
@@ -30,9 +26,7 @@ class IndexController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/check", name="index_check", methods={"POST"})
-     */
+    #[Route('/check', name: 'index_check', methods: ['POST'])]
     public function check(Request $request): JsonResponse
     {
         try {
@@ -61,9 +55,7 @@ class IndexController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/import-form", name="index_import", methods={"POST"})
-     */
+    #[Route('/import-form', name: 'index_import', methods: ['POST'])]
     public function import(Request $request, Security $security): JsonResponse
     {
         $url = $request->request->get('url', '');

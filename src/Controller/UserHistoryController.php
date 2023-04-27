@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\UserPasswordReset;
 use App\Repository\UserPlayHistoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\{Request, Response};
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
-use Exception;
 
 class UserHistoryController extends AbstractController
 {
@@ -25,9 +22,7 @@ class UserHistoryController extends AbstractController
         $this->user = $security->getUser();
     }
 
-    /**
-     * @Route("/history/list", name="history_list", methods={"GET"})
-     */
+    #[Route('/history/list', name: 'history_list', methods: ['GET'])]
     public function history(): Response
     {
         $history = $this->history->getAll($this->user);
@@ -35,9 +30,7 @@ class UserHistoryController extends AbstractController
         return $this->json($history);
     }
 
-    /**
-     * @Route("/history/clear", name="history_clear", methods={"GET"})
-     */
+    #[Route('/history/clear', name: 'history_clear', methods: ['GET'])]
     public function clear(): Response
     {
         $this->history->clearHistory($this->user);

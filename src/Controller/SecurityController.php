@@ -16,9 +16,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @Route("/login", name="security_login")
-     */
+    #[Route('/login', name: 'security_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if (null !== $this->getUser()) {
@@ -33,9 +31,7 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-    /**
-     * @Route("/sign-up", name="security_signup")
-     */
+    #[Route('/sign-up', name: 'security_signup')]
     public function signup(UserPasswordHasherInterface $encoder, EntityManagerInterface $em, Request $request): Response
     {
         if (null !== $this->getUser()) {
@@ -64,9 +60,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/forgotten-password", name="security_forgotten_password")
-     */
+    #[Route('/forgotten-password', name: 'security_forgotten_password')]
     public function forgottenPassword(UserPasswordReset $reset, Request $request): Response
     {
         if (null !== $this->getUser()) {
@@ -96,9 +90,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/forgotten-password/{hash}", name="security_forgotten_password_reset")
-     */
+    #[Route('/forgotten-password/{hash}', name: 'security_forgotten_password_reset')]
     public function forgottenPasswordReset(UserPasswordReset $reset, Request $request, string $hash): Response
     {
         if (null !== $this->getUser()) {
@@ -132,9 +124,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/logout", name="security_logout")
-     */
+    #[Route('/logout', name: 'security_logout')]
     public function logout(): void
     {
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');

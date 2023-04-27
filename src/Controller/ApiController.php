@@ -12,9 +12,7 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class ApiController extends AbstractController
 {
-    /**
-     * @Route("/api/version", name="api_version")
-     */
+    #[Route('/api/version', name: 'api_version', methods: ['GET'])]
     public function version(): Response
     {
         return $this->json([
@@ -22,9 +20,7 @@ class ApiController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/api/healthcheck", name="api_healthcheck")
-     */
+    #[Route('/api/healthcheck', name: 'api_healthcheck', methods: ['GET'])]
     public function healthcheck(HealthCheck $healthcheck): Response
     {
         return $this->json($healthcheck->getOverview());

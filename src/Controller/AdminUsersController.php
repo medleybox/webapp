@@ -32,17 +32,13 @@ class AdminUsersController extends AbstractController
         ];
     }
 
-    /**
-     * @Route("/admin/users", name="admin_users", methods={"GET"})
-     */
+    #[Route('/admin/users', name: 'admin_users', methods: ['GET'])]
     public function users(): Response
     {
         return $this->render('admin/users.html.twig');
     }
 
-    /**
-     * @Route("/admin/users/json", name="admin_users_json", methods={"GET"})
-     */
+    #[Route('/admin/users/json', name: 'admin_users_json', methods: ['GET'])]
     public function usersJson(): Response
     {
         $users = [];
@@ -53,10 +49,8 @@ class AdminUsersController extends AbstractController
         return $this->json(['users' => $users]);
     }
 
-    /**
-     * @Route("/admin/users/json/{id}", name="admin_users_json_id", methods={"GET", "POST"})
-     * @ParamConverter("id", class="\App\Entity\LocalUser")
-     */
+    #[Route('/admin/users/json/{id}', name: 'admin_users_json_id', methods: ['GET', 'POST'])]
+    #[ParamConverter('id', class: '\App\Entity\LocalUser')]
     public function usersJsonId(LocalUser $user, Request $request): Response
     {
         if ($request->isMethod('POST')) {
@@ -76,10 +70,8 @@ class AdminUsersController extends AbstractController
         return $this->json(['user' => $this->getUserAsArray($user)]);
     }
 
-    /**
-     * @Route("/admin/users/delete/{id}", name="admin_users_delete", methods={"DELETE"})
-     * @ParamConverter("id", class="\App\Entity\LocalUser")
-     */
+    #[Route('/admin/users/delete/{id}', name: 'admin_users_delete', methods: ['DELETE'])]
+    #[ParamConverter('id', class: '\App\Entity\LocalUser')]
     public function deleteUser(LocalUser $user, Request $request): Response
     {
         if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
