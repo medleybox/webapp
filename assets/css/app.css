@@ -1,0 +1,16 @@
+body {
+    background-color: var(--md-theme-default-background, #424242);
+}
+
+.md-app {
+    height: 100vh !important;
+    width: 100%;
+}
+
+a.md-list-item-text{
+    color: white !important;
+}
+
+.admin_users .md-dialog-container {
+    min-width: 400px;
+}
