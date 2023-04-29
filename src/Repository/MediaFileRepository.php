@@ -112,6 +112,11 @@ class MediaFileRepository extends ServiceEntityRepository
             return [];
         }
 
+        shuffle($files);
+        if (count($files) < self::COL_LIMIT) {
+            return $files;
+        }
+
         $final = [];
         $randKeys = array_rand($keys, min(self::COL_LIMIT, count($keys)));
         foreach ($randKeys as $key) {
