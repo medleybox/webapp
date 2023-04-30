@@ -117,7 +117,7 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRoles(): ?array
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -204,12 +204,12 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function getUserIdentifier(): bool
+    public function getUserIdentifier(): string
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
 
-        return true;
+        return '';
     }
 
     /**
