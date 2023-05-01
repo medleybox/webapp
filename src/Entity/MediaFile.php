@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\MediaFileRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MediaFileRepository::class)]
 class MediaFile
@@ -32,6 +33,7 @@ class MediaFile
      * @var string
      */
     #[ORM\Column(type: "string", length: 255, nullable: true)]
+    #[Groups(['searchable'])]
     private $title = '';
 
     /**

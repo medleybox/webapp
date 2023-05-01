@@ -15,6 +15,7 @@ volumes:
     frontend-data:
     webapp-data:
     tmp-data:
+    meilisearch-data:
 
 networks:
     medley:
@@ -123,3 +124,11 @@ services:
             - medley
         volumes:
             - postgres-data:/var/lib/postgresql/data
+    meilisearch:
+        image: getmeili/meilisearch:nightly
+        environment:
+            MEILI_MASTER_KEY: medleybox
+        networks:
+            - medley
+        volumes:
+            - meilisearch-data:/meili_data

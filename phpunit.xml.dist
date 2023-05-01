@@ -33,6 +33,14 @@
         <env name="DATABASE_URL" value="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=15&amp;charset=utf8"/>
         <!-- ###- doctrine/doctrine-bundle ### -->
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
+
+        <!-- ###+ meilisearch/search-bundle ### -->
+        <!-- Uncomment the following line if you use Meilisearch through Docker -->
+        <!-- MEILISEARCH_URL=http://meilisearch:7700 -->
+        <env name="MEILISEARCH_URL" value="http://127.0.0.1:7700"/>
+        <env name="MEILISEARCH_API_KEY" value="!ChangeMe!"/>
+        <env name="MEILISEARCH_PREFIX" value="app_${APP_ENV}_"/>
+        <!-- ###- meilisearch/search-bundle ### -->
     </php>
 
     <testsuites>

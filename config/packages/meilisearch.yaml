@@ -1,0 +1,8 @@
+meilisearch:
+    url: '%env(MEILISEARCH_URL)%' # URL of the Meilisearch server (mandatory)
+    api_key: '%env(MEILISEARCH_API_KEY)%' # API key to access the Meilisearch server (mandatory)
+    prefix: '%env(MEILISEARCH_PREFIX)%'
+    indices:
+        - name: media
+          class: App\Entity\MediaFile
+          enable_serializer_groups: true

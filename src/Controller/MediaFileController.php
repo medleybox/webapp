@@ -19,6 +19,15 @@ class MediaFileController extends AbstractController
     {
     }
 
+    #[Route('/media-file/search', name: 'media_search', methods: ['GET'])]
+    public function search(Request $request): Response 
+    {
+        $searchQuery = $request->query->get('q') ?? '';
+        $hits = $this->media->search($searchQuery);
+
+        return $this->json($hits);
+    }
+
     #[Route('/media-file/list', name: 'media_list', methods: ['GET'])]
     public function list(Security $security): Response
     {

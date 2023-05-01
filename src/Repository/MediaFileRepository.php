@@ -6,6 +6,7 @@ use App\Entity\{LocalUser, MediaFile};
 use App\Service\{Import, Request};
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Meilisearch\Bundle\SearchService;
 use Symfony\Component\HttpClient\Exception\ServerException;
 use Symfony\Component\HttpFoundation\UrlHelper;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -51,7 +52,7 @@ class MediaFileRepository extends ServiceEntityRepository
      */
     const SUGGESTED_LIMIT = 50;
 
-    public function __construct(ManagerRegistry $registry, Import $import, UrlGeneratorInterface $router, Request $request, UrlHelper $urlHelper)
+    public function __construct(ManagerRegistry $registry, Import $import, UrlGeneratorInterface $router, Request $request, UrlHelper $urlHelper, private SearchService $meili)
     {
         $this->import = $import;
         $this->router = $router;
@@ -124,6 +125,23 @@ class MediaFileRepository extends ServiceEntityRepository
         }
 
         return $final;
+    }
+
+    /**
+     * @return array<string, float|string|null>
+     */
+    public function search(string $searchQuery): array
+    {
+        $hits = $this->meili->search($this->_em, MediaFile::class, $searchQuery);
+        $files = [];
+        foreach ($hits as $media) {
+            $check = $this->checkMedia($media);
+            if (null !== $check) {
+                $files[] = $check;
+            }
+        }
+
+        return $files;
     }
 
     /**

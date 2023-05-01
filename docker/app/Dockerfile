@@ -9,6 +9,9 @@ RUN composer install --no-ansi --no-progress --no-interaction --no-dev -o -a --n
 FROM ghcr.io/medleybox/php-fpm:master as webapp
 
 ENV POSTGRES_DB=medleybox_webapp
+ENV MEILISEARCH_API_KEY=medleybox
+ENV MEILISEARCH_PREFIX=medleybox_
+ENV MEILISEARCH_URL=http://meilisearch:7700
 
 COPY bin/console /var/www/bin/console
 COPY public/index.php /var/www/public/index.php
