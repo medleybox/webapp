@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Kernel;
@@ -9,11 +11,6 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<UserPlayHistory>
- *
- * @method UserPlayHistory|null find($id, $lockMode = null, $lockVersion = null)
- * @method UserPlayHistory|null findOneBy(array $criteria, array $orderBy = null)
- * @method UserPlayHistory[]    findAll()
- * @method UserPlayHistory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class UserPlayHistoryRepository extends ServiceEntityRepository
 {
@@ -22,7 +19,7 @@ class UserPlayHistoryRepository extends ServiceEntityRepository
         parent::__construct($registry, UserPlayHistory::class);
     }
 
-    public function getAll(LocalUser $user)
+    public function getAll(LocalUser $user): array
     {
         $history = [];
         foreach ($user->getUserPlayHistories() as $row) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\{LocalUser, MediaFile};
@@ -12,8 +14,7 @@ use Symfony\Component\HttpFoundation\UrlHelper;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * @method MediaFile[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- * @extends \Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository<MediaFile>
+ * @extends ServiceEntityRepository<MediaFile>
  */
 class MediaFileRepository extends ServiceEntityRepository
 {

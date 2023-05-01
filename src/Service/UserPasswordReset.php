@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Repository\{LocalUserRepository, UserPasswordResetRepository};
@@ -15,50 +17,15 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 class UserPasswordReset implements PasswordAuthenticatedUserInterface
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
-     * @var \App\Repository\LocalUserRepository
-     */
-    private LocalUserRepository $users;
-
-    /**
-     * @var \App\Repository\UserPasswordResetRepository
-     */
-    private UserPasswordResetRepository $passwordResets;
-
-    /**
-     * @var \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface
-     */
-    private PasswordHasherFactoryInterface $passwordHasherFactory;
-
-    /**
-     * @var \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface
-     */
-    private UserPasswordHasherInterface $encoder;
-
-    /**
-     * @var \Symfony\Component\Mailer\MailerInterface
-     */
-    private MailerInterface $mailer;
-
-    /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
-     */
-    private UrlGeneratorInterface $router;
-
-    public function __construct(EntityManagerInterface $em, LocalUserRepository $users, UserPasswordResetRepository $passwordResets, PasswordHasherFactoryInterface $passwordHasherFactory, UserPasswordHasherInterface $encoder, MailerInterface $mailer, UrlGeneratorInterface $router)
-    {
-        $this->em = $em;
-        $this->users = $users;
-        $this->passwordResets = $passwordResets;
-        $this->passwordHasherFactory = $passwordHasherFactory;
-        $this->encoder = $encoder;
-        $this->mailer = $mailer;
-        $this->router = $router;
+    public function __construct(
+        private EntityManagerInterface $em,
+        private LocalUserRepository $users,
+        private UserPasswordResetRepository $passwordResets,
+        private PasswordHasherFactoryInterface $passwordHasherFactory,
+        private UserPasswordHasherInterface $encoder,
+        private MailerInterface $mailer,
+        private UrlGeneratorInterface $router
+    ) {
     }
 
     public function updatePasswordWithReset(ResetEntity $reset, string $password): bool

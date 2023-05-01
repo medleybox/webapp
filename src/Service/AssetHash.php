@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use Symfony\Component\Filesystem\Filesystem;
@@ -7,9 +9,9 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class AssetHash
 {
-    public function __construct(private string $env)
-    {
-        //
+    public function __construct(
+        private string $env
+    ) {
     }
 
     public function get(): string

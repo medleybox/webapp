@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\{LocalUser, UserSettings};
@@ -8,11 +10,6 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<UserSettings>
- *
- * @method UserSettings|null find($id, $lockMode = null, $lockVersion = null)
- * @method UserSettings|null findOneBy(array $criteria, array $orderBy = null)
- * @method UserSettings[]    findAll()
- * @method UserSettings[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class UserSettingsRepository extends ServiceEntityRepository
 {

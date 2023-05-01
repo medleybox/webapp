@@ -20,7 +20,7 @@ class MediaFileController extends AbstractController
     }
 
     #[Route('/media-file/search', name: 'media_search', methods: ['GET'])]
-    public function search(Request $request): Response 
+    public function search(Request $request): Response
     {
         $searchQuery = $request->query->get('q') ?? '';
         $hits = $this->media->search($searchQuery);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\MediaCollection;
@@ -8,11 +10,6 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<MediaCollection>
- *
- * @method MediaCollection|null find($id, $lockMode = null, $lockVersion = null)
- * @method MediaCollection|null findOneBy(array $criteria, array $orderBy = null)
- * @method MediaCollection[]    findAll()
- * @method MediaCollection[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class MediaCollectionRepository extends ServiceEntityRepository
 {

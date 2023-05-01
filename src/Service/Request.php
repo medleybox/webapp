@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\MediaFile;
@@ -18,14 +20,9 @@ class Request
      */
     private string $baseUrl = self::BASE_URI;
 
-    /**
-     * @var \Symfony\Contracts\HttpClient\HttpClientInterface
-     */
-    public $client;
-
-    public function __construct(HttpClientInterface $client)
-    {
-        $this->client = $client;
+    public function __construct(
+        private HttpClientInterface $client
+    ) {
     }
 
     public function setBaseUrl(string $url): self

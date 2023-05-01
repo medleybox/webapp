@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use Symfony\Contracts\HttpClient\{HttpClientInterface, ResponseInterface};
@@ -8,14 +10,9 @@ class HealthCheck
 {
     const TIMEOUT = 1;
 
-    /**
-     * @var \Symfony\Contracts\HttpClient\HttpClientInterface
-     */
-    public $client;
-
-    public function __construct(HttpClientInterface $client)
-    {
-        $this->client = $client;
+    public function __construct(
+        private HttpClientInterface $client
+    ) {
     }
 
     protected function get(string $url): ResponseInterface

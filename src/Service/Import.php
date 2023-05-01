@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\{MediaFile, LocalUser};
@@ -11,20 +13,10 @@ use Exception;
 
 class Import
 {
-    /**
-     * @var \App\Service\Request
-     */
-    protected $request;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
-
-    public function __construct(Request $request, EntityManagerInterface $em)
-    {
-        $this->request = $request;
-        $this->em = $em;
+    public function __construct(
+        private Request $request,
+        private EntityManagerInterface $em
+    ) {
     }
 
     /**
