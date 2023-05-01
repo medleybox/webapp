@@ -1,10 +1,9 @@
 # Webapp
-[![Docker Hub Link](https://img.shields.io/docker/image-size/medleybox/webapp/latest?style=for-the-badge)][dockerhub-webapp]
-[![Docker Hub Link](https://img.shields.io/docker/cloud/automated/medleybox/webapp?style=for-the-badge)][dockerhub-webapp-builds]
-[![Docker Hub Link](https://img.shields.io/docker/cloud/build/medleybox/webapp?style=for-the-badge)][dockerhub-webapp-builds]
-[![Github Workflows Link](https://github.com/medleybox/webapp/workflows/PHP%20Tests/badge.svg)][github-workflows]
 
-A Symfony 5 application to serve the frontend of Medleybox.
+A Symfony 6 application to serve the frontend of Medleybox.
+
+[![php-composer-and-tests](https://github.com/medleybox/webapp/actions/workflows/php-composer-and-tests.yml/badge.svg)][github-workflows-tests]
+[![docker-publish](https://github.com/medleybox/webapp/actions/workflows/docker-publish.yml/badge.svg)][github-workflows-publish]
 
 ## Quick Start
 
@@ -61,10 +60,8 @@ Docs:
 - [Vue Material][vuematerial-docs]
 - [Material Icons][material-icons]
 
-
-[dockerhub-webapp]: https://hub.docker.com/repository/docker/medleybox/webapp
-[dockerhub-webapp-builds]: https://hub.docker.com/repository/docker/medleybox/webapp/builds
-[github-workflows]: https://github.com/medleybox/webapp/actions?query=workflow%3A%22PHP+Tests%22
+[github-workflows-tests]: https://github.com/medleybox/webapp/actions/workflows/php-composer-and-tests.yml
+[github-workflows-publish]: https://github.com/medleybox/webapp/actions/workflows/docker-publish.yml
 [phpcs-symfony-ruleset]: https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/2.17/doc/ruleSets/SymfonyRisky.rst
 [medleybox-mailhog]: https://medleybox.local/mailhog
 [vuematerial-docs]: https://www.creative-tim.com/vuematerial/components/app
