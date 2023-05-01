@@ -4,34 +4,23 @@ namespace App\Command;
 
 use App\Entity\LocalUser;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{InputDefinition,InputInterface,InputOption};
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+#[AsCommand(
+    name: 'app:create-user',
+    description: 'Create a new admin user',
+)]
 class CreateUserCommand extends Command
 {
-    /**
-    * {@inheritdoc}
-    * @var string
-    */
-    protected static $defaultName = 'app:create-user';
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface
-     */
-    private $encoder;
-
-    public function __construct(EntityManagerInterface $em, UserPasswordHasherInterface $encoder)
-    {
-        $this->em = $em;
-        $this->encoder = $encoder;
+    public function __construct(
+        private EntityManagerInterface $em,
+        private UserPasswordHasherInterface $encoder
+    ) {
         parent::__construct();
     }
 
@@ -40,16 +29,13 @@ class CreateUserCommand extends Command
      */
     protected function configure(): void
     {
-        $this
-            ->setDescription('Create a new admin user')
-            ->addOption(
-                'username',
-                'u',
-                InputOption::VALUE_REQUIRED,
-                'Set the name of the new user',
-                'admin'
-            )
-        ;
+        $this->addOption(
+            'username',
+            'u',
+            InputOption::VALUE_REQUIRED,
+            'Set the name of the new user',
+            'admin'
+        );
     }
 
     /**

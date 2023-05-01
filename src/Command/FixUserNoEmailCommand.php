@@ -4,42 +4,23 @@ namespace App\Command;
 
 use App\Repository\{LocalUserRepository, MediaFileRepository};
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{InputArgument,InputInterface};
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'app:fix-user-email',
+    description: 'Upgrade users that have no email set',
+)]
 class FixUserNoEmailCommand extends Command
 {
-    /**
-    * {@inheritdoc}
-    * @var string
-    */
-    protected static $defaultName = 'app:fix-user-email';
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-     /**
-     * @var \App\Repository\LocalUserRepository
-     */
-    private $users;
-
-    public function __construct(EntityManagerInterface $em, LocalUserRepository $users)
-    {
-        $this->em = $em;
-        $this->users = $users;
+    public function __construct(
+        private EntityManagerInterface $em,
+        private LocalUserRepository $users
+    ) {
         parent::__construct();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure(): void
-    {
-        $this->setDescription('Upgrade users that have no email set');
     }
 
     /**

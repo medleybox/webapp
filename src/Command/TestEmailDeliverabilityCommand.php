@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{InputArgument,InputInterface};
 use Symfony\Component\Console\Question\Question;
@@ -12,31 +13,15 @@ use Symfony\Component\Mime\{Address, Email};
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 use Symfony\Component\Validator\Validation;
 
+#[AsCommand(
+    name: 'app:test-email-deliverability',
+    description: 'Send an email to test deliverability',
+)]
 class TestEmailDeliverabilityCommand extends Command
 {
-    /**
-    * {@inheritdoc}
-    * @var string
-    */
-    protected static $defaultName = 'app:test-email-deliverability';
-
-    /**
-     * @var \Symfony\Component\Mailer\MailerInterface
-     */
-    private MailerInterface $mailer;
-
-    public function __construct(MailerInterface $mailer)
+    public function __construct(private MailerInterface $mailer)
     {
-        $this->mailer = $mailer;
         parent::__construct();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure(): void
-    {
-        $this->setDescription('Send an email to test deliverability');
     }
 
     /**
@@ -61,7 +46,7 @@ class TestEmailDeliverabilityCommand extends Command
         $this->mailer->send($email);
 
         $io = new SymfonyStyle($input, $output);
-        $io->success("Success! Sent email to ${address}");
+        $io->success("Success! Sent email to {$address}");
 
         return Command::SUCCESS;
     }

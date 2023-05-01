@@ -4,48 +4,24 @@ namespace App\Command;
 
 use App\Repository\{LocalUserRepository, MediaFileRepository};
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{InputArgument,InputInterface};
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'app:assign-orphaned-media-files',
+    description: 'Assign users to media files without importUser set',
+)]
 class AssignOrphanedMediaFilesCommand extends Command
 {
-    /**
-    * {@inheritdoc}
-    * @var string
-    */
-    protected static $defaultName = 'app:assign-orphaned-media-files';
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \App\Repository\MediaFileRepository
-     */
-    private $media;
-
-     /**
-     * @var \App\Repository\LocalUserRepository
-     */
-    private $users;
-
-    public function __construct(EntityManagerInterface $em, MediaFileRepository $media, LocalUserRepository $users)
-    {
-        $this->em = $em;
-        $this->media = $media;
-        $this->users = $users;
+    public function __construct(
+        private EntityManagerInterface $em,
+        private MediaFileRepository $media,
+        private LocalUserRepository $users
+    ) {
         parent::__construct();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure(): void
-    {
-        $this->setDescription('Assign users to media files without importUser set');
     }
 
     /**

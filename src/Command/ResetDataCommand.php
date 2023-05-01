@@ -4,42 +4,23 @@ namespace App\Command;
 
 use App\Repository\MediaFileRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{InputArgument,InputInterface};
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'app:reset-data',
+    description: 'Remove all media uploaded',
+)]
 class ResetDataCommand extends Command
 {
-    /**
-    * {@inheritdoc}
-    * @var string
-    */
-    protected static $defaultName = 'app:reset-data';
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \App\Repository\MediaFileRepository
-     */
-    private $media;
-
-    public function __construct(EntityManagerInterface $em, MediaFileRepository $media)
-    {
-        $this->em = $em;
-        $this->media = $media;
+    public function __construct(
+        private EntityManagerInterface $em,
+        private MediaFileRepository $media
+    ) {
         parent::__construct();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure(): void
-    {
-        $this->setDescription('Remove media uploaded');
     }
 
     /**
