@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #use Symfony\Component\Routing\{Annotation\Route, Requirement\Requirement};
 use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Exception;
 
 class AdminController extends AbstractController
