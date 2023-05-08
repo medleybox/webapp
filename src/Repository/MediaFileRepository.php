@@ -131,8 +131,9 @@ class MediaFileRepository extends ServiceEntityRepository
     /**
      * @return array<string, float|string|null>
      */
-    public function search(string $searchQuery): array
+    public function search(string $search): array
     {
+        $searchQuery = "{$search}";
         $hits = $this->meili->search($this->_em, MediaFile::class, $searchQuery);
         $files = [];
         foreach ($hits as $media) {

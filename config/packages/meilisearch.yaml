@@ -6,3 +6,5 @@ meilisearch:
         - name: media
           class: App\Entity\MediaFile
           enable_serializer_groups: true
+          settings:
+                searchableAttributes: ['title']
