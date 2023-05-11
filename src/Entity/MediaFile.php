@@ -111,6 +111,10 @@ class MediaFile
 
     public function getSeconds(): ?float
     {
+        if (null === $this->seconds) {
+            return null;
+        }
+
         return floor($this->seconds);
     }
 
