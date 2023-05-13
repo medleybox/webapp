@@ -162,7 +162,7 @@ class MediaFileRepository extends ServiceEntityRepository
     /**
      * @return array<string, float|string|null>.
      */
-    private function getApiValue(MediaFile $media): array
+    public function getApiValue(MediaFile $media): array
     {
         return [
             'uuid' => $media->getUuid(),

@@ -14,8 +14,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserPlayHistoryRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(
+        private MediaFileRepository $mediafile,
+        ManagerRegistry $registry
+    ) {
         parent::__construct($registry, UserPlayHistory::class);
     }
 
@@ -24,7 +26,7 @@ class UserPlayHistoryRepository extends ServiceEntityRepository
         $history = [];
         foreach ($user->getUserPlayHistories() as $row) {
             $history[] = [
-                'media' => $row->getMedia()->getUuid(),
+                'media' => $this->mediafile->getApiValue($row->getMedia()),
                 'completed' => $row->getCompleted(),
                 'created' => $row->getAdded()->format(Kernel::APP_TIMEFORMAT),
             ];
