@@ -1,10 +1,10 @@
 {
     "name": "medleybox/webapp",
-    "description": "A Symfony 5 application to serve the frontend of Medleybox.",
+    "description": "A Symfony 6 application to serve the frontend of Medleybox.",
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "composer-plugin-api": "^2",
         "doctrine/doctrine-bundle": "^2",
         "doctrine/orm": "^2",
@@ -93,12 +93,6 @@
         "symfony": {
             "allow-contrib": true,
             "require": "^6.2"
-        }
-    },
-    "scripts": {
-        "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
         }
     }
 }
