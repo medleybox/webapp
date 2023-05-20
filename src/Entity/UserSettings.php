@@ -43,6 +43,12 @@ class UserSettings
     #[ORM\Column(type: "boolean", options: ["default" => 0])]
     private $openVlc = false;
 
+    /**
+     * @var int
+     */
+    #[ORM\Column(type: 'smallint')]
+    private $backend;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +98,23 @@ class UserSettings
     public function setOpenVlc(bool $openVlc): self
     {
         $this->openVlc = $openVlc;
+
+        return $this;
+    }
+
+    public function getBackend(): int
+    {
+        // Default to 'MediaElement' backend
+        if (null === $this->backend) {
+            return 1;
+        }
+
+        return $this->backend;
+    }
+
+    public function setBackend(int $backend): self
+    {
+        $this->backend = $backend;
 
         return $this;
     }

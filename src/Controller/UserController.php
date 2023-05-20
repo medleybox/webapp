@@ -33,7 +33,8 @@ class UserController extends AbstractController
         return $this->json([
             'autoPlay' => $settings->isAutoPlay(),
             'random' => $settings->isRandom(),
-            'openVlc' => $settings->isOpenVlc()
+            'openVlc' => $settings->isOpenVlc(),
+            'backend' => $settings->getBackend(),
         ]);
     }
 
@@ -47,6 +48,7 @@ class UserController extends AbstractController
                 ->setAutoPlay("1" === $request->request->get('autoPlay'))
                 ->setRandom("1" === $request->request->get('random'))
                 ->setOpenVlc("1" === $request->request->get('openVlc'))
+                ->setBackend((int) $request->request->get('backend'))
             ;
             $repo->save($settings, $user);
         } catch (\Exception $e) {
