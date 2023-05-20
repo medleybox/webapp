@@ -46,7 +46,7 @@ class UserSettings
     /**
      * @var int
      */
-    #[ORM\Column(type: 'smallint')]
+    #[ORM\Column(type: 'smallint', options: ["default" => 1])]
     private $backend;
 
     public function getId(): ?int
