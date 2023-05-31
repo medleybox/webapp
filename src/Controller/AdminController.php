@@ -7,10 +7,9 @@ namespace App\Controller;
 use App\Service\{Import, Request as Vault};
 use App\Entity\MediaFile;
 use App\Repository\MediaFileRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-#use Symfony\Component\Routing\{Annotation\Route, Requirement\Requirement};
+use Symfony\Component\Routing\{Annotation\Route, Requirement\Requirement};
 use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -55,10 +54,11 @@ class AdminController extends AbstractController
         return $this->render('admin/media.html.twig');
     }
 
-    // requirements: ['uuid' => Requirement::UUID_V4])]
-    #[Route('/admin/media/refresh-source/{uuid}', name: 'admin_refreshSource', methods: ['GET'])]
-    #[ParamConverter('uuid', class: '\App\Entity\MediaFile', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function refreshSource(MediaFile $media, Vault $vault): Response
+    #[Route('/admin/media/refresh-source/{uuid}', name: 'admin_refreshSource', requirements: ['uuid' => Requirement::UUID_V4], methods: ['GET'])]
+    public function refreshSource(
+        #[MapEntity(mapping: ['uuid' => 'uuid'])] MediaFile $media,
+        Vault $vault
+    ): Response
     {
         $json = $vault->get("entry/refresh-source/{$media->getUuid()}")->toArray();
 

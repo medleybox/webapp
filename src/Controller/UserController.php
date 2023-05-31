@@ -8,7 +8,6 @@ use App\Entity\LocalUser;
 use App\Service\UserPasswordReset;
 use App\Repository\UserSettingsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Bundle\SecurityBundle\Security;
@@ -55,7 +54,7 @@ class UserController extends AbstractController
             return $this->json(['save' => false, 'attempt' => true, 'error' => $e->getMessage()]);
         }
 
-        return $this->json(['save' => true, 'attempt' => false]);
+        return $this->json(['save' => true, 'attempt' => true]);
     }
 
     #[Route('/user/update-password', name: 'user_update_password', methods: ['POST'])]

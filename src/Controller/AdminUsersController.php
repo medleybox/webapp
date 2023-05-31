@@ -7,7 +7,7 @@ namespace App\Controller;
 use App\Entity\LocalUser;
 use App\Repository\LocalUserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{Request, Response};
 
@@ -50,8 +50,10 @@ class AdminUsersController extends AbstractController
     }
 
     #[Route('/admin/users/json/{id}', name: 'admin_users_json_id', methods: ['GET', 'POST'])]
-    #[ParamConverter('id', class: '\App\Entity\LocalUser')]
-    public function usersJsonId(LocalUser $user, Request $request): Response
+    public function usersJsonId(
+        #[MapEntity(mapping: ['id' => 'id'])] LocalUser $user,
+        Request $request
+    ): Response
     {
         if ($request->isMethod('POST')) {
             $user->setUsername($request->request->get('username'));
@@ -71,8 +73,10 @@ class AdminUsersController extends AbstractController
     }
 
     #[Route('/admin/users/delete/{id}', name: 'admin_users_delete', methods: ['DELETE'])]
-    #[ParamConverter('id', class: '\App\Entity\LocalUser')]
-    public function deleteUser(LocalUser $user, Request $request): Response
+    public function deleteUser(
+        #[MapEntity(mapping: ['id' => 'id'])] LocalUser $user,
+        Request $request
+    ): Response
     {
         if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
             $msg = "Unable to delete admin user!";
