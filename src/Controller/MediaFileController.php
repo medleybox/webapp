@@ -10,7 +10,7 @@ use App\Form\MediaFileType;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{Request, Response};
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\{Annotation\Route, Requirement\Requirement};
 use Symfony\Bundle\SecurityBundle\Security;
 
 class MediaFileController extends AbstractController
@@ -70,7 +70,7 @@ class MediaFileController extends AbstractController
         return $this->json($this->media->forUser($user));
     }
 
-    #[Route('/media-file/metadata/{uuid}', name: 'media_metadata', methods: ['GET', 'HEAD'])]
+    #[Route('/media-file/metadata/{uuid}', name: 'media_metadata', requirements: ['uuid' => Requirement::UUID_V4], methods: ['GET', 'HEAD'])]
     public function metadata(#[MapEntity(mapping: ['uuid' => 'uuid'])] MediaFile $media): Response
     {
         $importuser = $media->getImportUser();
@@ -88,13 +88,13 @@ class MediaFileController extends AbstractController
         ]);
     }
 
-    #[Route('/media-file/wavedata/{uuid}', name: 'media_wavedata', methods: ['GET'])]
+    #[Route('/media-file/wavedata/{uuid}', name: 'media_wavedata', requirements: ['uuid' => Requirement::UUID_V4], methods: ['GET'])]
     public function wavedata(#[MapEntity(mapping: ['uuid' => 'uuid'])] MediaFile $media): Response
     {
         return $this->json($this->media->getWavedata($media));
     }
 
-    #[Route('/media-file/delete/{uuid}', name: 'media_delete', methods: ['GET', 'DELETE'])]
+    #[Route('/media-file/delete/{uuid}', name: 'media_delete', requirements: ['uuid' => Requirement::UUID_V4], methods: ['GET', 'DELETE'])]
     public function delete(#[MapEntity(mapping: ['uuid' => 'uuid'])] MediaFile $media): Response
     {
         $this->media->delete($media);
@@ -104,13 +104,12 @@ class MediaFileController extends AbstractController
         ]);
     }
 
-    #[Route('/media-file/play/{uuid}', name: 'media_play', methods: ['GET', 'HEAD'])]
+    #[Route('/media-file/play/{uuid}', name: 'media_play', requirements: ['uuid' => Requirement::UUID_V4], methods: ['GET', 'HEAD'])]
     public function play(
         #[MapEntity(mapping: ['uuid' => 'uuid'])] MediaFile $media,
         Security $security,
         UserPlayHistoryRepository $history
-    ): Response
-    {
+    ): Response {
         $user = $security->getUser();
         assert($user instanceof LocalUser);
         $history->update($media, $user);

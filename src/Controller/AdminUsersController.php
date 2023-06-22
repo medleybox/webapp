@@ -8,7 +8,7 @@ use App\Entity\LocalUser;
 use App\Repository\LocalUserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\{Annotation\Route, Requirement\Requirement};
 use Symfony\Component\HttpFoundation\{Request, Response};
 
 class AdminUsersController extends AbstractController
@@ -49,12 +49,11 @@ class AdminUsersController extends AbstractController
         return $this->json(['users' => $users]);
     }
 
-    #[Route('/admin/users/json/{id}', name: 'admin_users_json_id', methods: ['GET', 'POST'])]
+    #[Route('/admin/users/json/{id}', name: 'admin_users_json_id', requirements: ['uuid' => Requirement::UUID_V4], methods: ['GET', 'POST'])]
     public function usersJsonId(
         #[MapEntity(mapping: ['id' => 'id'])] LocalUser $user,
         Request $request
-    ): Response
-    {
+    ): Response {
         if ($request->isMethod('POST')) {
             $user->setUsername($request->request->get('username'));
             $user->setEmail($request->request->get('email'));
@@ -72,12 +71,11 @@ class AdminUsersController extends AbstractController
         return $this->json(['user' => $this->getUserAsArray($user)]);
     }
 
-    #[Route('/admin/users/delete/{id}', name: 'admin_users_delete', methods: ['DELETE'])]
+    #[Route('/admin/users/delete/{id}', name: 'admin_users_delete', requirements: ['uuid' => Requirement::UUID_V4], methods: ['DELETE'])]
     public function deleteUser(
         #[MapEntity(mapping: ['id' => 'id'])] LocalUser $user,
         Request $request
-    ): Response
-    {
+    ): Response {
         if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
             $msg = "Unable to delete admin user!";
             return $this->json(['success' => false, 'msg' => $msg], Response::HTTP_FORBIDDEN);

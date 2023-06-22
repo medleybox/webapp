@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\{Import, Request as Vault};
+use App\Service\{HealthCheck, Import, Request as Vault};
 use App\Entity\MediaFile;
 use App\Repository\MediaFileRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -30,7 +30,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin/about/json', name: 'admin_about_json', methods: ['GET'])]
-    public function aboutJson(Request $request, Vault $vault, MediaFileRepository $media): Response
+    public function aboutJson(Request $request, Vault $vault, MediaFileRepository $media, HealthCheck $hc): Response
     {
         $vaultVersion = [];
         $version = $vault->get('api/version');
@@ -39,7 +39,7 @@ class AdminController extends AbstractController
         }
 
         return $this->json([
-            'webapp' => [
+            'webapp' => $hc->meilisearchVersion() + [
                 'symfony' => Kernel::VERSION,
                 'php' => PHP_VERSION,
                 'files' => $media->count([])
@@ -58,8 +58,7 @@ class AdminController extends AbstractController
     public function refreshSource(
         #[MapEntity(mapping: ['uuid' => 'uuid'])] MediaFile $media,
         Vault $vault
-    ): Response
-    {
+    ): Response {
         $json = $vault->get("entry/refresh-source/{$media->getUuid()}")->toArray();
 
         return $this->json($json);
@@ -68,18 +67,16 @@ class AdminController extends AbstractController
     #[Route('/admin/media/json', name: 'admin_media_json', methods: ['GET'])]
     public function mediaJson(Request $request, Vault $vault, MediaFileRepository $media): Response
     {
-        $vaultMedia = $vault->get('entry/list-all')->toArray();
         $json = [];
-
+        $vaultMedia = $vault->get('entry/list-all')->toArray();
         foreach ($media->findBy([]) as $row) {
             $import = null;
-            if (null !== $row->getImportUser()) {
-                $user = $row->getImportUser();
+            $user = $row->getImportUser();
+            if (null !== $user) {
                 $import = $user->__toString();
             }
 
             $uuid = $row->getUuid();
-
             $data = [
                 'uuid' => $uuid,
                 'title' => $row->getTitle(),
