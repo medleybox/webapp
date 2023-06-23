@@ -110,7 +110,7 @@ class Request
                 'base_uri' => $this->baseUrl,
                 'timeout' => self::TIMEOUT
             ]);
-        } catch (\RuntimeException $e) {
+        } catch (\Exception $e) {
             //
             return null;
         }

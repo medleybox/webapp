@@ -27,6 +27,10 @@ services:
     App\Service\AssetHash:
         $env: '%env(APP_ENV)%'
 
+    App\Service\HealthCheck:
+        $mUrl: '%env(MEILISEARCH_URL)%'
+        $mKey: '%env(MEILISEARCH_API_KEY)%'
+
     Redis:
         class: Redis
         calls:

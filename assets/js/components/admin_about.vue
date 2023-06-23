@@ -7,9 +7,11 @@
                 </md-card-header>
 
                 <md-card-content v-show="data.webapp != {}">
-                    Symfony: <code>{{data.webapp.symfony}}</code><br/>
-                    PHP: <code>{{data.webapp.php}}</code><br/>
-                    Version: -<br/>
+                    <p class="float-right">
+                        Meilisearch: <code>{{data.webapp.meilisearch}}</code><br/>
+                    </p>
+                    Symfony Version: <code>{{data.webapp.symfony}}</code><br/>
+                    PHP Version: <code>{{data.webapp.php}}</code><br/>
                     Media Files: <code>{{data.webapp.files}}</code><br/>
                 </md-card-content>
             </md-card>
@@ -27,9 +29,8 @@
                     </p>
                     <p>
                         Symfony: <code>{{data.vault.symfony}}</code><br/>
-                        PHP: <code>{{data.vault.php}}</code><br/>
+                        PHP Version: <code>{{data.vault.php}}</code><br/>
                         AudiowaveForm: <code>{{data.vault.audiowaveform}}</code><br />
-                        Version: -
                     </p>
                 </md-card-content>
             </md-card>

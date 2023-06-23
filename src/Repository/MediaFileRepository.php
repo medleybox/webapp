@@ -217,7 +217,12 @@ class MediaFileRepository extends ServiceEntityRepository
             $this->request->refreshLatestList();
         }
         $this->request->updateVaultDownload($media, $this->getFakeFilename($media));
-        $this->_em->flush();
+
+        try {
+            $this->_em->flush();
+        } catch (\Exception $e) {
+            return false;
+        }
 
         return true;
     }
@@ -227,8 +232,12 @@ class MediaFileRepository extends ServiceEntityRepository
         // Remove the file from storage
         $this->import->delete($this->getDelete($media));
 
-        $this->_em->remove($media);
-        $this->_em->flush();
+        try {
+            $this->_em->remove($media);
+            $this->_em->flush();
+        } catch (\Exception $e) {
+            return false;
+        }
         $this->request->refreshMediaList();
 
         return true;
