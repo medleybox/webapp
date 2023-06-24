@@ -11,31 +11,31 @@ build:webapp:
   stage: build
   tags:
     - docker
-  script:
+  before_script:
     - sed -i "s/ghcr.io/${CI_REGISTRY}/g" docker/app/Dockerfile
     - sed -i "s/:master/:latest/g" docker/app/Dockerfile
+  script:
     - >
-      docker build
+      docker build .
       --pull
       --cache-from $CI_REGISTRY_IMAGE:latest
       --tag $CI_REGISTRY_IMAGE:latest
       -f docker/app/Dockerfile
-      .
     - docker push $CI_REGISTRY_IMAGE:latest
 
 build:encore:
   stage: build
   tags:
     - docker
-  script:
+  before_script:
     - sed -i "s/ghcr.io/${CI_REGISTRY}/g" docker/encore/Dockerfile
     - sed -i "s/:master/:latest/g" docker/encore/Dockerfile
+  script:
     - >
-      docker build
+      docker build .
       --pull
       --cache-from $CI_REGISTRY_IMAGE:latest
       --tag $CI_REGISTRY_IMAGE:latest
        --tag ${CI_REGISTRY}/medleybox/encore:latest
       -f docker/encore/Dockerfile
-      .
     - docker push ${CI_REGISTRY}/medleybox/encore:latest
