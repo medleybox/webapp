@@ -36,7 +36,6 @@ build:encore:
       docker build .
       --pull
       --cache-from $CI_REGISTRY_IMAGE:latest
-      --tag $CI_REGISTRY_IMAGE:latest
-       --tag ${CI_REGISTRY}/medleybox/encore:latest
+      --tag ${CI_REGISTRY}/medleybox/encore:latest
       -f docker/encore/Dockerfile
     - docker push ${CI_REGISTRY}/medleybox/encore:latest
