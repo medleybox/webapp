@@ -8,6 +8,7 @@ services:
   - docker:dind
 
 build:webapp:
+  needs: ["build:encore"]
   stage: build
   tags:
     - docker
