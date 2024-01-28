@@ -22,6 +22,16 @@ networks:
         external: true
 
 services:
+    pgadmin:
+        image: dpage/pgadmin4
+        restart: always
+        networks:
+            - medley
+        environment:
+            PGADMIN_DEFAULT_EMAIL: admin@medleybox.dev
+            PGADMIN_DEFAULT_PASSWORD: medleybox
+        ports:
+        - "5050:80"
     nginx:
         image: ghcr.io/medleybox/nginx:master
         restart: always
@@ -89,6 +99,7 @@ services:
             - ./config/packages:/var/www/config/packages
             - ./docker/app/dev.ini:/usr/local/etc/php/conf.d/webapp.ini
             - ./src:/var/www/src
+            - ./tests:/var/www/tests
             - ./templates:/var/www/templates
             - ./docker/app/dev.ini:/usr/local/etc/php/dev.ini
             - ./public/build:/var/www/public/build
