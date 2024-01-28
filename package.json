@@ -1,12 +1,12 @@
 {
     "devDependencies": {
-        "@symfony/webpack-encore": "~4.1.0",
+        "@symfony/webpack-encore": "^4.5.0",
         "core-js": "^3.13.1",
         "css-loader": "^6",
         "sass": "^1.55.0",
         "sass-loader": "^13.1.0",
-        "vue-loader": "^15.10.0",
-        "vue-template-compiler": "^2.6.12",
+        "vue-loader": "^15.11.1",
+        "vue-template-compiler": "^2.7",
         "webpack-notifier": "^1.6.0"
     },
     "license": "UNLICENSED",
