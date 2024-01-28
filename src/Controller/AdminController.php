@@ -64,6 +64,15 @@ class AdminController extends AbstractController
         return $this->json($json);
     }
 
+    #[Route('/admin/media/force-import', name: 'admin_forceImport', requirements: ['uuid' => Requirement::UUID_V4], methods: ['POST'])]
+    public function forceImport(Request $request, Vault $vault): Response
+    {
+        $uuid = $request->request->get('uuid');
+        $json = $vault->get("entry/refresh-source/{$uuid}")->toArray();
+
+        return $this->json($json);
+    }
+
     #[Route('/admin/media/json', name: 'admin_media_json', methods: ['GET'])]
     public function mediaJson(Request $request, Vault $vault, MediaFileRepository $media): Response
     {
@@ -90,13 +99,16 @@ class AdminController extends AbstractController
             if (array_key_exists($uuid, $vaultMedia)) {
                 $data['hasVault'] = true;
                 $data['vault'] = $vaultMedia[$uuid];
+
+                unset($vaultMedia[$uuid]);
             }
 
             $json[] = $data;
         }
 
         return $this->json([
-            'media' => $json
+            'media' => $json,
+            'vault' => $vaultMedia
         ]);
     }
 }

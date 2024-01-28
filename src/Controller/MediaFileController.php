@@ -84,6 +84,8 @@ class MediaFileController extends AbstractController
             'importuser' => $importuser,
             'metadata' => $this->media->getMetadata($media),
             'delete' => $this->media->getDeleteUrl($media),
+            // Download URL for now as streaming is broken ¯\_(ツ)_/¯
+            'stream' => $this->media->getDownload($media),
             'seconds' => $media->getSeconds(),
         ]);
     }

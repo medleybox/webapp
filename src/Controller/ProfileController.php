@@ -8,7 +8,8 @@ use App\Service\{AssetHash, UserAvatar, Import};
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\{JsonResponse, RedirectResponse, Request, Response};
+use Symfony\Component\HttpFoundation\{JsonResponse, Response, Request};
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Mime\MimeTypes;
 use Exception;
@@ -34,9 +35,14 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/profile/avatar', name: 'profile_avatar', methods: ['GET'])]
-    public function avatar(Request $request): RedirectResponse
+    public function avatar(Request $request): Response
     {
-        return $this->redirect($this->user->getAvatarPath());
+        $avatar = $this->user->getAvatarPath();
+        if (null === $avatar) {
+            return new Response(null, 404);
+        }
+
+        return $this->redirect($avatar);
     }
 
     #[Route('/profile/new-avatar', name: 'profile_newAvatar', methods: ['POST'])]

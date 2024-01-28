@@ -22,7 +22,7 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
      * @var int
      */
     #[ORM\Id()]
-    #[ORM\GeneratedValue()]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column(type: "integer")]
     private $id;
 
@@ -361,10 +361,10 @@ class LocalUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAvatarPath(): string
+    public function getAvatarPath(): ?string
     {
         if (null === $this->avatar) {
-            return '';
+            return null;
         }
 
         return "/vault/avatar/r/{$this->avatar}";

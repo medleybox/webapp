@@ -216,13 +216,13 @@ class MediaFileRepository extends ServiceEntityRepository
             $this->_em->persist($media);
             $this->request->refreshLatestList();
         }
-        $this->request->updateVaultDownload($media, $this->getFakeFilename($media));
 
         try {
             $this->_em->flush();
         } catch (\Exception $e) {
             return false;
         }
+        $this->request->updateVaultDownload($media, $this->getFakeFilename($media));
 
         return true;
     }
