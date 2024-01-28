@@ -60,6 +60,11 @@ Docs:
 - [Vue Material][vuematerial-docs]
 - [Material Icons][material-icons]
 
+## License
+GNU General Public License v3.0 or later
+
+See [LICENCE](LICENCE) to see the full text.
+
 [github-workflows-tests]: https://github.com/medleybox/webapp/actions/workflows/php-composer-and-tests.yml
 [github-workflows-publish]: https://github.com/medleybox/webapp/actions/workflows/docker-publish.yml
 [phpcs-symfony-ruleset]: https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/2.17/doc/ruleSets/SymfonyRisky.rst
