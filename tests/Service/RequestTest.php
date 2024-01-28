@@ -7,11 +7,14 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class RequestTest extends KernelTestCase
 {
+    private $request;
+
     protected function setUp(): void
     {
-        $kernel = self::bootKernel();
+        self::bootKernel();
+        $container = static::getContainer();
 
-        $this->request = $kernel->getContainer()->get('App\Service\Request');
+        $this->request = $container->get(Request::class);
         $this->request->setBaseUrl('https://httpbin.org');
     }
 
