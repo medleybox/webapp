@@ -10,7 +10,7 @@
                 <md-table-head></md-table-head>
             </md-table-row>
 
-            <md-table-row v-for="row in media"
+            <md-table-row v-for="row in media.media"
                 v-bind:data="row"
                 v-bind:key="row.uuid">
                 <md-table-cell>
@@ -24,6 +24,22 @@
                 <md-table-cell><span v-html="getPrettyBytes(row)"></span></md-table-cell>
                 <md-table-cell>{{row.user}}</md-table-cell>
                 <md-table-cell><md-button class="md-primary md-raised" @click="showEditModal(row.uuid)">Edit</md-button></md-table-cell>
+            </md-table-row>
+
+            <md-table-row v-for="row in media.vault"
+                v-bind:data="row"
+                v-bind:key="row.uuid">
+                <md-table-cell>
+                    <span class="uuid--hover" @click="copyUuidToCB(row.uuid)">
+                        <md-icon class="md-accent">info</md-icon>
+                        <md-tooltip md-direction="right">{{row.uuid}}</md-tooltip>
+                    </span>
+                    {{row.title}}
+                </md-table-cell>
+                <md-table-cell><span v-html="showTrackSeconds(row)"></span></md-table-cell>
+                <md-table-cell>-</md-table-cell>
+                <md-table-cell></md-table-cell>
+                <md-table-cell><md-button disabled="true" class="md-primary md-raised" @click="forceImport(row.uuid)">Force Import</md-button></md-table-cell>
             </md-table-row>
         </md-table>
     </admin>
@@ -51,7 +67,7 @@ export default {
         return {
             loaded: false,
             media: {
-                webapp: null,
+                media: null,
                 vault: null,
             }
         };
@@ -64,7 +80,7 @@ export default {
             }).then((response) => {
                 return response.json();
             }).then((json) => {
-                this.media = json.media;
+                this.media = json;
                 this.loaded = true;
             });
         },
@@ -92,7 +108,22 @@ export default {
         },
         showEditModal(uuid) {
             EventBus.$emit('admin_media_dialog-fetchData', uuid);
-        }
+        },
+        forceImport(uuid) {
+            const data = new FormData();
+            data.append('uuid', uuid);
+
+            let _this = this;
+            fetch(`/admin/media/force-import`, {
+                method: 'POST',
+                credentials: 'same-origin',
+                body: data
+            }).then((response) => {
+                return response.json();
+            }).then((json) => {
+                console.log(json);
+            });
+        },
     },
     components: {
         'admin': adminApp,
